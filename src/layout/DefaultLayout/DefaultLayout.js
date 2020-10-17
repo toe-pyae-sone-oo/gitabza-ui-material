@@ -1,6 +1,12 @@
 import React from 'react'
+import Navigation from '../../components/Navigation/Navigation'
 
-const DefaultLayout = () => 
-  <div>Hello World</div>
+const DefaultLayout = () => {
+  return (
+    <>
+      <Navigation/>
+    </>
+  )
+}
 
 export default DefaultLayout
