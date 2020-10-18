@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Pyidaungsu';
+  src: local('Pyidaungsu'), url(./fonts/Pyidaungsu-1.8.3_Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Pyidaungsu-bold';
+  src: local('Pyidaungsu-bold'), url(./fonts/Pyidaungsu-1.8.3_Bold.ttf);
+}

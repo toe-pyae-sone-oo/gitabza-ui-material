@@ -1,11 +1,25 @@
 import React from 'react'
+import { Switch, Route } from 'react-router-dom'
+import Container from '@material-ui/core/Container'
+import Home from '../../views/Home/Home'
 import Navigation from '../../components/Navigation/Navigation'
+import useStyles from './DefaultLayoutStyle'
 
 const DefaultLayout = () => {
+  const classes = useStyles()
+
   return (
-    <>
+    <div>
       <Navigation/>
-    </>
+      <Container 
+        maxWidth="lg" 
+        className={classes.layoutContainer}
+      >
+        <Switch>
+          <Route exact path="/" component={Home} />
+        </Switch>
+      </Container>
+    </div>
   )
 }
 
