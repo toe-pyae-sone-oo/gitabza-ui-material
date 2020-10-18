@@ -10,7 +10,7 @@ const YoutubeSongItem = ({ title = '', image = undefined }) => {
       item
       md={3}
       sm={4}
-      xs={12}
+      xs={6}
     >
       <img className={classes.image} src={image} alt={title} /> 
       <Typography className={classes.title} variant="caption">
