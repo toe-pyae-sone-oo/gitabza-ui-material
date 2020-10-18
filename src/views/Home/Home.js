@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
@@ -13,6 +11,7 @@ import { LOAD_LATEST_SONGS, LOAD_LATEST_ARTISTS } from '../../constants/actionTy
 import SongList from '../../components/Home/SongList/SongList'
 import YoutubeSongList from '../../components/Home/YoutubeSongList/YoutubeSongList'
 import ArtistList from '../../components/Home/ArtistList/ArtistList'
+import Title from '../../components/Title/Title'
 import useStyles from './HomeStyle'
 
 const mapStateToProps = state => ({
@@ -42,18 +41,10 @@ const Home = ({ loading, songs, artists, loadSongs, loadArtists }) => {
       <Grid container item md={8}>
         <Card variant="outlined" className={classes.songsCard}>
           <CardContent>
-            <Typography 
-              variant="h6"
-              gutterBottom
-            >
-              <Box 
-                display="flex"
-                alignItems="center"
-              >
-                <MusicNoteIcon/>
-                Latest Update
-              </Box>
-            </Typography>
+            <Title 
+              icon={<MusicNoteIcon/>} 
+              content="Latest Update" 
+            />
             {loading
               ? 'Loading...'
               : <>
@@ -67,18 +58,10 @@ const Home = ({ loading, songs, artists, loadSongs, loadArtists }) => {
       <Grid container item md={4}>
         <Card variant="outlined" className={classes.artistsCard}>
           <CardContent>
-            <Typography 
-              variant="h6"
-              gutterBottom
-            >
-              <Box
-                display="flex"
-                alignItems="center"
-              >
-                <MicIcon/>
-                Latest Songs
-              </Box>
-            </Typography>
+            <Title
+              icon={<MicIcon/>}
+              content="Latest Artists"
+            />
             {loading
               ? 'Loading...'
               : <ArtistList artists={artists} />

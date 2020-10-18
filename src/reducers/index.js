@@ -5,6 +5,7 @@ import adminArtists from './adminArtists'
 import adminSongs from './adminSongs'
 import adminToken from './adminToken'
 import home from './home'
+import songs from './songs'
 
 export default combineReducers({
   loading,
@@ -13,4 +14,5 @@ export default combineReducers({
   adminSongs,
   adminToken,
   home,
+  songs,
 })

@@ -32,7 +32,8 @@ export const update = (id, payload) => {
 }
 
 export const getLatest = () => {
+  let query = `skip=${0}&limit=${20}`
   return httpClient
-    .get('/songs/latest')
-    .then(({ data }) => data)
+    .get(`/songs?${query}`)
+    .then(({ data }) => data.songs)
 }

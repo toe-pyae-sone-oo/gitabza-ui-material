@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Home from '../../views/Home/Home'
+import Chords from '../../views/Chords/Chords'
 import Navigation from '../../components/Navigation/Navigation'
 import useStyles from './DefaultLayoutStyle'
 
@@ -17,6 +18,7 @@ const DefaultLayout = () => {
       >
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/chords" component={Chords} />
         </Switch>
       </Container>
     </div>
