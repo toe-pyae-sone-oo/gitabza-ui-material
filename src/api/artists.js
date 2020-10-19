@@ -14,8 +14,10 @@ export const upload = file => {
     .then(({ data }) => data)
 }
 
-export const find = ({ name = undefined, skip = 0, limit = 10 }) => {
+export const find = ({ name, skip = 0, limit = 10, sort, order }) => {
   let query = name ? `name=${name.trim()}&` : ''
+  query += sort ? `sort=${sort}&` : ''
+  query += order ? `order=${order}&` : ''
   query += `skip=${skip}&`
   query += `limit=${limit}`
 
