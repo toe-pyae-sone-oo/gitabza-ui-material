@@ -29,7 +29,6 @@ const Chords = ({ loading, songs, count, loadSongs }) => {
   }, [loadSongs])
 
   const loadMoreSongs = () => {
-    console.log('hello!')
     const nextPage = page + 1
     setPage(nextPage)
     find({ skip: nextPage * LIMIT_PER_PAGE, limit: LIMIT_PER_PAGE })
