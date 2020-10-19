@@ -7,14 +7,12 @@ import { store } from './store'
 import './index.css'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" component={App} />
-        </Switch>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={App} />
+      </Switch>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 )
