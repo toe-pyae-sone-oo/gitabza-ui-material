@@ -6,8 +6,16 @@ export const create = payload => {
     .then(({ data }) => data)
 }
 
-export const find = ({ title = undefined, skip = 0, limit = 10 }) => {
+export const find = ({ 
+  title, 
+  skip = 0, 
+  limit = 10,
+  sort,
+  order,
+}) => {
   let query = title ? `title=${title.trim()}&` : ''
+  query += sort ? `sort=${sort}&` : ''
+  query += order ? `order=${order}&` : ''
   query += `skip=${skip}&`
   query += `limit=${limit}`
   return httpClient

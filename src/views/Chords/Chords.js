@@ -25,13 +25,22 @@ const Chords = ({ loading, songs, count, loadSongs }) => {
   const [page, setPage] = useState(0)
 
   useEffect(() => {
-    find({ limit: LIMIT_PER_PAGE }).then(loadSongs)
+    find({ 
+      limit: LIMIT_PER_PAGE,
+      sort: 'title',
+      order: 'asc',
+    }).then(loadSongs)
   }, [loadSongs])
 
   const loadMoreSongs = () => {
     const nextPage = page + 1
     setPage(nextPage)
-    find({ skip: nextPage * LIMIT_PER_PAGE, limit: LIMIT_PER_PAGE })
+    find({ 
+      skip: nextPage * LIMIT_PER_PAGE, 
+      limit: LIMIT_PER_PAGE,
+      sort: 'title',
+      order: 'asc',
+    })
       .then(({ songs: newSongs, count }) => loadSongs({ songs: [...songs, ...newSongs], count }))
   }
 
