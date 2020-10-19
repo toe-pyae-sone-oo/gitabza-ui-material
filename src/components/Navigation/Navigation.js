@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -12,18 +12,15 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import MicIcon from '@material-ui/icons/Mic'
 import useStyles from './NavigationStyle'
 
-const routes = ['Home', 'Chords', 'Artists']
-
-const Navigation = () => {
+const Navigation = ({ route, changeRoute, title }) => {
   const classes = useStyles()
-  const [currentRoute, setCurrentRoute] = useState(0)
 
   return (
     <>
       <AppBar classes={{ root: classes.appBar }}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            {routes[currentRoute]}
+            {title}
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -41,20 +38,20 @@ const Navigation = () => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton 
-              onClick={() => setCurrentRoute(0)}
+              onClick={() => changeRoute(0)}
             >
               <HomeIcon 
-                className={currentRoute === 0 
+                className={route === 0 
                   ? classes.navIconActive 
                   : classes.navIcon
                 } 
               />
             </IconButton>
             <IconButton 
-              onClick={() => setCurrentRoute(1)}
+              onClick={() => changeRoute(1)}
             >
               <MusicNoteIcon 
-                className={currentRoute === 1
+                className={route === 1
                   ? classes.navIconActive 
                   : classes.navIcon
                 } 
@@ -62,10 +59,10 @@ const Navigation = () => {
             </IconButton>
             <IconButton
               edge="end"
-              onClick={() => setCurrentRoute(2)}
+              onClick={() => changeRoute(2)}
             >
               <MicIcon 
-                className={currentRoute === 2
+                className={route === 2
                   ? classes.navIconActive 
                   : classes.navIcon
                 } 
@@ -77,8 +74,8 @@ const Navigation = () => {
       <BottomNavigation 
         className={classes.bottomNav} 
         showLabels
-        value={currentRoute}
-        onChange={(e, value) => setCurrentRoute(value)}
+        value={route}
+        onChange={(e, value) => changeRoute(value)}
       >
         <BottomNavigationAction label="Home" icon={<HomeIcon />} />
         <BottomNavigationAction label="Chords" icon={<MusicNoteIcon />} />
