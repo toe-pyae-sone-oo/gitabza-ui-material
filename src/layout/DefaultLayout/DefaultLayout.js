@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container'
 import Home from '../../views/Home/Home'
 import Chords from '../../views/Chords/Chords'
 import Artists from '../../views/Artists/Artists'
+import ArtistPreview from '../../views/ArtistPreview/ArtistPreview'
 import Navigation from '../../components/Navigation/Navigation'
 import useStyles from './DefaultLayoutStyle'
 
@@ -23,7 +24,8 @@ const routes = [
 ]
 
 const getRouteByPath = path => {
-  return routes.findIndex(route => route.path === path) || 0
+  const index = routes.findIndex(route => route.path === path)
+  return index < 0 ? 0 : index
 }
 
 const DefaultLayout = ({ history }) => {
@@ -51,7 +53,8 @@ const DefaultLayout = ({ history }) => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/chords" component={Chords} />
-          <Route path="/artists" component={Artists} />
+          <Route exact path="/artists" component={Artists} />
+          <Route path="/artists/:id" component={ArtistPreview} />
         </Switch>
       </Container>
     </div>

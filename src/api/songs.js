@@ -45,3 +45,9 @@ export const getLatest = () => {
     .get(`/songs?${query}`)
     .then(({ data }) => data.songs)
 }
+
+export const findByArtist = artistId => {
+  return httpClient
+    .get(`/artists/${artistId}/songs`)
+    .then(({ data }) => data)
+}
