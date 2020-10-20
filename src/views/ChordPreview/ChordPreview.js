@@ -94,18 +94,49 @@ const ChordPreview = ({ loading, match }) => {
                       icon={<InfoIcon/>}
                       content="Info"
                     />
-                    <Typography variant="caption" display="block">
-                      <Grid container>
-                        <Grid item xs={4}>Version</Grid>
-                        <Grid item xs={8}>: {song.version}</Grid>
+                    <Grid
+                      container
+                      spacing={2}
+                    >
+                      <Grid 
+                        item 
+                        xs={6}
+                      >
+                        <Typography 
+                          variant="caption"
+                          display="block"
+                          className={classes.textCenter}
+                          color="textSecondary"
+                        >
+                          Version
+                        </Typography>
+                        <Typography 
+                          variant="body2"
+                          className={classes.textCenter}
+                        >
+                          {song.version}
+                        </Typography>
                       </Grid>
-                    </Typography>
-                    <Typography variant="caption" display="block">
-                      <Grid container>
-                        <Grid item xs={4}>Difficulty</Grid>
-                        <Grid item xs={8}>: {song.difficulty}</Grid>
+                      <Grid 
+                        item 
+                        xs={6}
+                      >
+                        <Typography 
+                          variant="caption"
+                          display="block"
+                          className={classes.textCenter}
+                          color="textSecondary"
+                        >
+                          Difficulty
+                        </Typography>
+                        <Typography 
+                          variant="body2"
+                          className={classes.textCenter}
+                        >
+                          {song.difficulty === 'none' ? '-' : song.difficulty}
+                        </Typography>
                       </Grid>
-                    </Typography>
+                    </Grid>
                   </CardContent>
                 </Card>
                 <Card

@@ -51,6 +51,9 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     marginTop: theme.spacing(2),
   },
+  textCenter: {
+    textAlign: 'center',
+  },
 }))
 
 export default useStyles
