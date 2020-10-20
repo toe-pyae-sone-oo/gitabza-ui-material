@@ -6,3 +6,9 @@ export const getCapo = i => {
     default: return `${i}th fret`
   }
 }
+
+export const getVideoId = link => {
+  const url = new URL(link)
+  const q = url.searchParams
+  return q.get('v')
+}

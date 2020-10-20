@@ -3,6 +3,7 @@ import { Switch, Route, useLocation } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Home from '../../views/Home/Home'
 import Chords from '../../views/Chords/Chords'
+import ChordPreview from '../../views/ChordPreview/ChordPreview'
 import Artists from '../../views/Artists/Artists'
 import ArtistPreview from '../../views/ArtistPreview/ArtistPreview'
 import Navigation from '../../components/Navigation/Navigation'
@@ -52,7 +53,8 @@ const DefaultLayout = ({ history }) => {
       >
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/chords" component={Chords} />
+          <Route exact path="/chords" component={Chords} />
+          <Route path="/chords/:id" component={ChordPreview} />
           <Route exact path="/artists" component={Artists} />
           <Route path="/artists/:id" component={ArtistPreview} />
         </Switch>
