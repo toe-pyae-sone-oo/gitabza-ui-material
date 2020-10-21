@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   youtubeCard: {
     width: '100%',
     marginTop: 0,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       marginTop: theme.spacing(6),
     },
   },
@@ -57,6 +57,10 @@ const useStyles = makeStyles(theme => ({
   actionCard: {
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'block',
+    },
   },
   transponseAction: {
     width: 2000,
@@ -66,6 +70,14 @@ const useStyles = makeStyles(theme => ({
   },
   action: {
     color: theme.palette.primary.main,
+  },
+  mobileActionCard: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    display: 'block',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   },
 }))
 

@@ -14,6 +14,9 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
+import MusicNoteIcon from '@material-ui/icons/MusicNote'
+import PlayIcon from '@material-ui/icons/PlayCircleFilledOutlined'
+import FormatSizeIcon from '@material-ui/icons/FormatSize'
 import Youtube from 'react-youtube'
 import Title from '../../components/Title/Title'
 import { findById } from '../../api/songs'
@@ -47,7 +50,7 @@ const ChordPreview = ({ loading, match }) => {
           ? <>
               <Grid 
                 item 
-                lg={9} 
+                md={9} 
                 xs={12}
               >
                 <Typography 
@@ -131,6 +134,61 @@ const ChordPreview = ({ loading, match }) => {
                     </Grid>
                   </Grid>
                 </Card>
+                <Card
+                  className={classes.mobileActionCard}
+                  variant="outlined"
+                >
+                  <ButtonGroup
+                    color="default"
+                    aria-label="outlined primary button group"
+                    fullWidth
+                  >
+                    <Button
+                      size="small"
+                    >
+                      <MusicNoteIcon fontSize="small" />
+                    </Button>
+                    <Button
+                      size="small"
+                      className={classes.action}
+                    >
+                      <ArrowUpwardIcon fontSize="small" />
+                    </Button>
+                    <Button
+                      size="small"
+                      className={classes.action}
+                    >
+                      <ArrowDownwardIcon fontSize="small" />
+                    </Button>
+                    <Button
+                      size="small"
+                    >
+                      <PlayIcon fontSize="small" />
+                    </Button>
+                    <Button
+                      size="small"
+                    >
+                      <FormatSizeIcon fontSize="small" />
+                    </Button>
+                    <Button
+                      size="small"
+                      className={classes.action}
+                    >
+                      <RemoveIcon fontSize="small" />
+                    </Button>
+                    <Button
+                      size="small"
+                    >
+                      12
+                    </Button>
+                    <Button
+                      size="small"
+                      className={classes.action}
+                    >
+                      <AddIcon fontSize="small" />
+                    </Button>
+                  </ButtonGroup>
+                </Card>
                 <Card 
                   variant="outlined"
                   className={classes.lyricsCard}
@@ -148,7 +206,7 @@ const ChordPreview = ({ loading, match }) => {
               </Grid>
               <Grid
                 item
-                lg={3}
+                md={3}
                 xs={12}
               >
                 <Card
