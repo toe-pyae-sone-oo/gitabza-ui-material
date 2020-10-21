@@ -4,10 +4,16 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Avatar from '@material-ui/core/Avatar'
 import MicIcon from '@material-ui/icons/Mic'
 import YoutubeIcon from '@material-ui/icons/YouTube'
 import InfoIcon from '@material-ui/icons/Info'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
 import Youtube from 'react-youtube'
 import Title from '../../components/Title/Title'
 import { findById } from '../../api/songs'
@@ -50,6 +56,81 @@ const ChordPreview = ({ loading, match }) => {
                 >
                   {song.title}
                 </Typography>
+                <Card 
+                  className={classes.actionCard}
+                  variant="outlined"
+                >
+                  <Grid 
+                    container
+                    spacing={2}
+                  >
+                    <Grid item xs={12} md={4}>
+                      <ButtonGroup 
+                        color="default" 
+                        aria-label="outlined primary button group"
+                        fullWidth
+                      >
+                        <Button 
+                          className={classes.transponseAction}
+                          size="small" 
+                        >
+                          Transpose
+                        </Button>
+                        <Button size="small">
+                          <ArrowDownwardIcon 
+                            className={classes.action} 
+                            fontSize="small" 
+                          />
+                        </Button>
+                        <Button size="small">
+                          <ArrowUpwardIcon 
+                            className={classes.action} 
+                            fontSize="small" 
+                          />
+                        </Button>
+                      </ButtonGroup>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Button 
+                        variant="outlined" 
+                        color="default"
+                        fullWidth
+                        size="small" 
+                      >
+                        Auto Scroll
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <ButtonGroup 
+                        color="default" 
+                        aria-label="outlined primary button group"
+                        fullWidth
+                      >
+                        <Button 
+                          size="small" 
+                          className={classes.fontAction}
+                        >
+                          Font
+                        </Button>
+                        <Button size="small">
+                          <RemoveIcon 
+                            className={classes.action} 
+                            fontSize="small" 
+                          />
+                        </Button>
+                        <Button size="small">
+                          12
+                        </Button>
+                        <Button size="small">
+                          <AddIcon 
+                            className={classes.action}
+                            fontSize="small" 
+                          />
+                        </Button>
+                      </ButtonGroup>
+                    </Grid>
+                  </Grid>
+                </Card>
                 <Card 
                   variant="outlined"
                   className={classes.lyricsCard}

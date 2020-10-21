@@ -54,6 +54,19 @@ const useStyles = makeStyles(theme => ({
   textCenter: {
     textAlign: 'center',
   },
+  actionCard: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+  },
+  transponseAction: {
+    width: 2000,
+  },
+  fontAction: {
+    width: 1500,
+  },
+  action: {
+    color: theme.palette.primary.main,
+  },
 }))
 
 export default useStyles
