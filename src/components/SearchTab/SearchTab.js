@@ -6,11 +6,13 @@ const WIDTH_LIMIT = 768
 
 const SearchTab = ({ tab, changeTab }) => {
   const [prevWidth, setPrevWidth] = useState(-1)
+  const [isMobile, setMobile] = useState(false)
 
   useEffect(() => {
     const updateWidth = () => {
       const width = window.innerWidth  
       setPrevWidth(width)
+      setMobile(width < WIDTH_LIMIT)
     }
 
     updateWidth()
@@ -28,7 +30,7 @@ const SearchTab = ({ tab, changeTab }) => {
       indicatorColor="primary"
       textColor="primary"
       centered
-      variant={prevWidth < WIDTH_LIMIT ? 'fullWidth' : 'standard'}
+      variant={isMobile ? 'fullWidth' : 'standard'}
     >
       <Tab label="Chords" />
       <Tab label="Artists" />
