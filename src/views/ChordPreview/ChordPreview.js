@@ -34,6 +34,7 @@ const ChordPreview = ({ loading, match }) => {
   const songId = match.params.id
 
   const [song, setSong] = useState(undefined)
+  const [fontSize, setFontSize] = useState(14)
 
   useEffect(() => {
     findById(songId).then(data => setSong(data))
@@ -45,6 +46,13 @@ const ChordPreview = ({ loading, match }) => {
       ...song,
       lyrics,
     })
+  }
+
+  const handleFontSize = size => {
+    const newSize = fontSize + size
+    if (newSize >= 8 && newSize <= 32) {
+      setFontSize(newSize)
+    }
   }
 
   return (
@@ -83,8 +91,7 @@ const ChordPreview = ({ loading, match }) => {
                       >
                         <Button 
                           className={
-                            classes.transponseAction, 
-                            classes.actionTitle
+                            `${classes.transponseAction} ${classes.actionTitle}`
                           }
                           size="small" 
                         >
@@ -129,13 +136,15 @@ const ChordPreview = ({ loading, match }) => {
                         <Button 
                           size="small" 
                           className={
-                            classes.fontAction,
-                            classes.actionTitle
+                            `${classes.fontAction} ${classes.actionTitle}`
                           }
                         >
                           Font
                         </Button>
-                        <Button size="small">
+                        <Button 
+                          size="small"
+                          onClick={() => handleFontSize(-1)}
+                        >
                           <RemoveIcon 
                             className={classes.action} 
                             fontSize="small" 
@@ -145,9 +154,12 @@ const ChordPreview = ({ loading, match }) => {
                           size="small"
                           className={classes.actionTitle}
                         >
-                          12
+                          {fontSize}
                         </Button>
-                        <Button size="small">
+                        <Button 
+                          size="small"
+                          onClick={() => handleFontSize(1)}
+                        >
                           <AddIcon 
                             className={classes.action}
                             fontSize="small" 
@@ -200,6 +212,7 @@ const ChordPreview = ({ loading, match }) => {
                     <Button
                       size="small"
                       className={classes.action}
+                      onClick={() => handleFontSize(-1)}
                     >
                       <RemoveIcon fontSize="small" />
                     </Button>
@@ -207,11 +220,12 @@ const ChordPreview = ({ loading, match }) => {
                       size="small"
                       className={classes.actionTitle}
                     >
-                      12
+                      {fontSize}
                     </Button>
                     <Button
                       size="small"
                       className={classes.action}
+                      onClick={() => handleFontSize(1)}
                     >
                       <AddIcon fontSize="small" />
                     </Button>
@@ -224,7 +238,7 @@ const ChordPreview = ({ loading, match }) => {
                   <CardContent 
                     className={classes.lyricsWrapper}
                   >
-                    <pre className={classes.lyrics}>
+                    <pre style={{ fontSize }}>
                       {wrapChords(song.lyrics, (match, i) =>
                         <span key={match + i} className={classes.code}>{match}</span>
                       )}

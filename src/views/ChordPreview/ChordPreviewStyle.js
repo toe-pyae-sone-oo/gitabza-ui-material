@@ -23,9 +23,6 @@ const useStyles = makeStyles(theme => ({
   lyricsWrapper: {
     overflow: 'scroll',
   },
-  lyrics: {
-    fontSize: '14px',
-  },
   code: {
     color: theme.palette.primary.main,
   },
