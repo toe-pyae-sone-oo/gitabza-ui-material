@@ -28,6 +28,8 @@ const mapStateToProps = state => ({
   loading: state.loading,
 })
 
+let scroll = false
+
 const ChordPreview = ({ loading, match }) => {
   const classes = useStyles()
 
@@ -35,6 +37,7 @@ const ChordPreview = ({ loading, match }) => {
 
   const [song, setSong] = useState(undefined)
   const [fontSize, setFontSize] = useState(14)
+  const [scrolling, setScrolling] = useState(false)
 
   useEffect(() => {
     findById(songId).then(data => setSong(data))
@@ -53,6 +56,20 @@ const ChordPreview = ({ loading, match }) => {
     if (newSize >= 8 && newSize <= 32) {
       setFontSize(newSize)
     }
+  }
+
+  const pageScroll = () => {
+    if (!scroll) return false
+    window.scrollBy(0, 1)
+    setTimeout(pageScroll, 100)
+  }
+
+  const handleScroll = () => {
+    scroll = !scroll
+    if (scroll) {
+      pageScroll()
+    }
+    setScrolling(scroll)
   }
 
   return (
@@ -119,10 +136,12 @@ const ChordPreview = ({ loading, match }) => {
                     </Grid>
                     <Grid item xs={12} md={4}>
                       <Button 
-                        variant="outlined" 
-                        color="default"
+                        variant={scrolling ? 'contained' : 'outlined'} 
+                        color={scrolling ? 'primary' : 'default'}
                         fullWidth
                         size="small" 
+                        onClick={handleScroll}
+                        disableElevation
                       >
                         Auto Scroll
                       </Button>
