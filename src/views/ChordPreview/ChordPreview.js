@@ -20,7 +20,7 @@ import FormatSizeIcon from '@material-ui/icons/FormatSize'
 import Youtube from 'react-youtube'
 import Title from '../../components/Title/Title'
 import { findById } from '../../api/songs'
-import { wrapChords } from '../../helpers/chords'
+import { wrapChords, tranpsoseSong } from '../../helpers/chords'
 import { getVideoId } from '../../helpers/songs'
 import useStyles from './ChordPreviewStyle'
 
@@ -38,6 +38,14 @@ const ChordPreview = ({ loading, match }) => {
   useEffect(() => {
     findById(songId).then(data => setSong(data))
   }, [setSong, songId])
+
+  const handleTranspose = step => {
+    const lyrics = tranpsoseSong(song.lyrics, step)
+    setSong({
+      ...song,
+      lyrics,
+    })
+  }
 
   return (
     <Grid 
@@ -79,13 +87,19 @@ const ChordPreview = ({ loading, match }) => {
                         >
                           Transpose
                         </Button>
-                        <Button size="small">
+                        <Button 
+                          size="small"
+                          onClick={() => handleTranspose(-1)}
+                        >
                           <ArrowDownwardIcon 
                             className={classes.action} 
                             fontSize="small" 
                           />
                         </Button>
-                        <Button size="small">
+                        <Button 
+                          size="small"
+                          onClick={() => handleTranspose(1)}
+                        >
                           <ArrowUpwardIcon 
                             className={classes.action} 
                             fontSize="small" 
@@ -151,14 +165,16 @@ const ChordPreview = ({ loading, match }) => {
                     <Button
                       size="small"
                       className={classes.action}
+                      onClick={() => handleTranspose(-1)}
                     >
-                      <ArrowUpwardIcon fontSize="small" />
+                      <ArrowDownwardIcon fontSize="small" />
                     </Button>
                     <Button
                       size="small"
                       className={classes.action}
+                      onClick={() => handleTranspose(1)}
                     >
-                      <ArrowDownwardIcon fontSize="small" />
+                      <ArrowUpwardIcon fontSize="small" />
                     </Button>
                     <Button
                       size="small"
