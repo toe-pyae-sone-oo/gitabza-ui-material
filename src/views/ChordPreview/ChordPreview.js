@@ -376,7 +376,13 @@ const ChordPreview = ({ loading, match }) => {
                   size="small"
                   onClick={handleScroll}
                 >
-                  <PlayIcon />
+                  <PlayIcon 
+                    className={
+                      scrolling 
+                        ? classes.mobileAutoScrollIcon 
+                        : null
+                    } 
+                  />
                 </Fab>
               </Grid>
             </>

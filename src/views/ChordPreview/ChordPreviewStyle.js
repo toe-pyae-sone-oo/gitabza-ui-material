@@ -88,6 +88,9 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  mobileAutoScrollIcon: {
+    color: '#ffffffb3',
+  },
 }))
 
 export default useStyles
