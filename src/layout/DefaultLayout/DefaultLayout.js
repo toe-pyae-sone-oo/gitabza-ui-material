@@ -8,6 +8,7 @@ import Artists from '../../views/Artists/Artists'
 import ArtistPreview from '../../views/ArtistPreview/ArtistPreview'
 import Navigation from '../../components/Navigation/Navigation'
 import useStyles from './DefaultLayoutStyle'
+import Search from '../../views/Search/Search'
 
 const routes = [
   {
@@ -50,6 +51,7 @@ const DefaultLayout = ({ history }) => {
       <Container 
         maxWidth="lg" 
         className={classes.layoutContainer}
+        style={{ paddingTop: path === '/search' ? 0 : null }}
       >
         <Switch>
           <Route exact path="/" component={Home} />
@@ -57,6 +59,7 @@ const DefaultLayout = ({ history }) => {
           <Route path="/chords/:id" component={ChordPreview} />
           <Route exact path="/artists" component={Artists} />
           <Route path="/artists/:id" component={ArtistPreview} />
+          <Route path="/search" component={Search} />
         </Switch>
       </Container>
     </div>
