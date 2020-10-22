@@ -5,7 +5,7 @@ const firstChordRegex = /([CDEFGAB][b#]?(?=\s(?![a-zH-Z])|(?=(2|5|6|7|9|11|13|6\
 
 export const wrapChords = (input, wrapper) => {
   const wrapped = input.replace(chordRegex, '[$1]')
-  return stringReplace(wrapped, /\[([\w\#]+)\]/g, wrapper)
+  return stringReplace(wrapped, /\[([\w#]+)\]/g, wrapper)
 }
 
 const notes = {
@@ -67,8 +67,8 @@ export const tranpsoseSong = (song, steps) => {
 
   const regexStr = Object.keys(converter)
     .map(c => {
-      c = c.replace(/\[/g, '\\\[')
-      c = c.replace(/\]/g, '\\\]')
+      c = c.replace(/\[/g, '\\[')
+      c = c.replace(/\]/g, '\\]')
       return c
     })
     .join('|')
