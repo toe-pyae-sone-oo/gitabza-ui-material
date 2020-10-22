@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Avatar from '@material-ui/core/Avatar'
+import Fab from '@material-ui/core/Fab'
 import MicIcon from '@material-ui/icons/Mic'
 import YoutubeIcon from '@material-ui/icons/YouTube'
 import InfoIcon from '@material-ui/icons/Info'
@@ -15,7 +16,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
-import PlayIcon from '@material-ui/icons/PlayCircleFilledOutlined'
+import PlayIcon from '@material-ui/icons/PlayArrow'
 import FormatSizeIcon from '@material-ui/icons/FormatSize'
 import Youtube from 'react-youtube'
 import Title from '../../components/Title/Title'
@@ -219,11 +220,6 @@ const ChordPreview = ({ loading, match }) => {
                     </Button>
                     <Button
                       size="small"
-                    >
-                      <PlayIcon fontSize="small" />
-                    </Button>
-                    <Button
-                      size="small"
                       className={classes.actionTitle}
                     >
                       <FormatSizeIcon fontSize="small" />
@@ -373,6 +369,15 @@ const ChordPreview = ({ loading, match }) => {
                     )}
                   </CardContent>
                 </Card>
+                <Fab 
+                  aria-label="scroll" 
+                  className={classes.mobileAutoScroll} 
+                  color={scrolling ? 'primary' : 'default'}
+                  size="small"
+                  onClick={handleScroll}
+                >
+                  <PlayIcon />
+                </Fab>
               </Grid>
             </>
           : <p>Not found</p>

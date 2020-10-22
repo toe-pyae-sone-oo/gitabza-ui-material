@@ -79,6 +79,15 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  mobileAutoScroll: {
+    position: 'fixed',
+    bottom: 65,
+    right: theme.spacing(2),
+    display: 'inline-flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
 }))
 
 export default useStyles
