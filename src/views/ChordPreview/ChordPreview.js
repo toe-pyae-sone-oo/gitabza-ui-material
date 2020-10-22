@@ -82,7 +82,10 @@ const ChordPreview = ({ loading, match }) => {
                         fullWidth
                       >
                         <Button 
-                          className={classes.transponseAction}
+                          className={
+                            classes.transponseAction, 
+                            classes.actionTitle
+                          }
                           size="small" 
                         >
                           Transpose
@@ -125,7 +128,10 @@ const ChordPreview = ({ loading, match }) => {
                       >
                         <Button 
                           size="small" 
-                          className={classes.fontAction}
+                          className={
+                            classes.fontAction,
+                            classes.actionTitle
+                          }
                         >
                           Font
                         </Button>
@@ -135,7 +141,10 @@ const ChordPreview = ({ loading, match }) => {
                             fontSize="small" 
                           />
                         </Button>
-                        <Button size="small">
+                        <Button 
+                          size="small"
+                          className={classes.actionTitle}
+                        >
                           12
                         </Button>
                         <Button size="small">
@@ -159,6 +168,7 @@ const ChordPreview = ({ loading, match }) => {
                   >
                     <Button
                       size="small"
+                      className={classes.actionTitle}
                     >
                       <MusicNoteIcon fontSize="small" />
                     </Button>
@@ -183,6 +193,7 @@ const ChordPreview = ({ loading, match }) => {
                     </Button>
                     <Button
                       size="small"
+                      className={classes.actionTitle}
                     >
                       <FormatSizeIcon fontSize="small" />
                     </Button>
@@ -194,6 +205,7 @@ const ChordPreview = ({ loading, match }) => {
                     </Button>
                     <Button
                       size="small"
+                      className={classes.actionTitle}
                     >
                       12
                     </Button>

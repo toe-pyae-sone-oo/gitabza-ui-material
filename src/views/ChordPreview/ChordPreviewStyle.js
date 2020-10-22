@@ -71,6 +71,9 @@ const useStyles = makeStyles(theme => ({
   action: {
     color: theme.palette.primary.main,
   },
+  actionTitle: {
+    pointerEvents: 'none',
+  },
   mobileActionCard: {
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
