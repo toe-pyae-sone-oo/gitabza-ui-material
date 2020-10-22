@@ -73,7 +73,7 @@ const useStyles = makeStyles(theme => ({
   },
   mobileActionCard: {
     marginTop: theme.spacing(2),
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     display: 'block',
     [theme.breakpoints.up('md')]: {
       display: 'none',
