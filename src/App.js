@@ -4,6 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/styles'
 import DefaultLayout from './layout/DefaultLayout/DefaultLayout'
+import AdminLayout from './layout/AdminLayout/AdminLayout'
 
 const theme = createMuiTheme({
   palette: {
@@ -22,7 +23,8 @@ const App = () =>
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <Switch>
-      <Route path="/" component={DefaultLayout} />
+      <Route exact path="/" component={DefaultLayout} />
+      <Route path="/admin" component={AdminLayout} />
     </Switch>
   </ThemeProvider>
 
