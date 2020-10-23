@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -10,10 +10,26 @@ import SearchIcon from '@material-ui/icons/Search'
 import HomeIcon from '@material-ui/icons/Home'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import MicIcon from '@material-ui/icons/Mic'
+import SearchTab from '../SearchTab/SearchTab'
 import useStyles from './NavigationStyle'
 
-const Navigation = ({ route, changeRoute, title }) => {
+const Navigation = ({ 
+  route, 
+  changeRoute, 
+  title,
+  tab,
+  setTab,
+  showTab,
+  handleSearch,
+}) => {
   const classes = useStyles()
+
+  const [searchText, setSearchText] = useState('')
+
+  const handleSearchChange = e => setSearchText(e.target.value)
+  
+  const handleKeyDown = e => 
+    e.keyCode === 13 && handleSearch(searchText)
 
   return (
     <>
@@ -33,6 +49,9 @@ const Navigation = ({ route, changeRoute, title }) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleSearchChange}
+              value={searchText}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div className={classes.grow} />
@@ -70,6 +89,7 @@ const Navigation = ({ route, changeRoute, title }) => {
             </IconButton>
           </div>
         </Toolbar>
+        {showTab && <SearchTab tab={tab} changeTab={setTab} />}
       </AppBar>
       <BottomNavigation 
         className={classes.bottomNav} 

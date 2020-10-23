@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Switch, Route, useLocation } from 'react-router-dom'
+import { connect } from 'react-redux'
 import Container from '@material-ui/core/Container'
 import Home from '../../views/Home/Home'
 import Chords from '../../views/Chords/Chords'
@@ -7,8 +8,9 @@ import ChordPreview from '../../views/ChordPreview/ChordPreview'
 import Artists from '../../views/Artists/Artists'
 import ArtistPreview from '../../views/ArtistPreview/ArtistPreview'
 import Navigation from '../../components/Navigation/Navigation'
-import useStyles from './DefaultLayoutStyle'
 import Search from '../../views/Search/Search'
+import { SET_SEARCH_TAB, SET_SEARCH } from '../../constants/actionTypes'
+import useStyles from './DefaultLayoutStyle'
 
 const routes = [
   {
@@ -30,15 +32,41 @@ const getRouteByPath = path => {
   return index < 0 ? 0 : index
 }
 
-const DefaultLayout = ({ history }) => {
+const mapStateToProps = state => ({
+  tab: state.search.tab,
+  search: state.search.search,
+})
+
+const mapDispatchToProps = dispatch => ({
+  setTab: tab => dispatch({ type: SET_SEARCH_TAB, payload: tab }),
+  setSearch: search => dispatch({ type: SET_SEARCH, payload: search }),
+})
+
+const DefaultLayout = ({ 
+  tab, 
+  setTab,
+  search,
+  setSearch, 
+  history,
+}) => {
   const classes = useStyles()
 
   const path = useLocation().pathname
   const [currentRoute, setCurrentRoute] = useState(getRouteByPath(path))
+  const [isSearchView, setSearchView] = useState(path === '/search')
 
   const navigate = route => {
     setCurrentRoute(route)
     history.push(routes[route].path)
+  }
+
+  useEffect(() => {
+    setSearchView(path === '/search')
+  }, [path])
+
+  const handleSearch = text => {
+    setSearch(text)
+    history.push('/search')
   }
 
   return (
@@ -47,11 +75,16 @@ const DefaultLayout = ({ history }) => {
         route={currentRoute}
         changeRoute={navigate}
         title={routes[currentRoute].title}
+        showTab={isSearchView}
+        tab={tab}
+        setTab={setTab}
+        search={search}
+        setSearch={setSearch}
+        handleSearch={handleSearch}
       />
       <Container 
         maxWidth="lg" 
         className={classes.layoutContainer}
-        style={{ paddingTop: path === '/search' ? 0 : null }}
       >
         <Switch>
           <Route exact path="/" component={Home} />
@@ -66,4 +99,4 @@ const DefaultLayout = ({ history }) => {
   )
 }
 
-export default DefaultLayout
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout)
