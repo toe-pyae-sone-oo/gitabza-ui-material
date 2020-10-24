@@ -1,15 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { validateArtistForm } from '../../../validators'
-import { upload, create } from '../../../api/artists'
+import { upload, create, findById, update } from '../../../api/artists'
 import useStyles from './ArtistEditorStyle'
 
-const ArtistEditor = ({ history }) => {
+const mapStateToProps = state => ({
+  loading: state.loading,
+})
+
+const ArtistEditor = ({ loading, history, match }) => {
   const classes = useStyles()
+
+  const artistId = match.params.id
 
   const [file, setFile] = useState(undefined)
   const [pictureUrl, setPictureUrl] = useState(undefined)
@@ -22,6 +29,19 @@ const ArtistEditor = ({ history }) => {
     name: '',
     slug: '',
   })
+
+  useEffect(() => {
+    let mounted = true
+    if (artistId) {
+      findById(artistId).then(({ name, slug, picture }) => {
+          if (mounted) {
+            setForm({ name, slug })
+            setPictureUrl(picture)
+          }
+        })
+    }
+    return () => mounted = false
+  }, [artistId])
 
   const handleInputChange = e => {
     setForm({
@@ -65,9 +85,15 @@ const ArtistEditor = ({ history }) => {
         }
       }
       
-      create({ ...form, picture: uploaded })
-        .then(() => history.push('/admin/artists'))
-        .catch(handleError(_errors))
+      if (artistId) {
+        update(artistId, { ...form, picture: uploaded })
+          .then(() => history.push('/admin/artists'))
+          .catch(handleError(_errors))
+      } else {
+        create({ ...form, picture: uploaded })
+          .then(() => history.push('/admin/artists'))
+          .catch(handleError(_errors))
+      }
     }
   }
 
@@ -100,6 +126,7 @@ const ArtistEditor = ({ history }) => {
             onChange={handleInputChange}
             helperText={errors.name}
             error={!!errors.name}
+            disabled={loading}
           />
         </Grid>
         <Grid
@@ -116,6 +143,7 @@ const ArtistEditor = ({ history }) => {
             onChange={handleInputChange}
             helperText={errors.slug}
             error={!!errors.slug}
+            disabled={loading}
           />
         </Grid>
         <Grid
@@ -134,6 +162,8 @@ const ArtistEditor = ({ history }) => {
               variant="outlined"
               color="primary"
               component="span"
+              disabled={loading}
+              size="small"
             >
               Upload Picture
             </Button>
@@ -169,4 +199,4 @@ const ArtistEditor = ({ history }) => {
   )
 }
 
-export default ArtistEditor
+export default connect(mapStateToProps)(ArtistEditor)

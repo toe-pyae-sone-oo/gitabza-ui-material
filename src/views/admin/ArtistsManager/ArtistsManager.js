@@ -198,6 +198,9 @@ const ArtistsManager = ({
                         <IconButton 
                           size="small"
                           className={classes.edit}
+                          onClick={() => 
+                            history.push(`/admin/artists/${artist.uuid}/edit`)
+                          }
                         >
                           <EditIcon fontSize="inherit" />
                         </IconButton>

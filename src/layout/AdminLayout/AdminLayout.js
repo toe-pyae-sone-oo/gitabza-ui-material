@@ -20,6 +20,7 @@ const AdminLayout = () => {
           <Route exact path="/admin" component={Dashboard} />
           <Route exact path="/admin/artists" component={ArtistsManager} />
           <Route path="/admin/artists/new" component={ArtistEditor} />
+          <Route path="/admin/artists/:id/edit" component={ArtistEditor} />
         </Switch>
       </Container>
     </div>
