@@ -21,6 +21,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import SearchIcon from '@material-ui/icons/Search'
+import AddIcon from '@material-ui/icons/Add'
 import { LOAD_ADMIN_ARTISTS } from '../../../constants/actionTypes'
 import { find, remove } from '../../../api/artists'
 import { getTotalPages, getOffset, getIndex } from '../../../helpers/pagination'
@@ -60,6 +61,7 @@ const ArtistsManager = ({
   artists,
   count,
   loadArtists,
+  history,
 }) => {
   const classes = useStyles()
 
@@ -121,7 +123,23 @@ const ArtistsManager = ({
         className={classes.root}
         variant="outlined"
       >
-        <Typography variant="h5">Artists</Typography>
+        <div className={classes.header}>
+          <Typography 
+            variant="h5"
+            className={classes.title}
+          >
+            Artists
+          </Typography>
+          <Button 
+            className={classes.addButton}
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon/>}
+            onClick={() => history.push('/admin/artists/new')}
+          >
+            New
+          </Button>
+        </div>
         <div 
           className={classes.searchContainer}
         >

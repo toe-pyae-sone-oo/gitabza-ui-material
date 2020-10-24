@@ -48,6 +48,16 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     height: 40,
   },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  title: {
+    marginRight: 'auto',
+  },
+  addButton: {
+    alignSelf: 'end',
+  },
 }))
 
 export default useStyles
