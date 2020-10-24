@@ -9,9 +9,13 @@ import TableRow from '@material-ui/core/TableRow'
 import IconButton from '@material-ui/core/IconButton'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import Pagination from '@material-ui/lab/Pagination'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
+import SearchIcon from '@material-ui/icons/Search'
 import { LOAD_ADMIN_ARTISTS } from '../../../constants/actionTypes'
 import { find } from '../../../api/artists'
 import { getTotalPages, getOffset, getIndex } from '../../../helpers/pagination'
@@ -36,7 +40,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const fetchArtists = ({ name, page = 0, skip = 0 }) => {
-  console.log(skip)
   return find({ 
     name, 
     page, 
@@ -56,6 +59,7 @@ const ArtistsManager = ({
   const classes = useStyles()
 
   const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     fetchArtists({}).then(loadArtists)
@@ -73,12 +77,56 @@ const ArtistsManager = ({
       .then(loadArtists)
   }
 
+  const handleSearchChange = e => setSearch(e.target.value)
+
+  const handleSearch = () => 
+    fetchArtists({
+      name: search.trim(),
+    })
+      .then(loadArtists)
+
+  const handleSearchKeyDown = e => {
+    e.keyCode === 13 && fetchArtists({ 
+      name: search.trim() 
+    })
+      .then(loadArtists)
+  }
+
   return (
     <Card 
       className={classes.root}
       variant="outlined"
     >
       <Typography variant="h5">Artists</Typography>
+      <div 
+        className={classes.searchContainer}
+      >
+        <TextField 
+          variant="outlined" 
+          label="Name"
+          size="small"
+          className={classes.search}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment positon="end">
+                <SearchIcon/>
+              </InputAdornment>
+            )
+          }}
+          value={search}
+          onChange={handleSearchChange}
+          onKeyDown={handleSearchKeyDown}
+        />
+        <Button 
+          variant="contained"
+          color="primary"
+          className={classes.searchButton}
+          disableElevation
+          onClick={handleSearch}
+        >
+          Search
+        </Button>
+      </div>
       <TableContainer>
         <Table>
           <TableHead>

@@ -34,6 +34,20 @@ const useStyles = makeStyles(theme => ({
   loadingCell: {
     textAlign: 'center',
   },
+  searchContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  search: {
+    margin: `${theme.spacing(2)}px 0`,
+    [theme.breakpoints.up('md')]: {
+      minWidth: 400,
+    },
+  },
+  searchButton: {
+    marginLeft: theme.spacing(1),
+    height: 40,
+  },
 }))
 
 export default useStyles
