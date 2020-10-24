@@ -170,6 +170,7 @@ const ArtistEditor = ({ loading, history, match }) => {
           </label>
           <br/>
           <img
+            alt={pictureUrl ?? 'artist picture'}
             src={pictureUrl ?? `${window.location.origin}/logo192.png`}
             className={classes.picture}
           />
