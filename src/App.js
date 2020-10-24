@@ -23,8 +23,8 @@ const App = () =>
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <Switch>
-      <Route exact path="/" component={DefaultLayout} />
       <Route path="/admin" component={AdminLayout} />
+      <Route path="/" component={DefaultLayout} />
     </Switch>
   </ThemeProvider>
 

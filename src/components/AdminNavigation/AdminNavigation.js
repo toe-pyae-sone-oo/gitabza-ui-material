@@ -16,6 +16,7 @@ import MusicIcon from '@material-ui/icons/MusicNote'
 import MicIcon from '@material-ui/icons/Mic'
 import PersonIcon from '@material-ui/icons/Person'
 import KeyIcon from '@material-ui/icons/VpnKey'
+import DashboardIcon from '@material-ui/icons/Dashboard'
 import useStyles from './AdminNavigationStyle'
 
 const AdminNavigation = ({ window }) => {
@@ -39,15 +40,21 @@ const AdminNavigation = ({ window }) => {
       <List>
         <ListItem button>
           <ListItemIcon>
-            <MusicIcon/>
+            <DashboardIcon/>
           </ListItemIcon>
-          <ListItemText primary="Songs" />
+          <ListItemText primary="Dashboard" />
         </ListItem>
         <ListItem button>
           <ListItemIcon>
             <MicIcon/>
           </ListItemIcon>
           <ListItemText primary="Artists" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <MusicIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Songs" />
         </ListItem>
         <ListItem button>
           <ListItemIcon>
