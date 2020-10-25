@@ -114,7 +114,7 @@ const AdminLayout = ({ token, setToken, history }) => {
           />
           <AuthenticatedRoute 
             path="/admin/artists/:id/edit" 
-            component={ArtistsManager} 
+            component={ArtistEditor} 
             appProps={{ authenticated }}
             redirect={'/admin/login'}
           />
@@ -133,7 +133,7 @@ const AdminLayout = ({ token, setToken, history }) => {
           />
           <AuthenticatedRoute 
             path="/admin/songs/:id/edit" 
-            component={ArtistsManager} 
+            component={SongEditor} 
             appProps={{ authenticated }}
             redirect={'/admin/login'}
           />
