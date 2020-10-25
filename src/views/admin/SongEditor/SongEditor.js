@@ -9,7 +9,7 @@ import AutoComplete from '@material-ui/lab/AutoComplete'
 import Button from '@material-ui/core/Button'
 import { LOAD_ADMIN_ARTIST_NAMES } from '../../../constants/actionTypes'
 import { getNames as getArtistNames } from '../../../api/artists'
-import { create } from '../../../api/songs'
+import { create, findById, update } from '../../../api/songs'
 import { getCapo } from '../../../helpers/songs'
 import { validateSongForm } from '../../../validators'
 import useStyles from './SongEditorStyle'
@@ -26,8 +26,16 @@ const mapDispatchToProps = dispatch => ({
   })
 })
 
-const SongEditor = ({ loading, artists, history, loadArtistNames }) => {
+const SongEditor = ({ 
+  loading, 
+  artists, 
+  history, 
+  match,
+  loadArtistNames 
+}) => {
   const classes = useStyles()
+
+  const songId = match.params.id
 
   const [form, setForm] = useState({
     title: '',
@@ -55,6 +63,17 @@ const SongEditor = ({ loading, artists, history, loadArtistNames }) => {
   useEffect(() => {
     getArtistNames().then(loadArtistNames)
   }, [loadArtistNames])
+
+  useEffect(() => {
+    let mounted = true
+    songId && findById(songId).then(song => {
+      mounted && setForm({ 
+        ...song,
+        artists: song.artists.map(artist => artist.uuid),
+      })
+    })
+    return () => mounted = false
+  }, [songId])
 
   const handleInputChange = e => {
     setForm({
@@ -84,9 +103,15 @@ const SongEditor = ({ loading, artists, history, loadArtistNames }) => {
 
     const isValid = Object.values(_errors).every(err => !err)
     if (isValid) {
-      create({ ...form })
-        .then(() => history.push('/admin/songs'))
-        .catch(handleError(_errors))
+      if (songId) {
+        update(songId, form)
+          .then(() => history.push('/admin/songs'))
+          .catch(handleError(_errors))
+      } else {
+        create({ ...form })
+          .then(() => history.push('/admin/songs'))
+          .catch(handleError(_errors))
+      }
     }
   }
 
@@ -267,7 +292,11 @@ const SongEditor = ({ loading, artists, history, loadArtistNames }) => {
             rows={15}
             helperText={errors.lyrics}
             error={!!errors.lyrics}
-            className={classes.lyrics}
+            InputProps={{
+              classes: {
+                input: classes.lyrics,
+              }
+            }}
           />
         </Grid>
         <Grid

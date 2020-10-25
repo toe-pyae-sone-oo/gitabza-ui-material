@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
   },
   lyrics: {
-    fontFamily: 'monospace',
+    fontFamily: 'monospace !important',
   },
 }))
 
