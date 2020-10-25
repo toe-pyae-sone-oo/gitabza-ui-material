@@ -15,20 +15,22 @@ import ArtistEditor from '../../views/admin/ArtistEditor/ArtistEditor'
 import SongsManager from '../../views/admin/SongsManager/SongsManager'
 import SongEditor from '../../views/admin/SongEditor/SongEditor'
 import { getToken, removeToken } from '../../helpers/adminLogin'
-import { SET_ADMIN_TOKEN } from '../../constants/actionTypes'
+import { SET_ADMIN_TOKEN, SET_ERROR } from '../../constants/actionTypes'
 import { verifyToken } from '../../api/adminLogin'
 import AuthenticatedRoute from '../../routes/AuthenticatedRoute'
 import useStyles from './AdminLayoutStyle'
 
 const mapStateToProps = state => ({
   token: state.adminToken,
+  error: state.error,
 })
 
 const mapDispatchToProps = dispatch => ({
-  setToken: token => dispatch({ type: SET_ADMIN_TOKEN, payload: token })
+  setToken: token => dispatch({ type: SET_ADMIN_TOKEN, payload: token }),
+  setError: error => dispatch({ type: SET_ERROR, payload: error }),
 })
 
-const AdminLayout = ({ token, setToken, history }) => {
+const AdminLayout = ({ error, token, setToken, setError, history }) => {
   const classes = useStyles()
 
   const [authenticated, setAuthenticated] = useState(!!getToken())
@@ -43,10 +45,14 @@ const AdminLayout = ({ token, setToken, history }) => {
   }, [token])
 
   useEffect(() => {
-    verifyToken().catch(() => {
-      setDialog(true)
-    })
+    verifyToken()
   }, [])
+
+  useEffect(() => {
+    if (error && error.status === 401) {
+      setDialog(true)
+    }
+  }, [error])
 
   const closeDialog = () => {
     setDialog(false)
@@ -56,6 +62,7 @@ const AdminLayout = ({ token, setToken, history }) => {
     history.push('/admin/login')
     setToken(null)
     removeToken()
+    setError(false)
   }
 
   return (
