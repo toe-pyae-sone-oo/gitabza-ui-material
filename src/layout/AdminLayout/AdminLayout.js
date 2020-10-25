@@ -6,6 +6,7 @@ import Dashboard from '../../views/admin/Dashboard/Dashboard'
 import ArtistsManager from '../../views/admin/ArtistsManager/ArtistsManager'
 import ArtistEditor from '../../views/admin/ArtistEditor/ArtistEditor'
 import SongsManager from '../../views/admin/SongsManager/SongsManager'
+import SongEditor from '../../views/admin/SongEditor/SongEditor'
 import useStyles from './AdminLayoutStyle'
 
 const AdminLayout = () => {
@@ -23,6 +24,7 @@ const AdminLayout = () => {
           <Route path="/admin/artists/new" component={ArtistEditor} />
           <Route path="/admin/artists/:id/edit" component={ArtistEditor} />
           <Route exact path="/admin/songs" component={SongsManager} />
+          <Route path="/admin/songs/new" component={SongEditor} />
         </Switch>
       </Container>
     </div>
