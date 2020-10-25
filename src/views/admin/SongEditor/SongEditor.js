@@ -204,6 +204,7 @@ const SongEditor = ({
             onChange={handleInputChange}
             helperText={errors.types}
             error={!!errors.types}
+            disabled={loading}
           >
             <MenuItem value="bass">Bass</MenuItem>
             <MenuItem value="chords">Chords</MenuItem>
@@ -228,6 +229,7 @@ const SongEditor = ({
             onChange={handleInputChange}
             helperText={errors.difficulty}
             error={!!errors.difficulty}
+            disabled={loading}
           >
             <MenuItem value="novice">Novice</MenuItem>
             <MenuItem value="intermediate">Intermediate</MenuItem>
@@ -248,6 +250,7 @@ const SongEditor = ({
             fullWidth
             value={form.capo}
             onChange={handleInputChange}
+            disabled={loading}
           >
             {[...Array(12).keys()].map(i =>
               <MenuItem 
@@ -274,6 +277,7 @@ const SongEditor = ({
             onChange={handleInputChange}
             helperText={errors.version}
             error={!!errors.version}
+            disabled={loading}
           />
         </Grid>
         <Grid
@@ -297,6 +301,7 @@ const SongEditor = ({
                 input: classes.lyrics,
               }
             }}
+            disabled={loading}
           />
         </Grid>
         <Grid
@@ -313,6 +318,7 @@ const SongEditor = ({
             onChange={handleInputChange}
             helperText={errors.youtube}
             error={!!errors.youtube}
+            disabled={loading}
           />
         </Grid>
         <Grid
@@ -323,6 +329,7 @@ const SongEditor = ({
             variant="contained"
             color="primary"
             onClick={handleSubmit}
+            disabled={loading}
           >
             Save
           </Button>
@@ -331,6 +338,7 @@ const SongEditor = ({
             color="default"
             className={classes.cancel}
             onClick={() => history.push('/admin/songs')}
+            disabled={loading}
           >
             Cancel
           </Button>

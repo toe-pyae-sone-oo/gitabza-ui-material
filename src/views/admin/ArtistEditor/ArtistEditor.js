@@ -156,6 +156,7 @@ const ArtistEditor = ({ loading, history, match }) => {
             className={classes.upload}
             type="file"
             onChange={handlePicUpload}
+            disabled={loading}
           />
           <label htmlFor="upload-pic">
             <Button
@@ -183,6 +184,7 @@ const ArtistEditor = ({ loading, history, match }) => {
             variant="contained"
             color="primary"
             onClick={handleSubmit}
+            disabled={loading}
           >
             Save
           </Button>
@@ -191,6 +193,7 @@ const ArtistEditor = ({ loading, history, match }) => {
             color="default"
             className={classes.cancel}
             onClick={() => history.push('/admin/artists')}
+            disabled={loading}
           >
             Cancel
           </Button>
