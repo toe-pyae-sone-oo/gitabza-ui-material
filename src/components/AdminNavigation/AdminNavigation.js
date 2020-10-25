@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useTheme } from '@material-ui/core/styles'
+import { NavLink } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -38,19 +39,35 @@ const AdminNavigation = ({ window }) => {
       <div className={classes.toolbar} />
       <Divider/>
       <List>
-        <ListItem button>
+        <ListItem 
+          button
+          component={NavLink}
+          exact
+          to="/admin"
+          activeClassName="Mui-selected"
+        >
           <ListItemIcon>
             <DashboardIcon/>
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem button>
+        <ListItem 
+          button
+          component={NavLink}
+          to="/admin/artists"
+          activeClassName="Mui-selected"
+        >
           <ListItemIcon>
             <MicIcon/>
           </ListItemIcon>
           <ListItemText primary="Artists" />
         </ListItem>
-        <ListItem button>
+        <ListItem 
+          button
+          component={NavLink}
+          to="/admin/songs"
+          activeClassName="Mui-selected"
+        >
           <ListItemIcon>
             <MusicIcon/>
           </ListItemIcon>
