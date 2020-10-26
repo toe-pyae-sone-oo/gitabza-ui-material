@@ -33,6 +33,7 @@ const mapStateToProps = state => ({
   loading: state.loading,
   songs: state.adminSongs.data,
   count: state.adminSongs.count,
+  verified: state.adminToken.verified,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -60,7 +61,8 @@ const SongsManager = ({
   count, 
   loading, 
   loadSongs,
-  history 
+  history,
+  verified,
 }) => {
 
   const classes = useStyles()
@@ -71,9 +73,8 @@ const SongsManager = ({
   const [deleteId, setDeleteId] = useState(undefined)
 
   useEffect(() => {
-    fetchSongs({})
-      .then(loadSongs)
-  }, [loadSongs])
+    verified && fetchSongs({}).then(loadSongs)
+  }, [loadSongs, verified])
 
   const handlePageChange = (_, newPage) => {
     setPage(newPage)

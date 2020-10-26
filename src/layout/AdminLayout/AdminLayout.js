@@ -15,25 +15,33 @@ import ArtistEditor from '../../views/admin/ArtistEditor/ArtistEditor'
 import SongsManager from '../../views/admin/SongsManager/SongsManager'
 import SongEditor from '../../views/admin/SongEditor/SongEditor'
 import { getToken, removeToken } from '../../helpers/adminLogin'
-import { SET_ADMIN_TOKEN, SET_ERROR } from '../../constants/actionTypes'
+import { SET_ADMIN_TOKEN, SET_ERROR, SET_ADMIN_VERIFIED } from '../../constants/actionTypes'
 import { verifyToken } from '../../api/adminLogin'
 import AuthenticatedRoute from '../../routes/AuthenticatedRoute'
 import useStyles from './AdminLayoutStyle'
 
 const mapStateToProps = state => ({
-  token: state.adminToken,
+  token: state.adminToken.token,
   error: state.error,
 })
 
 const mapDispatchToProps = dispatch => ({
   setToken: token => dispatch({ type: SET_ADMIN_TOKEN, payload: token }),
+  setVerified: isVerified => dispatch({ type: SET_ADMIN_VERIFIED, payload: isVerified }),
   setError: error => dispatch({ type: SET_ERROR, payload: error }),
 })
 
-const AdminLayout = ({ error, token, setToken, setError, history }) => {
+const AdminLayout = ({ 
+  error, 
+  token, 
+  setToken, 
+  setError, 
+  history,
+  setVerified, 
+}) => {
   const classes = useStyles()
 
-  const [authenticated, setAuthenticated] = useState(!!getToken())
+  const [loggedIn, setLoggedIn] = useState(!!getToken())
   const [dialog, setDialog] = useState(false)
 
   useEffect(() => {
@@ -41,12 +49,13 @@ const AdminLayout = ({ error, token, setToken, setError, history }) => {
   }, [setToken])
 
   useEffect(() => {
-    setAuthenticated(!!token || !!getToken())
+    setLoggedIn(!!token || !!getToken())
   }, [token])
 
   useEffect(() => {
     verifyToken()
-  }, [])
+      .then(() => setVerified(true))
+  }, [setVerified])
 
   useEffect(() => {
     if (error && error.status === 401) {
@@ -60,9 +69,10 @@ const AdminLayout = ({ error, token, setToken, setError, history }) => {
 
   const reLogin = () => {
     history.push('/admin/login')
-    setToken(null)
+    setToken(false)
     removeToken()
     setError(false)
+    setVerified(false)
   }
 
   return (
@@ -103,45 +113,45 @@ const AdminLayout = ({ error, token, setToken, setError, history }) => {
             exact 
             path="/admin" 
             component={Dashboard} 
-            appProps={{ authenticated }}
+            appProps={{ authenticated: loggedIn }}
             redirect={'/admin/login'}
           />
           <AuthenticatedRoute 
             exact 
             path="/admin/artists" 
             component={ArtistsManager} 
-            appProps={{ authenticated }}
+            appProps={{ authenticated: loggedIn }}
             redirect={'/admin/login'}
           />
           <AuthenticatedRoute  
             path="/admin/artists/new" 
             component={ArtistEditor} 
-            appProps={{ authenticated }}
+            appProps={{ authenticated: loggedIn }}
             redirect={'/admin/login'}
           />
           <AuthenticatedRoute 
             path="/admin/artists/:id/edit" 
             component={ArtistEditor} 
-            appProps={{ authenticated }}
+            appProps={{ authenticated: loggedIn }}
             redirect={'/admin/login'}
           />
           <AuthenticatedRoute 
             exact 
             path="/admin/songs" 
             component={SongsManager} 
-            appProps={{ authenticated }}
+            appProps={{ authenticated: loggedIn }}
             redirect={'/admin/login'}
           />
           <AuthenticatedRoute 
             path="/admin/songs/new" 
             component={SongEditor} 
-            appProps={{ authenticated }}
+            appProps={{ authenticated: loggedIn }}
             redirect={'/admin/login'}
           />
           <AuthenticatedRoute 
             path="/admin/songs/:id/edit" 
             component={SongEditor} 
-            appProps={{ authenticated }}
+            appProps={{ authenticated: loggedIn }}
             redirect={'/admin/login'}
           />
         </Switch>

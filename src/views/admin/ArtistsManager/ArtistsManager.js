@@ -33,6 +33,8 @@ const mapStateToProps = state => ({
   loading: state.loading,
   artists: state.adminArtists.data,
   count: state.adminArtists.count,
+  error: state.error,
+  verified: state.adminToken.verified,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -60,6 +62,8 @@ const ArtistsManager = ({
   loading,
   artists,
   count,
+  error,
+  verified,
   loadArtists,
   history,
 }) => {
@@ -71,12 +75,13 @@ const ArtistsManager = ({
   const [deleteId, setDeleteId] = useState(undefined)
 
   useEffect(() => {
-    fetchArtists({}).then(loadArtists)
-  }, [loadArtists])
+    verified && fetchArtists({}).then(loadArtists)
+  }, [verified, loadArtists])
 
   const handlePageChange = (_, newPage) => {
     setPage(newPage)
-    fetchArtists({ 
+    fetchArtists({
+      name: search.trim(), 
       page: newPage, 
       skip: getOffset({ 
         page: newPage, 
@@ -95,10 +100,7 @@ const ArtistsManager = ({
       .then(loadArtists)
 
   const handleSearchKeyDown = e => {
-    e.keyCode === 13 && fetchArtists({ 
-      name: search.trim() 
-    })
-      .then(loadArtists)
+    e.keyCode === 13 && handleSearch()
   }
 
   const confirmDelete = id => {
@@ -108,8 +110,7 @@ const ArtistsManager = ({
 
   const handleDelete = () => {
     remove(deleteId)
-      .then(() => fetchArtists({ name: search.trim() }))
-      .then(loadArtists)
+      .then(handleSearch)
     setDeleteId(undefined)
     closeDialog()
   }

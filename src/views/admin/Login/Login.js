@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { validateAdminLoginForm as validateForm } from '../../../validators'
 import { login } from '../../../api/adminLogin'
 import { saveToken } from '../../../helpers/adminLogin'
-import { SET_ADMIN_TOKEN } from '../../../constants/actionTypes'
+import { SET_ADMIN_TOKEN, SET_ERROR } from '../../../constants/actionTypes'
 import useStyles from './LoginStyle'
 
 const mapStateToProps = state => ({
@@ -15,10 +15,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setToken: token => dispatch({ type: SET_ADMIN_TOKEN, payload: token })
+  setToken: token => dispatch({ type: SET_ADMIN_TOKEN, payload: token }),
+  setError: error => dispatch({ type: SET_ERROR, payload: error }),
 })
 
-const Login = ({ loading, setToken, history }) => {
+const Login = ({ loading, setToken, setError, history }) => {
   const classes = useStyles()
 
   const [form, setForm] = useState({
@@ -49,7 +50,10 @@ const Login = ({ loading, setToken, history }) => {
     if (valid) {
       login(form)
         .then(handleToken)
-        .then(() => history.push('/admin'))
+        .then(() => {
+          setError(false)
+          history.push('/admin')
+        })
         .catch(({ response }) => {
           if (
             response && response.data && 
