@@ -23,7 +23,7 @@ import AddIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import { getIndex, getOffset, getTotalPages } from '../../../helpers/pagination'
-import { LOAD_ADMIN_SONGS } from '../../../constants/actionTypes'
+import { LOAD_ADMIN_SONGS, SET_ADMIN_SONGS_SEARCH } from '../../../constants/actionTypes'
 import { find, remove } from '../../../api/songs'
 import useStyles from './SongsManagerStyle'
 
@@ -35,11 +35,12 @@ const mapStateToProps = state => ({
   count: state.adminSongs.count,
   changed: state.adminSongs.changed,
   page: state.adminSongs.page,
+  search: state.adminSongs.search,
   verified: state.adminToken.verified,
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadSongs: ({ songs, count, page = 1, changed }) => dispatch({
+  loadSongs: ({ songs, count, page = 1, changed = false }) => dispatch({
     type: LOAD_ADMIN_SONGS,
     payload: {
       data: songs,
@@ -47,7 +48,11 @@ const mapDispatchToProps = dispatch => ({
       page, 
       changed,
     },
-  })
+  }),
+  setSearch: search => dispatch({
+    type: SET_ADMIN_SONGS_SEARCH,
+    payload: search,
+  }),
 })
 
 const fetchSongs = ({ title, skip = 0 }) => 
@@ -64,15 +69,16 @@ const SongsManager = ({
   count, 
   page,
   changed,
+  search,
   loading, 
   loadSongs,
+  setSearch,
   history,
   verified,
 }) => {
 
   const classes = useStyles()
 
-  const [search, setSearch] = useState('')
   const [dialog, setDialog] = useState(false)
   const [deleteId, setDeleteId] = useState(undefined)
 

@@ -22,7 +22,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import SearchIcon from '@material-ui/icons/Search'
 import AddIcon from '@material-ui/icons/Add'
-import { LOAD_ADMIN_ARTISTS } from '../../../constants/actionTypes'
+import { LOAD_ADMIN_ARTISTS, SET_ADMIN_ARTISTS_SEARCH } from '../../../constants/actionTypes'
 import { find, remove } from '../../../api/artists'
 import { getTotalPages, getOffset, getIndex } from '../../../helpers/pagination'
 import useStyles from './ArtistsManagerStyle'
@@ -35,6 +35,7 @@ const mapStateToProps = state => ({
   count: state.adminArtists.count,
   page: state.adminArtists.page,
   changed: state.adminArtists.changed,
+  search: state.adminArtists.search,
   error: state.error,
   verified: state.adminToken.verified,
 })
@@ -53,6 +54,10 @@ const mapDispatchToProps = dispatch => ({
       page,
       changed,
     },
+  }),
+  setSearch: search => dispatch({ 
+    type: SET_ADMIN_ARTISTS_SEARCH, 
+    payload: search 
   }),
 })
 
@@ -74,12 +79,13 @@ const ArtistsManager = ({
   page,
   changed,
   verified,
+  search,
   loadArtists,
+  setSearch,
   history,
 }) => {
   const classes = useStyles()
 
-  const [search, setSearch] = useState('')
   const [dialog, setDialog] = useState(false)
   const [deleteId, setDeleteId] = useState(undefined)
 

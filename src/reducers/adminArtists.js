@@ -2,6 +2,7 @@ import {
   LOAD_ADMIN_ARTISTS, 
   LOAD_ADMIN_ARTIST_NAMES,
   SET_ADMIN_ARTISTS_CHANGED, 
+  SET_ADMIN_ARTISTS_SEARCH,
 } from '../constants/actionTypes'
 
 export default (state = { 
@@ -10,6 +11,7 @@ export default (state = {
   names: [],
   page: 1,
   changed: true,
+  search: '',
 }, action) => {
   switch (action.type) {
     case LOAD_ADMIN_ARTISTS:
@@ -33,6 +35,11 @@ export default (state = {
       return {
         ...state,
         changed: action.payload,
+      }
+    case SET_ADMIN_ARTISTS_SEARCH:
+      return {
+        ...state,
+        search: action.payload,
       }
     default:
       return state
