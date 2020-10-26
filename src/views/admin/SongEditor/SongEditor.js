@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
 import AutoComplete from '@material-ui/lab/AutoComplete'
 import Button from '@material-ui/core/Button'
-import { LOAD_ADMIN_ARTIST_NAMES } from '../../../constants/actionTypes'
+import { LOAD_ADMIN_ARTIST_NAMES, SET_ADMIN_SONGS_CHANGED } from '../../../constants/actionTypes'
 import { getNames as getArtistNames } from '../../../api/artists'
 import { create, findById, update } from '../../../api/songs'
 import { getCapo } from '../../../helpers/songs'
@@ -23,7 +23,11 @@ const mapDispatchToProps = dispatch => ({
   loadArtistNames: payload => dispatch({ 
     type: LOAD_ADMIN_ARTIST_NAMES,
     payload,
-  })
+  }),
+  setChanged: changed => dispatch({ 
+    type: SET_ADMIN_SONGS_CHANGED, 
+    payload: changed 
+  }),
 })
 
 const SongEditor = ({ 
@@ -31,7 +35,8 @@ const SongEditor = ({
   artists, 
   history, 
   match,
-  loadArtistNames 
+  loadArtistNames,
+  setChanged,
 }) => {
   const classes = useStyles()
 
@@ -105,11 +110,17 @@ const SongEditor = ({
     if (isValid) {
       if (songId) {
         update(songId, form)
-          .then(() => history.push('/admin/songs'))
+          .then(() => {
+            setChanged(true)
+            history.push('/admin/songs')
+          })
           .catch(handleError(_errors))
       } else {
         create({ ...form })
-          .then(() => history.push('/admin/songs'))
+          .then(() => {
+            setChanged(true)
+            history.push('/admin/songs')
+          })
           .catch(handleError(_errors))
       }
     }

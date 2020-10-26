@@ -33,23 +33,26 @@ const mapStateToProps = state => ({
   loading: state.loading,
   songs: state.adminSongs.data,
   count: state.adminSongs.count,
+  changed: state.adminSongs.changed,
+  page: state.adminSongs.page,
   verified: state.adminToken.verified,
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadSongs: ({ songs, count }) => dispatch({
+  loadSongs: ({ songs, count, page = 1, changed }) => dispatch({
     type: LOAD_ADMIN_SONGS,
     payload: {
       data: songs,
       count,
+      page, 
+      changed,
     },
   })
 })
 
-const fetchSongs = ({ title, page = 0, skip = 0 }) => 
+const fetchSongs = ({ title, skip = 0 }) => 
   find({
     title,
-    page,
     limit: LIMIT_PER_PAGE,
     sort: 'created_at',
     order: 'desc',
@@ -59,6 +62,8 @@ const fetchSongs = ({ title, page = 0, skip = 0 }) =>
 const SongsManager = ({ 
   songs, 
   count, 
+  page,
+  changed,
   loading, 
   loadSongs,
   history,
@@ -67,25 +72,26 @@ const SongsManager = ({
 
   const classes = useStyles()
 
-  const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [dialog, setDialog] = useState(false)
   const [deleteId, setDeleteId] = useState(undefined)
 
   useEffect(() => {
-    verified && fetchSongs({}).then(loadSongs)
+    verified && 
+    changed &&
+    fetchSongs({}).then(loadSongs)
   }, [loadSongs, verified])
 
   const handlePageChange = (_, newPage) => {
-    setPage(newPage)
     fetchSongs({ 
-      page: newPage, 
       skip: getOffset({ 
         page: newPage, 
         limit: LIMIT_PER_PAGE 
       }),
     })
-      .then(loadSongs)
+      .then(({ songs, count }) => 
+        loadSongs({ songs, count, page: newPage, changed: false })
+      )
   }
 
   const handleSearchChange = e => setSearch(e.target.value)
@@ -97,10 +103,7 @@ const SongsManager = ({
       .then(loadSongs)
 
   const handleSearchKeyDown = e => {
-    e.keyCode === 13 && fetchSongs({ 
-      title: search.trim() 
-    })
-      .then(loadSongs)
+    e.keyCode === 13 && handleSearch()
   }
 
   const confirmDelete = id => {
@@ -109,9 +112,7 @@ const SongsManager = ({
   }
 
   const handleDelete = () => {
-    remove(deleteId)
-      .then(() => fetchSongs({ title: search.trim() }))
-      .then(loadSongs)
+    remove(deleteId).then(handleSearch)
     setDeleteId(undefined)
     closeDialog()
   }
@@ -145,7 +146,7 @@ const SongsManager = ({
         <div className={classes.searchContainer}>
           <TextField 
             variant="outlined" 
-            label="Name"
+            label="Title"
             size="small"
             className={classes.search}
             InputProps={{
@@ -173,9 +174,9 @@ const SongsManager = ({
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>#</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Action</TableCell>
+                <TableCell className={classes.indexCol}>#</TableCell>
+                <TableCell className={classes.titleCol}>Title</TableCell>
+                <TableCell className={classes.actionCol}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

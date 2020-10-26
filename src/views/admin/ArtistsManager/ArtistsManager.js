@@ -33,16 +33,25 @@ const mapStateToProps = state => ({
   loading: state.loading,
   artists: state.adminArtists.data,
   count: state.adminArtists.count,
+  page: state.adminArtists.page,
+  changed: state.adminArtists.changed,
   error: state.error,
   verified: state.adminToken.verified,
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadArtists: ({ artists, count }) => dispatch({ 
+  loadArtists: ({ 
+    artists, 
+    count,
+    page = 1,
+    changed = false,
+  }) => dispatch({ 
     type: LOAD_ADMIN_ARTISTS, 
     payload: {
       data: artists,
       count,
+      page,
+      changed,
     },
   }),
 })
@@ -62,24 +71,25 @@ const ArtistsManager = ({
   loading,
   artists,
   count,
-  error,
+  page,
+  changed,
   verified,
   loadArtists,
   history,
 }) => {
   const classes = useStyles()
 
-  const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [dialog, setDialog] = useState(false)
   const [deleteId, setDeleteId] = useState(undefined)
 
   useEffect(() => {
-    verified && fetchArtists({}).then(loadArtists)
-  }, [verified, loadArtists])
+    verified && 
+    changed &&
+    fetchArtists({}).then(loadArtists)
+  }, [verified, changed, loadArtists])
 
   const handlePageChange = (_, newPage) => {
-    setPage(newPage)
     fetchArtists({
       name: search.trim(), 
       page: newPage, 
@@ -88,7 +98,9 @@ const ArtistsManager = ({
         limit: LIMIT_PER_PAGE 
       }),
     })
-      .then(loadArtists)
+      .then(({ artists, count }) => 
+        loadArtists({ artists, count, page: newPage })
+      )
   }
 
   const handleSearchChange = e => setSearch(e.target.value)
@@ -97,7 +109,9 @@ const ArtistsManager = ({
     fetchArtists({
       name: search.trim(),
     })
-      .then(loadArtists)
+      .then(({ artists, count }) => 
+        loadArtists({ artists, count })
+      )
 
   const handleSearchKeyDown = e => {
     e.keyCode === 13 && handleSearch()

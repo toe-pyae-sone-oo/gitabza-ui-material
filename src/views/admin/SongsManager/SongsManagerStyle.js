@@ -43,6 +43,15 @@ const useStyles = makeStyles(theme => ({
   pagination: {
     maxWidth: 500,
   },
+  indexCol: {
+    width: '10%',
+  },
+  titleCol: {
+    width: '60%',
+  },
+  actionCol: {
+    width: '30%',
+  },
 }))
 
 export default useStyles

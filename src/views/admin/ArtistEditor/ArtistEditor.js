@@ -7,13 +7,18 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { validateArtistForm } from '../../../validators'
 import { upload, create, findById, update } from '../../../api/artists'
+import { SET_ADMIN_ARTISTS_CHANGED } from '../../../constants/actionTypes'
 import useStyles from './ArtistEditorStyle'
 
 const mapStateToProps = state => ({
   loading: state.loading,
 })
 
-const ArtistEditor = ({ loading, history, match }) => {
+const mapDispatchToProps = dispatch => ({
+  setChanged: changed => dispatch({ type: SET_ADMIN_ARTISTS_CHANGED, payload: changed })
+})
+
+const ArtistEditor = ({ loading, setChanged, history, match }) => {
   const classes = useStyles()
 
   const artistId = match.params.id
@@ -87,11 +92,17 @@ const ArtistEditor = ({ loading, history, match }) => {
       
       if (artistId) {
         update(artistId, { ...form, picture: uploaded })
-          .then(() => history.push('/admin/artists'))
+          .then(() => {
+            setChanged(true)
+            history.push('/admin/artists')
+          })
           .catch(handleError(_errors))
       } else {
         create({ ...form, picture: uploaded })
-          .then(() => history.push('/admin/artists'))
+          .then(() => {
+            setChanged(true)
+            history.push('/admin/artists')
+          })
           .catch(handleError(_errors))
       }
     }
@@ -203,4 +214,4 @@ const ArtistEditor = ({ loading, history, match }) => {
   )
 }
 
-export default connect(mapStateToProps)(ArtistEditor)
+export default connect(mapStateToProps, mapDispatchToProps)(ArtistEditor)
