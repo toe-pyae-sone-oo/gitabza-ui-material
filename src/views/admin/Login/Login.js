@@ -70,6 +70,10 @@ const Login = ({ loading, setToken, setError, history }) => {
     }
   }
 
+  const handleKeyDown = e => {
+    (e.keyCode === 13) && handleSubmit()
+  }
+
   return (
     <div className={classes.root}>
       <Card 
@@ -94,6 +98,7 @@ const Login = ({ loading, setToken, setError, history }) => {
           error={!!errors.username}
           helperText={errors.username}
           disabled={loading}
+          onKeyDown={handleKeyDown}
         />
         <TextField
           name="password"
@@ -108,6 +113,7 @@ const Login = ({ loading, setToken, setError, history }) => {
           error={!!errors.password}
           helperText={errors.password}
           disabled={loading}
+          onKeyDown={handleKeyDown}
         />
         <Button
           variant="contained"
