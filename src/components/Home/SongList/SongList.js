@@ -1,12 +1,20 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import Carousel from 'react-multi-carousel'
 import SongItem from '../SongItem/SongItem'
+import { responsive } from '../../../helpers/carousel'
 
-const SongList = ({ songs = [] }) =>
-  <Grid container spacing={2}>
-    {songs.map(song =>
-      <SongItem key={song.uuid} {...song} />
+const SongList = ({ songs = [] }) => 
+  <Carousel
+    ssr
+    responsive={responsive}
+    keyBoardControl={false}
+  >
+    {songs.map(song => 
+      <SongItem 
+        key={song.uuid} 
+        {...song} 
+      />
     )}
-  </Grid>
+  </Carousel>
 
 export default SongList

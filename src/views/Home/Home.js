@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import MusicNoteIcon from '@material-ui/icons/MusicNote'
-import MicIcon from '@material-ui/icons/Mic'
+import 'react-multi-carousel/lib/styles.css'
 import { getLatest as getLatestSongs } from '../../api/songs'
 import { getLatest as getLatestArtists } from '../../api/artists'
 import { LOAD_LATEST_SONGS, LOAD_LATEST_ARTISTS } from '../../constants/actionTypes'
-import SongList from '../../components/Home/SongList/SongList'
-import YoutubeSongList from '../../components/Home/YoutubeSongList/YoutubeSongList'
-import ArtistList from '../../components/Home/ArtistList/ArtistList'
-import Title from '../../components/Title/Title'
-import useStyles from './HomeStyle'
+import Loading from '../../components/Loading/Loading'
+import SongList from '../../components/home/SongList/SongList'
+import ArtistList from '../../components/home/ArtistList/ArtistList'
+import SectionHeader from '../../components/home/SectionHeader/SectionHeader'
 
 const mapStateToProps = state => ({
   loading: state.loading,
@@ -26,8 +22,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const Home = ({ loading, songs, artists, loadSongs, loadArtists }) => {
-  const classes = useStyles()
-
   useEffect(() => {
     getLatestSongs().then(loadSongs)
   }, [loadSongs])
@@ -37,37 +31,23 @@ const Home = ({ loading, songs, artists, loadSongs, loadArtists }) => {
   }, [loadArtists])
 
   return (
-    <Grid container>
-      <Grid container item md={8}>
-        <Card variant="outlined" className={classes.songsCard}>
-          <CardContent>
-            <Title 
-              icon={<MusicNoteIcon/>} 
-              content="Latest Update" 
-            />
-            {loading
-              ? 'Loading...'
-              : <>
-                  <SongList songs={songs} />
-                  <YoutubeSongList songs={songs} />
-                </>
-            }
-          </CardContent>
-        </Card>
+    <Grid 
+      container
+      spacing={2}
+    >
+      <Grid item xs={12}>
+        <SectionHeader
+          title="Latest Update"
+        />
+        {loading && <Loading />}
+        <SongList songs={songs} />
       </Grid>
-      <Grid container item md={4}>
-        <Card variant="outlined" className={classes.artistsCard}>
-          <CardContent>
-            <Title
-              icon={<MicIcon/>}
-              content="Latest Artists"
-            />
-            {loading
-              ? 'Loading...'
-              : <ArtistList artists={artists} />
-            }
-          </CardContent>
-        </Card>
+      <Grid item xs={12}>
+        <SectionHeader 
+          title="Artists" 
+        />
+        {loading && <Loading />}
+        <ArtistList artists={artists} />
       </Grid>
     </Grid>
   )

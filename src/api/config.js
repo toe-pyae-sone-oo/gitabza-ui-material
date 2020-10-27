@@ -4,8 +4,19 @@ import { SET_LOADING, SET_ERROR } from '../constants/actionTypes'
 import { store } from '../store'
 import { getToken } from '../helpers/adminLogin'
 
-const startLoading = store => store.dispatch({ type: SET_LOADING, loading: true })
-const stopLoading = store => store.dispatch({ type: SET_LOADING, loading: false })
+let onRequest = 0
+
+const startLoading = () => {
+  onRequest++
+  store.dispatch({ type: SET_LOADING, loading: true })
+}
+
+const stopLoading = () => {
+  onRequest--
+  if (onRequest === 0) {
+    store.dispatch({ type: SET_LOADING, loading: false })
+  }
+}
 
 const setError = err => store.dispatch({ type: SET_ERROR, payload: err })
 
@@ -14,17 +25,17 @@ const httpClient = axios.create({
 })
 
 httpClient.interceptors.request.use(config => {
-  startLoading(store)
+  startLoading()
   return config
 })
 
 httpClient.interceptors.response.use(
   res => {
-    stopLoading(store)
+    stopLoading()
     return res
   },
   err => {
-    stopLoading(store)
+    stopLoading()
     
     if (err.response && err.response.status === 422) { 
       throw err 

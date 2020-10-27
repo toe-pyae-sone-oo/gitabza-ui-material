@@ -1,12 +1,21 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import Carousel from 'react-multi-carousel'
 import ArtistItem from '../ArtistItem/ArtistItem'
+import { responsive } from '../../../helpers/carousel'
 
 const ArtistList = ({ artists = [] }) => 
-  <Grid container spacing={1}>
-    {artists.map(artist =>
-      <ArtistItem key={artist.uuid} {...artist} />
+  <Carousel
+    ssr
+    responsive={responsive}
+    keyBoardControl={false}
+  >
+    {artists.map(artist => 
+      <ArtistItem 
+        key={artist.uuid} 
+        {...artist} 
+      />
     )}
-  </Grid>
+  </Carousel>
+  
 
 export default ArtistList
