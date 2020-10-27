@@ -86,7 +86,7 @@ const SongsManager = ({
     verified && 
     changed &&
     fetchSongs({}).then(loadSongs)
-  }, [loadSongs, verified])
+  }, [loadSongs, verified, changed])
 
   const handlePageChange = (_, newPage) => {
     fetchSongs({ 
