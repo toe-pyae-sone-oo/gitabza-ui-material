@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import ArtistItem from '../../components/ArtistItem/ArtistItem'
+import Loading from '../../components/Loading/Loading'
 import { find } from '../../api/artists'
 import { LOAD_ARTISTS } from '../../constants/actionTypes'
 import useStyles from './ArtistsStyle'
@@ -60,8 +61,8 @@ const Artists = ({ artists, count, loading, loadArtists }) => {
             <Grid
               item
               key={artist.uuid}
-              lg={4}
-              md={4}
+              lg={3}
+              md={3}
               sm={6}
               xs={12}
             >
@@ -70,7 +71,7 @@ const Artists = ({ artists, count, loading, loadArtists }) => {
           )}
         </Grid>
       </InfiniteScroll>
-      {loading ? <p>Loading...</p> : null}
+      {loading ? <Loading/> : null}
     </>
   )
 }

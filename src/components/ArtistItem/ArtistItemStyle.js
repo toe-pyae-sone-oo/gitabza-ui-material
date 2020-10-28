@@ -19,7 +19,12 @@ const useStyles = makeStyles(theme => ({
   },
   songsIcon: {
     marginRight: theme.spacing(1),
-  }
+  },
+  info: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
 }))
 
 export default useStyles
