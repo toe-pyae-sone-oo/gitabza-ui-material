@@ -1,87 +1,146 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import SongItem from '../../components/SongItem/SongItem'
-import { findById } from '../../api/artists'
+import ArtistItem from '../../components/ArtistItem/ArtistItem'
+import Loading from '../../components/Loading/Loading'
+import NotFound from '../../components/NotFound/NotFound'
+import { findById, getLatest } from '../../api/artists'
 import { findByArtist } from '../../api/songs'
 import useStyles from './ArtistPreviewStyle'
 
-const ArtistPreview = ({ match }) => {
+const mapStateToProps = state => ({
+  loading: state.loading,
+})
+
+const ArtistPreview = ({ loading, match }) => {
   const classes = useStyles()
 
   const artistId = match.params.id
   const [artist, setArtist] = useState(undefined)
   const [songs, setSongs] = useState([])
+  const [error, setError] = useState(undefined)
+  const [others, setOthers] = useState([])
 
-  useEffect(() => {
-    if (artistId) {
-      findById(artistId)
-        .then(data => setArtist(data))
-      findByArtist(artistId)
-        .then(data => setSongs(data))
+  const handleError = err => {
+    if (err.response && err.response.status === 404) {
+      setError('Artist Not Found')
     }
-  }, [artistId])
+  }
 
   useEffect(() => {
     
-  })
+    if (artistId) {
+      findById(artistId)
+        .then(data => setArtist(data))
+        .catch(handleError)
+
+      findByArtist(artistId)
+        .then(data => setSongs(data))
+        .catch(handleError)
+    }
+
+    getLatest().then(artists => setOthers([
+      ...artists.filter(artist => artist.uuid !== artistId)
+    ]))
+
+  }, [artistId])
 
   return (
     <Grid 
       container 
-      item
       spacing={2}
     >
-      {artist 
-        ? <>
-            <Grid 
-              item 
-              container
-              direction="column"
-              alignItems="center"
-            >
-              <Avatar
-                className={classes.avatar}
-                alt={artist.name}
-                src={artist.picture}
-              />
-              <Typography 
-                className={classes.name}
-                variant="h6"
-              >
-                {artist.name}
-              </Typography>
-              <Typography
-                variant="subtitle2"
-              >
-                Chords - {artist.songs}
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              container
-            >
-              <Grid container spacing={2}>
-                {songs.map(song =>
+      <Grid
+        container
+        item
+        md={9}
+      >
+        <Grid
+          xs={12}
+          item
+        >
+          {error && <NotFound message={error} />}
+          {loading
+            ? <Loading/>
+            : artist &&
+                <>
+                  <div className={classes.artistInfoWrapper}>
+                    <Avatar
+                      className={classes.avatar}
+                      alt={artist.name}
+                      src={artist.picture}
+                    />
+                    <div
+                      className={classes.artistInfo}
+                    >
+                      <Typography 
+                        className={classes.name}
+                        variant="h6"
+                      >
+                        {artist.name}
+                      </Typography>
+                      <Typography
+                        className={classes.songCount}
+                        variant="subtitle2"
+                      >
+                        သီချင်း - {artist.songs}
+                      </Typography>
+                    </div>
+                  </div>
                   <Grid 
-                    item 
-                    key={song.uuid} 
-                    lg={4} 
-                    md={6}
-                    sm={6}
-                    xs={12}
+                    container 
+                    spacing={2}
                   >
-                    <SongItem {...song} />
+                    {songs.map(song =>
+                      <Grid 
+                        item 
+                        key={song.uuid} 
+                        lg={6} 
+                        md={6}
+                        sm={6}
+                        xs={12}
+                      >
+                        <SongItem {...song} />
+                      </Grid>
+                    )}
                   </Grid>
-                )}
-              </Grid>
-            </Grid>
-          </>
-        : <p>Not Found</p>
-      }
+                </>
+          }
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        item
+        md={3}
+      >
+        <Grid item xs={12}>
+          <Typography
+            variant="body1"
+          >
+            You may also like
+          </Typography>
+        </Grid>
+        {loading
+          ? <Loading />
+          : <>
+              {others.map(artist => 
+                <Grid
+                  key={artist.uuid}
+                  item
+                  xs={12}
+                  className={classes.artists}
+                >
+                  <ArtistItem {...artist} />
+                </Grid>
+              )}
+            </>
+        }
+      </Grid>
     </Grid>
   )
 }
 
-export default ArtistPreview
+export default connect(mapStateToProps)(ArtistPreview)

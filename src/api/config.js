@@ -36,12 +36,9 @@ httpClient.interceptors.response.use(
   },
   err => {
     stopLoading()
-    
-    if (err.response && err.response.status === 422) { 
-      throw err 
-    }
 
-    // handle `unauthorized` error
+    // handle 500 error
+
     if (err.response && err.response.status === 401) {
       setError({ 
         message: err.response.data.message,
@@ -50,6 +47,7 @@ httpClient.interceptors.response.use(
       throw err
     }
 
+    throw err
   })
 
 const adminAuthHeader = () => {
