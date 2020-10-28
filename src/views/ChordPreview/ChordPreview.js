@@ -6,11 +6,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-import Avatar from '@material-ui/core/Avatar'
 import Fab from '@material-ui/core/Fab'
-import MicIcon from '@material-ui/icons/Mic'
-import YoutubeIcon from '@material-ui/icons/YouTube'
-import InfoIcon from '@material-ui/icons/Info'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import AddIcon from '@material-ui/icons/Add'
@@ -19,8 +15,10 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import PlayIcon from '@material-ui/icons/PlayArrow'
 import FormatSizeIcon from '@material-ui/icons/FormatSize'
 import Youtube from 'react-youtube'
-import Title from '../../components/Title/Title'
-import { findById } from '../../api/songs'
+import Loading from '../../components/Loading/Loading'
+import NotFound from '../../components/NotFound/NotFound'
+import SongItem from '../../components/home/SongItem/SongItem'
+import { findById, getLatest } from '../../api/songs'
 import { wrapChords, tranpsoseSong } from '../../helpers/chords'
 import { getVideoId } from '../../helpers/songs'
 import useStyles from './ChordPreviewStyle'
@@ -39,9 +37,26 @@ const ChordPreview = ({ loading, match }) => {
   const [song, setSong] = useState(undefined)
   const [fontSize, setFontSize] = useState(14)
   const [scrolling, setScrolling] = useState(false)
+  const [error, setError] = useState(undefined)
+  const [others, setOthers] = useState([])
+
+  const handleError = err => {
+    if (err.response && err.response.status === 404) {
+      setError('Song Not Found')
+    }
+  }
 
   useEffect(() => {
-    findById(songId).then(data => setSong(data))
+
+    songId && findById(songId)
+      .then(data => setSong(data))
+      .catch(handleError)
+
+    getLatest()
+      .then(data => setOthers(
+        [...data.filter(song => song.uuid !== songId).slice(0, 6)]
+      ))
+
   }, [setSong, songId])
 
   const handleTranspose = step => {
@@ -78,21 +93,47 @@ const ChordPreview = ({ loading, match }) => {
       container 
       spacing={2}
     >
+      {error && <NotFound message={error} />}
       {loading 
-        ? <p>Loading...</p>
-        : song
-          ? <>
+        ? <Loading />
+        : song &&
+            <>
               <Grid 
                 item 
                 md={9} 
                 xs={12}
               >
-                <Typography 
-                  variant="h5"
-                  className={classes.songTitle}
-                >
-                  {song.title}
-                </Typography>
+                <div className={classes.songInfo}>
+                  <Typography 
+                    variant="h5"
+                    className={classes.title}
+                  >
+                    {song.title}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                  >
+                    by{' '}
+                    <span 
+                      className={classes.artists}
+                    >
+                      {song.artists.map(({ name }) => name).join(', ')}
+                    </span>
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                  >
+                    Difficulty:{' '}
+                    <span className={classes.difficulty}>
+                      {song.difficulty}
+                    </span>
+                    {' '}
+                    Version:{' '}
+                    <span className={classes.version}>
+                      {song.version}
+                    </span>
+                  </Typography>
+                </div>
                 <Card 
                   className={classes.actionCard}
                   variant="outlined"
@@ -266,127 +307,62 @@ const ChordPreview = ({ loading, match }) => {
                 md={3}
                 xs={12}
               >
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                >
+                  Youtube
+                </Typography>
                 <Card
-                  variant="outlined"
                   className={classes.youtubeCard}
+                  variant="outlined"
                 >
-                  <CardContent>
-                    <Title 
-                      icon={<YoutubeIcon/>}
-                      content="Youtube"
-                    />
-                    <Youtube
-                      videoId={getVideoId(song.youtube)}
-                      className={classes.youtube}
-                    />
-                  </CardContent>
+                  <Youtube
+                    videoId={getVideoId(song.youtube)}
+                    className={classes.youtube}
+                  /> 
                 </Card>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  className={classes.otherSongsTitle}
+                >
+                  You may also like
+                </Typography>
                 <Card
                   variant="outlined"
-                  className={classes.infoCard}
                 >
-                  <CardContent>
-                    <Title 
-                      icon={<InfoIcon/>}
-                      content="Info"
-                    />
-                    <Grid
-                      container
-                      spacing={2}
-                    >
-                      <Grid 
-                        item 
-                        xs={6}
-                      >
-                        <Typography 
-                          variant="caption"
-                          display="block"
-                          className={classes.textCenter}
-                          color="textSecondary"
-                        >
-                          Version
-                        </Typography>
-                        <Typography 
-                          variant="body2"
-                          className={classes.textCenter}
-                        >
-                          {song.version}
-                        </Typography>
-                      </Grid>
-                      <Grid 
-                        item 
-                        xs={6}
-                      >
-                        <Typography 
-                          variant="caption"
-                          display="block"
-                          className={classes.textCenter}
-                          color="textSecondary"
-                        >
-                          Difficulty
-                        </Typography>
-                        <Typography 
-                          variant="body2"
-                          className={classes.textCenter}
-                        >
-                          {song.difficulty === 'none' ? '-' : song.difficulty}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-                <Card
-                  variant="outlined"
-                  className={classes.artistsCard}
-                >
-                  <CardContent>
-                    <Title 
-                      icon={<MicIcon/>}
-                      content="Artists"
-                    />
-                    {song.artists.map(artist =>
+                  <Grid
+                    container
+                  >
+                    {others.map(song => 
                       <Grid
+                        key={song.uuid}
                         item
-                        key={artist.uuid}
-                        xs={12}
+                        xs={6}
                       >
-                        <div className={classes.artistWrapper}>
-                          <div className={classes.avatarWrapper}>
-                            <Avatar
-                              className={classes.avatar} 
-                              alt={artist.name}
-                              src={artist.picture}
-                            />
-                          </div>
-                          <Typography 
-                            className={classes.artists}
-                            variant="subtitle1"
-                          >
-                            {artist.name}
-                          </Typography>
-                        </div>
+                        <SongItem {...song} />
                       </Grid>
                     )}
-                  </CardContent>
+                  </Grid>
                 </Card>
-                <Fab 
-                  aria-label="scroll" 
-                  className={classes.mobileAutoScroll} 
-                  color={scrolling ? 'primary' : 'default'}
-                  size="small"
-                  onClick={handleScroll}
-                >
-                  <PlayIcon 
-                    className={
-                      scrolling 
-                        ? classes.mobileAutoScrollIcon 
-                        : null
-                    } 
-                  />
-                </Fab>
               </Grid>
+              <Fab 
+                aria-label="scroll" 
+                className={classes.mobileAutoScroll} 
+                color={scrolling ? 'primary' : 'default'}
+                size="small"
+                onClick={handleScroll}
+              >
+                <PlayIcon 
+                  className={
+                    scrolling 
+                      ? classes.mobileAutoScrollIcon 
+                      : null
+                  } 
+                />
+              </Fab>
             </>
-          : <p>Not found</p>
       }
     </Grid>
   )

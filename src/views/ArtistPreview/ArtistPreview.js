@@ -116,13 +116,11 @@ const ArtistPreview = ({ loading, match }) => {
         item
         md={3}
       >
-        <Grid item xs={12}>
-          <Typography
-            variant="body1"
-          >
-            You may also like
-          </Typography>
-        </Grid>
+        <Typography
+          variant="h6"
+        >
+          You may also like
+        </Typography>
         {loading
           ? <Loading />
           : <>

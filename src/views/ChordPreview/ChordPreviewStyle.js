@@ -1,21 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  songTitle: {
-    fontFamily: 'Pyidaungsu-bold',
-    textAlign: 'center',
-  },
-  artistsCard: {
-    width: '100%',
-    marginTop: theme.spacing(2),
-  },
-  artistWrapper: {
+  songInfo: {
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  title: {
+    fontFamily: 'Pyidaungsu-bold',
   },
   artists: {
     fontFamily: 'Pyidaungsu',
-    marginLeft: theme.spacing(1),
+    color: theme.palette.primary.main,
+  },
+  difficulty: {
+    color: theme.palette.primary.main,
+  },
+  version: {
+    color: theme.palette.primary.main,
   },
   lyricsCard: {
     marginTop: theme.spacing(2),
@@ -26,23 +27,18 @@ const useStyles = makeStyles(theme => ({
   code: {
     color: theme.palette.primary.main,
   },
-  avatarWrapper: {
-    padding: theme.spacing(1),
-  },
-  avatar: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
-  },
   youtubeCard: {
-    width: '100%',
-    marginTop: 0,
-    [theme.breakpoints.up('md')]: {
-      marginTop: theme.spacing(6),
-    },
+    padding: theme.spacing(1),
   },
   youtube: {
     width: '100%',
-    height: 'auto',
+    height: 250,
+    [theme.breakpoints.up('sm')]: {
+      height: 360,
+    },
+    [theme.breakpoints.up('md')]: {
+      height: 200,
+    },
   },
   infoCard: {
     width: '100%',
@@ -90,6 +86,15 @@ const useStyles = makeStyles(theme => ({
   },
   mobileAutoScrollIcon: {
     color: '#ffffffb3',
+  },
+  otherSongsTitle: {
+    marginTop: theme.spacing(2),
+  },
+  otherSongs: {
+    marginTop: theme.spacing(2),
+  },
+  otherSongCard: {
+    margin: theme.spacing(1),
   },
 }))
 

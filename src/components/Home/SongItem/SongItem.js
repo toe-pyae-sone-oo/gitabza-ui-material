@@ -1,6 +1,6 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import useStyles from './SongList'
+import useStyles from './SongItemStyle'
 
 const SongItem = ({ title = '', image = undefined }) => {
   const classes = useStyles()
