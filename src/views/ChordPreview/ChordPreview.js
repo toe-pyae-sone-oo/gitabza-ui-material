@@ -313,15 +313,10 @@ const ChordPreview = ({ loading, match }) => {
                 >
                   Youtube
                 </Typography>
-                <Card
-                  className={classes.youtubeCard}
-                  variant="outlined"
-                >
-                  <Youtube
-                    videoId={getVideoId(song.youtube)}
-                    className={classes.youtube}
-                  /> 
-                </Card>
+                <Youtube
+                  videoId={getVideoId(song.youtube)}
+                  className={classes.youtube}
+                /> 
                 <Typography
                   variant="h6"
                   gutterBottom
