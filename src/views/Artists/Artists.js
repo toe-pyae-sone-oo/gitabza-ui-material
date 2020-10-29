@@ -27,13 +27,19 @@ const Artists = ({ artists, count, loading, loadArtists }) => {
   const [page, setPage] = useState(0)
   
   useEffect(() => {
-    find({ 
+
+    let mounted = true
+
+    artists.length === 0 && find({ 
       limit: LIMIT_PER_PAGE, 
       sort: 'name', 
       order: 'asc' 
     })
-      .then(loadArtists)
-  }, [loadArtists])
+      .then(data => mounted && loadArtists(data))
+
+    return () => mounted = false
+
+  }, [artists, loadArtists])
 
   const loadMoreArtists = () => {
     const nextPage = page + 1

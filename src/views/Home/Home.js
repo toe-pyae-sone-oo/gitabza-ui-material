@@ -23,12 +23,24 @@ const mapDispatchToProps = dispatch => ({
 
 const Home = ({ loading, songs, artists, loadSongs, loadArtists }) => {
   useEffect(() => {
-    getLatestSongs().then(loadSongs)
-  }, [loadSongs])
+    let mounted = true
+
+    songs.length === 0 && getLatestSongs()
+      .then(songs => mounted && loadSongs(songs))
+
+    return () => mounted = false
+
+  }, [songs, loadSongs])
 
   useEffect(() => {
-    getLatestArtists().then(loadArtists)
-  }, [loadArtists])
+    let mounted = true
+
+    artists.length === 0 && getLatestArtists()
+      .then(artists => mounted && loadArtists(artists))
+
+    return () => mounted = false
+
+  }, [artists, loadArtists])
 
   return (
     <Grid 
