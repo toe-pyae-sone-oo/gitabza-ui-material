@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import Loading from '../../components/Loading/Loading'
 import { LOAD_SONGS } from '../../constants/actionTypes'
 import { find } from '../../api/songs'
 import SongItem from '../../components/SongItem/SongItem'
@@ -41,7 +42,9 @@ const Chords = ({ loading, songs, count, loadSongs }) => {
       sort: 'title',
       order: 'asc',
     })
-      .then(({ songs: newSongs, count }) => loadSongs({ songs: [...songs, ...newSongs], count }))
+      .then(({ songs: newSongs, count }) => 
+        loadSongs({ songs: [...songs, ...newSongs], count })
+      )
   }
 
   return (
@@ -67,7 +70,7 @@ const Chords = ({ loading, songs, count, loadSongs }) => {
           )}
         </Grid>
       </InfiniteScroll>
-      {loading ? <p>Loading...</p> : null}
+      {loading ? <Loading /> : null}
     </>
   )
 }
