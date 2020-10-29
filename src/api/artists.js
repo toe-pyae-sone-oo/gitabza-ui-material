@@ -50,6 +50,6 @@ export const getNames = () => {
 
 export const getLatest = () => {
   return httpClient
-    .get('/artists?limit=10')
+    .get('/artists?limit=20')
     .then(({ data }) => data.artists)
 }
