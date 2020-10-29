@@ -62,6 +62,7 @@ const DefaultLayout = ({
 
   useEffect(() => {
     setSearchView(path === '/search')
+    setCurrentRoute(getRouteByPath(path))
   }, [path])
 
   const handleSearch = text => {
