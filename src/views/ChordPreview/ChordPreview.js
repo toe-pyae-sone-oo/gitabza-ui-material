@@ -60,7 +60,7 @@ const ChordPreview = ({ loading, match, history }) => {
   useEffect(() => {
     getLatest()
       .then(data => setOthers(
-        [...data.filter(s => s.slug !== songSlug).slice(0, 6)]
+        [...data.filter(s => s.slug !== songSlug).slice(0, 8)]
       )) 
   }, [songSlug])
 
@@ -329,27 +329,24 @@ const ChordPreview = ({ loading, match, history }) => {
                 >
                   You may also like
                 </Typography>
-                <Card
-                  variant="outlined"
+                <Grid
+                  container
+                  spacing={1}
                 >
-                  <Grid
-                    container
-                  >
-                    {others.map(song => 
-                      <Grid
-                        key={song.uuid}
-                        item
-                        xs={6}
-                      >
-                        <SongItem 
-                          onPreview={() => 
-                            history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
-                          {...song} 
-                        />
-                      </Grid>
-                    )}
-                  </Grid>
-                </Card>
+                  {others.map(song => 
+                    <Grid
+                      key={song.uuid}
+                      item
+                      xs={6}
+                    >
+                      <SongItem 
+                        onPreview={() => 
+                          history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
+                        {...song} 
+                      />
+                    </Grid>
+                  )}
+                </Grid>
               </Grid>
               <Fab 
                 aria-label="scroll" 
