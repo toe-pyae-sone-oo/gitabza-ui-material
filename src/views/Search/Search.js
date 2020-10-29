@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import SongItem from '../../components/SongItem/SongItem'
 import ArtistItem from '../../components/ArtistItem/ArtistItem'
+import Loading from '../../components/Loading/Loading'
+import NotFound from '../../components/NotFound/NotFound'
 import { LOAD_SEARCH_SONGS, LOAD_SEARCH_ARTISTS } from '../../constants/actionTypes'
 import { find as findSongs } from '../../api/songs'
 import { find as findArtists } from '../../api/artists'
@@ -69,22 +71,53 @@ const Search = ({
 }) => {
   const classes = useStyles()
 
+  const [songError, setSongError] = useState(undefined)
+  const [artistError, setArtistError] = useState(undefined)
+
   useEffect(() => {
+    loadSongs({
+      page: 0,
+      count: 0,
+      songs: [],
+    })
+
+    setSongError(undefined)
+
     searchSongs(search)
-      .then(({ songs, count }) => loadSongs({
-        page: 0,
-        count,
-        songs,
-      }))
+      .then(({ songs, count }) => {
+        loadSongs({
+          page: 0,
+          count,
+          songs,
+        })
+        setSongError(count === 0 
+          ? 'No Songs Found' 
+          : undefined
+        )
+      })
   }, [search, loadSongs])
 
   useEffect(() => {
+    loadArtists({
+      page: 0,
+      count: 0,
+      artists: [],
+    })
+
+    setArtistError(undefined)
+
     searchArtists(search)
-      .then(({ artists, count }) => loadArtists({
-        page: 0,
-        count,
-        artists,
-      }))
+      .then(({ artists, count }) => {
+        loadArtists({
+          page: 0,
+          count,
+          artists,
+        })
+        setArtistError(count === 0
+          ? 'No Artists Found'
+          : undefined
+        )
+      })
   }, [search, loadArtists])
 
   const loadMoreSongs = () => {
@@ -123,8 +156,9 @@ const Search = ({
             container
             spacing={2}
           >
-            {songs.data.length > 0
-              ? songs.data.map(song =>
+            {songError
+              ? <NotFound message={songError} />
+              : songs.data.map(song =>
                   <Grid 
                     item 
                     key={song.uuid}
@@ -136,7 +170,6 @@ const Search = ({
                     <SongItem {...song} />
                   </Grid>
                 )
-              : !loading && <p>No chords found</p>
             }
           </Grid>
         </InfiniteScroll>
@@ -155,8 +188,9 @@ const Search = ({
             container
             spacing={2}
           >
-            {artists.data.length > 0 
-              ? artists.data.map(artist =>
+            {artistError
+              ? <NotFound message={artistError} />
+              : artists.data.map(artist =>
                   <Grid 
                     item 
                     key={artist.uuid}
@@ -168,12 +202,11 @@ const Search = ({
                     <ArtistItem {...artist} />
                   </Grid>
                 )
-              : !loading && <p>No artists found</p>
           }
           </Grid>
         </InfiniteScroll>
       </TabPanel>
-      {loading ? <p>Loading...</p> : null}
+      {loading && <Loading />}
     </div>
   )
 }
