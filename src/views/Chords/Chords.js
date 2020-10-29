@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   loadSongs: data => dispatch({ type: LOAD_SONGS, payload: data }),
 })
 
-const Chords = ({ loading, songs, count, loadSongs }) => {
+const Chords = ({ loading, songs, count, loadSongs, history }) => {
   const classes = useStyles()
 
   const [page, setPage] = useState(0)
@@ -70,7 +70,11 @@ const Chords = ({ loading, songs, count, loadSongs }) => {
               sm={6}
               xs={12}
             >
-              <SongItem {...song} />
+              <SongItem 
+                onPreview={() => 
+                  history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
+                {...song} 
+              />
             </Grid>
           )}
         </Grid>

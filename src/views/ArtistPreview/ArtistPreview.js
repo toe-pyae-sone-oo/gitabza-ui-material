@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
   loading: state.loading,
 })
 
-const ArtistPreview = ({ loading, match }) => {
+const ArtistPreview = ({ loading, match, history }) => {
   const classes = useStyles()
 
   const artistSlug = match.params.slug
@@ -105,7 +105,11 @@ const ArtistPreview = ({ loading, match }) => {
                         sm={6}
                         xs={12}
                       >
-                        <SongItem {...song} />
+                        <SongItem 
+                          {...song} 
+                          onPreview={() => 
+                            history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
+                        />
                       </Grid>
                     )}
                   </Grid>
@@ -133,7 +137,11 @@ const ArtistPreview = ({ loading, match }) => {
                   xs={12}
                   className={classes.artists}
                 >
-                  <ArtistItem {...artist} />
+                  <ArtistItem 
+                    {...artist} 
+                    onPreview={() =>
+                      history.push(`/artists/${artist.slug}`)}
+                  />
                 </Grid>
               )}
             </>

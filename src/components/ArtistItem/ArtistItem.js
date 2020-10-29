@@ -7,13 +7,14 @@ import PersonIcon from '@material-ui/icons/Person'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import useStyles from './ArtistItemStyle'
 
-const ArtistItem = ({ picture, name, songs }) => {
+const ArtistItem = ({ picture, name, songs, onPreview = f => f }) => {
   const classes = useStyles()
 
   return (
     <Card 
       variant="outlined"
       className={classes.root}
+      onClick={onPreview}
     >
       <div className={classes.avatarWrapper}>
         <Avatar

@@ -3,7 +3,7 @@ import Carousel from 'react-multi-carousel'
 import ArtistItem from '../ArtistItem/ArtistItem'
 import { responsive } from '../../../helpers/carousel'
 
-const ArtistList = ({ artists = [] }) => 
+const ArtistList = ({ artists = [], onPreview = f => f }) => 
   <Carousel
     ssr
     responsive={responsive}
@@ -12,6 +12,7 @@ const ArtistList = ({ artists = [] }) =>
     {artists.map(artist => 
       <ArtistItem 
         key={artist.uuid} 
+        onPreview={() => onPreview(artist)}
         {...artist} 
       />
     )}

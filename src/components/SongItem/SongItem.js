@@ -13,12 +13,17 @@ const SongItem = ({
   image, 
   title, 
   artists = [], 
-  version 
+  version,
+  onPreview = f => f,
 }) => {
   const classes = useStyles()
 
   return (
-    <Card className={classes.root} variant="outlined">
+    <Card 
+      className={classes.root} 
+      variant="outlined"
+      onClick={onPreview}
+    >
       <CardMedia
         className={classes.image}
         image={image}
@@ -54,7 +59,7 @@ const SongItem = ({
               className={classes.artistsIcon}
               fontSize="small" 
             />
-            {artists.join(', ')}
+            {artists.map(({ name }) => name).join(', ')}
           </Box>
         </Typography>
         <Typography 

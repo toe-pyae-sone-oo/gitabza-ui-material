@@ -2,11 +2,16 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import useStyles from './SongItemStyle'
 
-const SongItem = ({ title = '', image = undefined }) => {
+const SongItem = ({ 
+  title = '', 
+  image = undefined, 
+  onPreview = f => f 
+}) => {
   const classes = useStyles()
   return (
     <div 
       className={classes.root}
+      onClick={() => onPreview()}
     >
       <img 
         className={classes.image} 

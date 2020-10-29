@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
 
 let scroll = false
 
-const ChordPreview = ({ loading, match }) => {
+const ChordPreview = ({ loading, match, history }) => {
   const classes = useStyles()
 
   const { 
@@ -341,7 +341,11 @@ const ChordPreview = ({ loading, match }) => {
                         item
                         xs={6}
                       >
-                        <SongItem {...song} />
+                        <SongItem 
+                          onPreview={() => 
+                            history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
+                          {...song} 
+                        />
                       </Grid>
                     )}
                   </Grid>

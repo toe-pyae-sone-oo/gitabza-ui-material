@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import useStyles from './SectionHeaderStyle'
 
-const SectionHeader = ({ title = '' }) => {
+const SectionHeader = ({ title = '', onShowAll = f => f }) => {
   const classes = useStyles()
   return (
     <div 
@@ -18,6 +18,7 @@ const SectionHeader = ({ title = '' }) => {
       <Button
         className={classes.showAllBtn}
         color="primary"
+        onClick={onShowAll}
       >
         Show all
       </Button>

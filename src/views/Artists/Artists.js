@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
 
 const LIMIT_PER_PAGE = 20
 
-const Artists = ({ artists, count, loading, loadArtists }) => {
+const Artists = ({ artists, count, loading, loadArtists, history }) => {
   const classes = useStyles()
 
   const [page, setPage] = useState(0)
@@ -72,7 +72,10 @@ const Artists = ({ artists, count, loading, loadArtists }) => {
               sm={6}
               xs={12}
             >
-              <ArtistItem {...artist} />
+              <ArtistItem 
+                onPreview={() => history.push(`/artists/${artist.slug}`)}
+                {...artist} 
+              />
             </Grid>
           )}
         </Grid>

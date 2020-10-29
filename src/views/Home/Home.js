@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
   loadArtists: artists => dispatch({ type: LOAD_LATEST_ARTISTS, payload: artists }),
 })
 
-const Home = ({ loading, songs, artists, loadSongs, loadArtists }) => {
+const Home = ({ loading, songs, artists, loadSongs, loadArtists, history }) => {
   useEffect(() => {
     let mounted = true
 
@@ -42,6 +42,12 @@ const Home = ({ loading, songs, artists, loadSongs, loadArtists }) => {
 
   }, [artists, loadArtists])
 
+  const gotoChordPreview = song => 
+    history.push(`/chords/${song.artists[0].slug}/${song.slug}`)
+
+  const gotoArtistPreview = artist =>
+    history.push(`/artists/${artist.slug}`)
+
   return (
     <Grid 
       container
@@ -50,16 +56,24 @@ const Home = ({ loading, songs, artists, loadSongs, loadArtists }) => {
       <Grid item xs={12}>
         <SectionHeader
           title="Latest Update"
+          onShowAll={() => history.push('/chords')}
         />
         {loading && <Loading />}
-        <SongList songs={songs} />
+        <SongList 
+          songs={songs} 
+          onPreview={gotoChordPreview}
+        />
       </Grid>
       <Grid item xs={12}>
         <SectionHeader 
           title="Artists" 
+          onShowAll={() => history.push('/artists')}
         />
         {loading && <Loading />}
-        <ArtistList artists={artists} />
+        <ArtistList 
+          artists={artists} 
+          onPreview={gotoArtistPreview}
+        />
       </Grid>
     </Grid>
   )

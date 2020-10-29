@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    cursor: 'pointer',
   },
   avatarWrapper: {
     padding: theme.spacing(1),
