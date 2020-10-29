@@ -18,7 +18,7 @@ import Youtube from 'react-youtube'
 import Loading from '../../components/Loading/Loading'
 import NotFound from '../../components/NotFound/NotFound'
 import SongItem from '../../components/home/SongItem/SongItem'
-import { findById, getLatest } from '../../api/songs'
+import { getLatest, findBySlug } from '../../api/songs'
 import { wrapChords, tranpsoseSong } from '../../helpers/chords'
 import { getVideoId } from '../../helpers/songs'
 import useStyles from './ChordPreviewStyle'
@@ -32,7 +32,10 @@ let scroll = false
 const ChordPreview = ({ loading, match }) => {
   const classes = useStyles()
 
-  const songId = match.params.id
+  const { 
+    artist: artistSlug,
+    song: songSlug,
+  } = match.params
 
   const [song, setSong] = useState(undefined)
   const [fontSize, setFontSize] = useState(14)
@@ -47,17 +50,19 @@ const ChordPreview = ({ loading, match }) => {
   }
 
   useEffect(() => {
+    if (artistSlug && songSlug) {
+      findBySlug(artistSlug, songSlug)
+        .then(setSong)
+        .catch(handleError)
+    }
+  }, [artistSlug, songSlug]) 
 
-    songId && findById(songId)
-      .then(data => setSong(data))
-      .catch(handleError)
-
+  useEffect(() => {
     getLatest()
       .then(data => setOthers(
-        [...data.filter(song => song.uuid !== songId).slice(0, 6)]
-      ))
-
-  }, [setSong, songId])
+        [...data.filter(s => s.slug !== songSlug).slice(0, 6)]
+      )) 
+  }, [songSlug])
 
   const handleTranspose = step => {
     const lyrics = tranpsoseSong(song.lyrics, step)

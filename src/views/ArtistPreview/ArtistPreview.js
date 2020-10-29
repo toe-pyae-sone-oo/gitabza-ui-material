@@ -7,8 +7,8 @@ import SongItem from '../../components/SongItem/SongItem'
 import ArtistItem from '../../components/ArtistItem/ArtistItem'
 import Loading from '../../components/Loading/Loading'
 import NotFound from '../../components/NotFound/NotFound'
-import { findById, getLatest } from '../../api/artists'
-import { findByArtist } from '../../api/songs'
+import { getLatest, findBySlug } from '../../api/artists'
+import { findByArtist as findSongs } from '../../api/songs'
 import useStyles from './ArtistPreviewStyle'
 
 const mapStateToProps = state => ({
@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 const ArtistPreview = ({ loading, match }) => {
   const classes = useStyles()
 
-  const artistId = match.params.id
+  const artistSlug = match.params.slug
   const [artist, setArtist] = useState(undefined)
   const [songs, setSongs] = useState([])
   const [error, setError] = useState(undefined)
@@ -31,22 +31,24 @@ const ArtistPreview = ({ loading, match }) => {
   }
 
   useEffect(() => {
-    
-    if (artistId) {
-      findById(artistId)
+    if (artistSlug) {
+      findBySlug(artistSlug)
         .then(data => setArtist(data))
         .catch(handleError)
+    }
+  }, [artistSlug])
 
-      findByArtist(artistId)
+  useEffect(() => {
+    if (artist) {
+      findSongs(artist.uuid)
         .then(data => setSongs(data))
         .catch(handleError)
+        
+      getLatest().then(artists => setOthers([
+        ...artists.filter(it => it.uuid !== artist.uuid)
+      ]))
     }
-
-    getLatest().then(artists => setOthers([
-      ...artists.filter(artist => artist.uuid !== artistId)
-    ]))
-
-  }, [artistId])
+  }, [artist])
 
   return (
     <Grid 

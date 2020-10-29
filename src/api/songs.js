@@ -33,6 +33,12 @@ export const findById = id => {
     .then(({ data }) => data)
 }
 
+export const findBySlug = (artistSlug, songSlug) => {
+  return httpClient
+    .get(`/songs/slug/${artistSlug}/${songSlug}`)
+    .then(({ data }) => data)
+}
+
 export const update = (id, payload) => {
   return httpClient
     .put(`/songs/${id}`, payload, adminAuthHeader())

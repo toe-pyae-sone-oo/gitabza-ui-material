@@ -36,6 +36,12 @@ export const findById = id => {
     .then(({ data }) => data)
 }
 
+export const findBySlug = slug => {
+  return httpClient
+    .get(`/artists/slug/${slug}`)
+    .then(({ data }) => data)
+}
+
 export const update = (id, body) => {
   return httpClient
     .put(`/artists/${id}`, body, adminAuthHeader())

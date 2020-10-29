@@ -89,9 +89,9 @@ const DefaultLayout = ({
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/chords" component={Chords} />
-          <Route path="/chords/:id" component={ChordPreview} />
+          <Route path="/chords/:artist/:song" component={ChordPreview} />
           <Route exact path="/artists" component={Artists} />
-          <Route path="/artists/:id" component={ArtistPreview} />
+          <Route path="/artists/:slug" component={ArtistPreview} />
           <Route path="/search" component={Search} />
         </Switch>
       </Container>
