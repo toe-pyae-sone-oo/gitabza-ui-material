@@ -32,8 +32,12 @@ const ArtistPreview = ({ loading, match, history }) => {
 
   useEffect(() => {
     if (artistSlug) {
+      setArtist(undefined)
+      setSongs([])
+      setOthers([])
+
       findBySlug(artistSlug)
-        .then(data => setArtist(data))
+        .then(setArtist)
         .catch(handleError)
     }
   }, [artistSlug])
@@ -41,9 +45,9 @@ const ArtistPreview = ({ loading, match, history }) => {
   useEffect(() => {
     if (artist) {
       findSongs(artist.uuid)
-        .then(data => setSongs(data))
+        .then(setSongs)
         .catch(handleError)
-        
+    
       getLatest().then(artists => setOthers([
         ...artists.filter(it => it.uuid !== artist.uuid)
       ]))
