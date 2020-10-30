@@ -18,6 +18,7 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import PlayIcon from '@material-ui/icons/PlayArrow'
 import FormatSizeIcon from '@material-ui/icons/FormatSize'
 import Youtube from 'react-youtube'
+import Carousel from 'react-multi-carousel'
 import Loading from '../../components/Loading/Loading'
 import NotFound from '../../components/NotFound/NotFound'
 import SongItem from '../../components/home/SongItem/SongItem'
@@ -25,7 +26,9 @@ import Chord from '../../components/Chord/Chord'
 import { getLatest, findBySlug } from '../../api/songs'
 import { wrapChords, tranpsoseSong, extractChords, getChordPositions } from '../../helpers/chords'
 import { getVideoId } from '../../helpers/songs'
+import { responsive } from '../../helpers/carousel'
 import useStyles from './ChordPreviewStyle'
+import 'react-multi-carousel/lib/styles.css'
 
 const mapStateToProps = state => ({
   loading: state.loading,
@@ -377,27 +380,24 @@ const ChordPreview = ({ loading, match, history }) => {
                       <Tab label="Guitar" />
                       <Tab label="Ukulele" />
                     </Tabs>
-                    <Grid
-                      container
-                      spacing={1}
+                    <Carousel
+                      ssr
+                      responsive={responsive}
+                      keyBoardControl={false}
                     >
-                      {Object.keys(chordPositions).map(key => 
-                        <Grid
-                          key={key} 
-                          item
-                        >
-                          <Chord 
-                            chordKey={key}
-                            chord={chordPositions[key][currentChordPos[key]]} 
-                            total={chordPositions[key].length}
-                            position={currentChordPos[key] + 1}
-                            instrument={instruments[currentTab]}
-                            onLeft={() => changeCurrentChordPos(key, -1)}
-                            onRight={() => changeCurrentChordPos(key, 1)}
-                          />
-                        </Grid>
+                      {Object.keys(chordPositions).map(key =>
+                        <Chord 
+                          key={key}
+                          chordKey={key}
+                          chord={chordPositions[key][currentChordPos[key]]} 
+                          total={chordPositions[key].length}
+                          position={currentChordPos[key] + 1}
+                          instrument={instruments[currentTab]}
+                          onLeft={() => changeCurrentChordPos(key, -1)}
+                          onRight={() => changeCurrentChordPos(key, 1)}
+                        />
                       )}
-                    </Grid>
+                    </Carousel>
                     <pre style={{ fontSize }}>
                       {wrapChords(song.lyrics, (match, i) =>
                         <span 

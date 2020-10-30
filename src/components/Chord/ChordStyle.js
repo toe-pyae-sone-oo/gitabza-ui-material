@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
   root: {
     background: theme.palette.common.white,
-    width: 120,
-    padding: theme.spacing(1),
+    width: 140,
+    paddingTop: theme.spacing(1),
   },
   chord: {
   },
