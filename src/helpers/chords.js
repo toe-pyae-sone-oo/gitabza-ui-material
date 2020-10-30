@@ -1,4 +1,6 @@
 import stringReplace from 'react-string-replace'
+import guitar from '@tombatossals/chords-db/lib/guitar.json'
+import ukulele from '@tombatossals/chords-db/lib/ukulele.json'
 
 const chordRegex = /([CDEFGAB][b#]?[m]?[(]?(2|5|6|7|9|11|13|6\/9|7-5|7-9|7#5|7#9|7\+5|7\+9|7b5|7b9|7sus2|7sus4|add2|add4|add9|aug|dim|dim7|m\|maj7|m6|m7|m7b5|m9|m11|m13|maj7|maj9|maj11|maj13|mb5|m|sus|sus2|sus4|M7)?(\))?)(?=\s|\.|\)|-|\/)/g
 const firstChordRegex = /([CDEFGAB][b#]?(?=\s(?![a-zH-Z])|(?=(2|5|6|7|9|11|13|6\/9|7-5|7-9|7#5|7#9|7‌​\+5|7\+9|7b5|7b9|7sus2|7sus4|add2|add4|add9|aug|dim|dim7|m\|maj7|m6|m7|m7b5|m9|m1‌​1|m13|maj7|maj9|maj11|maj13|mb5|m|sus|sus2|sus4|M7|\))(?=(\s|\/)))|(?=\s|\.|\)|-|\/)))/g
@@ -45,6 +47,13 @@ const transposeChord = (note, types, steps) => {
   return null
 }
 
+const normalizeChord = chord => {
+  if (chord.length > 1 && (chord[1] === 'b' || chord[1] === '#')) {
+    return chord.substring(0, 2)
+  }
+  return chord.substring(0, 1)
+}
+
 export const tranpsoseSong = (song, steps) => {
   steps = steps % 12
   const matches = song.match(chordRegex)
@@ -75,4 +84,54 @@ export const tranpsoseSong = (song, steps) => {
   const regex = new RegExp(regexStr, 'g')
 
   return song.replace(regex, m => converter[m])
+}
+
+const chordMapper = {
+  guitar: {
+    Gb: 'F#',
+    Db: 'C#',
+  },
+  ukulele: {
+    'C#': 'Db',
+    'F#': 'Gb',
+  },
+}
+
+export const extractChords = (song, instrument = 'guitar') => {
+  const matches = song.match(chordRegex)
+  const chords = [...new Set(matches)]
+
+  return chords.map(chord => {
+    let normalized = normalizeChord(chord)
+    let suffix = chord.replace(normalized, '')
+
+    normalized = chordMapper[instrument][normalized] 
+      ? chordMapper[instrument][normalized]
+      : normalized
+    normalized = normalized.replace('#', 'sharp')
+
+    if (suffix === '') {
+      suffix = 'major'
+    } else if (suffix === 'm') {
+      suffix = 'minor'
+    }
+
+    return { original: chord, key: normalized, suffix }
+  })
+}
+
+export const getChordPositions = (chords, instrument = 'guitar') => {
+  const positions = {}
+  chords.forEach(chord => {
+    const _positions = (
+      instrument === 'ukulele' ? ukulele : guitar
+    )
+      .chords[chord.key]
+      .find(_chord => _chord.suffix === chord.suffix)
+      
+    if (_positions) {
+      positions[chord.original] = _positions.positions
+    }
+  })
+  return positions
 }

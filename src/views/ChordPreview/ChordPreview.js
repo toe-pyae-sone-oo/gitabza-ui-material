@@ -7,6 +7,8 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Fab from '@material-ui/core/Fab'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import AddIcon from '@material-ui/icons/Add'
@@ -18,14 +20,17 @@ import Youtube from 'react-youtube'
 import Loading from '../../components/Loading/Loading'
 import NotFound from '../../components/NotFound/NotFound'
 import SongItem from '../../components/home/SongItem/SongItem'
+import Chord from '../../components/Chord/Chord'
 import { getLatest, findBySlug } from '../../api/songs'
-import { wrapChords, tranpsoseSong } from '../../helpers/chords'
+import { wrapChords, tranpsoseSong, extractChords, getChordPositions } from '../../helpers/chords'
 import { getVideoId } from '../../helpers/songs'
 import useStyles from './ChordPreviewStyle'
 
 const mapStateToProps = state => ({
   loading: state.loading,
 })
+
+const instruments = ['guitar', 'ukulele']
 
 let scroll = false
 
@@ -42,6 +47,9 @@ const ChordPreview = ({ loading, match, history }) => {
   const [scrolling, setScrolling] = useState(false)
   const [error, setError] = useState(undefined)
   const [others, setOthers] = useState([])
+  const [chordPositions, setChordPositions] = useState({})
+  const [currentChordPos, setCurrentChordPos] = useState({})
+  const [currentTab, setCurrentTab] = useState(0) // 0 => guitar, 1 => ukulele
 
   const handleError = err => {
     if (err.response && err.response.status === 404) {
@@ -63,6 +71,20 @@ const ChordPreview = ({ loading, match, history }) => {
         [...data.filter(s => s.slug !== songSlug).slice(0, 8)]
       )) 
   }, [songSlug])
+
+  useEffect(() => {
+    if (song) {
+      const chords = extractChords(song.lyrics, instruments[currentTab])
+      const positions = getChordPositions(chords, instruments[currentTab])
+      setChordPositions(positions)
+
+      const currentPos = {}
+      Object.keys(positions).forEach(key => {
+        currentPos[key] = 0
+      })
+      setCurrentChordPos(currentPos)
+    }
+  }, [song, currentTab])
 
   const handleTranspose = step => {
     const lyrics = tranpsoseSong(song.lyrics, step)
@@ -91,6 +113,20 @@ const ChordPreview = ({ loading, match, history }) => {
       pageScroll()
     }
     setScrolling(scroll)
+  }
+
+  const changeCurrentChordPos = (key, step) => {
+    const total = chordPositions[key].length
+    let current = currentChordPos[key] + step
+    if (current < 0) {
+      current = total - 1
+    } else if (current >= total) {
+      current = 0
+    }
+    setCurrentChordPos({
+      ...currentChordPos,
+      [key]: current,
+    })
   }
 
   return (
@@ -299,6 +335,36 @@ const ChordPreview = ({ loading, match, history }) => {
                   <CardContent 
                     className={classes.lyricsWrapper}
                   >
+                    <Tabs
+                      value={currentTab}
+                      onChange={(e, value) => setCurrentTab(value)}
+                      indicatorColor="primary"
+                      className={classes.instrumentTab}
+                    >
+                      <Tab label="Guitar" />
+                      <Tab label="Ukulele" />
+                    </Tabs>
+                    <Grid
+                      container
+                      spacing={1}
+                    >
+                      {Object.keys(chordPositions).map(key => 
+                        <Grid
+                          key={key} 
+                          item
+                        >
+                          <Chord 
+                            chordKey={key}
+                            chord={chordPositions[key][currentChordPos[key]]} 
+                            total={chordPositions[key].length}
+                            position={currentChordPos[key] + 1}
+                            instrument={instruments[currentTab]}
+                            onLeft={() => changeCurrentChordPos(key, -1)}
+                            onRight={() => changeCurrentChordPos(key, 1)}
+                          />
+                        </Grid>
+                      )}
+                    </Grid>
                     <pre style={{ fontSize }}>
                       {wrapChords(song.lyrics, (match, i) =>
                         <span key={match + i} className={classes.code}>{match}</span>

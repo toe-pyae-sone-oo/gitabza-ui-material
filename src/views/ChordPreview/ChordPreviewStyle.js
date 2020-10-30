@@ -96,6 +96,9 @@ const useStyles = makeStyles(theme => ({
   otherSongCard: {
     margin: theme.spacing(1),
   },
+  instrumentTab: {
+    marginBottom: theme.spacing(1),
+  },
 }))
 
 export default useStyles
