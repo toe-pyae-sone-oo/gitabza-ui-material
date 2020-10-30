@@ -90,10 +90,12 @@ const chordMapper = {
   guitar: {
     Gb: 'F#',
     Db: 'C#',
+    'G#': 'Ab',
   },
   ukulele: {
     'C#': 'Db',
     'F#': 'Gb',
+    'G#': 'Ab',
   },
 }
 

@@ -26,6 +26,8 @@ const useStyles = makeStyles(theme => ({
   },
   code: {
     color: theme.palette.primary.main,
+    cursor: 'pointer',
+    fontWeight: 'bold',
   },
   youtubeCard: {
     padding: theme.spacing(1),

@@ -26,7 +26,6 @@ const Chord = ({
       <Typography
         variant="body2"
         className={classes.chordKey}
-        gutterBottom
       >
         {chordKey}
       </Typography>
@@ -50,6 +49,7 @@ const Chord = ({
         <IconButton 
           size="small"
           onClick={() => onLeft()}
+          className={classes.actionBtn}
         >
           <KeyboardArrowLeftIcon 
             fontSize="small" 
@@ -58,12 +58,14 @@ const Chord = ({
         <Typography
           display="inline"
           variant="caption"
+          className={classes.position}
         >
           {position} of {total}
         </Typography>
         <IconButton 
           size="small"
           onClick={() => onRight()}
+          className={classes.actionBtn}
         >
           <KeyboardArrowRightIcon
             fontSize="small"

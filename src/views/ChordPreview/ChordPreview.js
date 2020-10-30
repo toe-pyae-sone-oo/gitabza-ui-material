@@ -9,6 +9,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Fab from '@material-ui/core/Fab'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import Popper from '@material-ui/core/Popper'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import AddIcon from '@material-ui/icons/Add'
@@ -50,6 +51,10 @@ const ChordPreview = ({ loading, match, history }) => {
   const [chordPositions, setChordPositions] = useState({})
   const [currentChordPos, setCurrentChordPos] = useState({})
   const [currentTab, setCurrentTab] = useState(0) // 0 => guitar, 1 => ukulele
+  const [anchorEl, setAnchorEl] = useState(undefined)
+  const [popupChord, setPopupChord] = useState(undefined)
+
+  const popper = Boolean(anchorEl)
 
   const handleError = err => {
     if (err.response && err.response.status === 404) {
@@ -58,6 +63,7 @@ const ChordPreview = ({ loading, match, history }) => {
   }
 
   useEffect(() => {
+    setAnchorEl(undefined)
     if (artistSlug && songSlug) {
       findBySlug(artistSlug, songSlug)
         .then(setSong)
@@ -66,6 +72,7 @@ const ChordPreview = ({ loading, match, history }) => {
   }, [artistSlug, songSlug]) 
 
   useEffect(() => {
+    setAnchorEl(undefined)
     getLatest()
       .then(data => setOthers(
         [...data.filter(s => s.slug !== songSlug).slice(0, 8)]
@@ -73,6 +80,7 @@ const ChordPreview = ({ loading, match, history }) => {
   }, [songSlug])
 
   useEffect(() => {
+    setAnchorEl(undefined)
     if (song) {
       const chords = extractChords(song.lyrics, instruments[currentTab])
       const positions = getChordPositions(chords, instruments[currentTab])
@@ -129,11 +137,36 @@ const ChordPreview = ({ loading, match, history }) => {
     })
   }
 
+  const handlePopper = (e, key) => {
+    setPopupChord(key)
+    setAnchorEl(anchorEl === e.currentTarget 
+      ? undefined 
+      : e.currentTarget
+    )
+  }
+
   return (
     <Grid 
       container 
       spacing={2}
     >
+      <Popper
+        open={popper}
+        anchorEl={anchorEl}
+      >
+        {popupChord && chordPositions[popupChord]
+          ? <Chord 
+              chordKey={popupChord}
+              chord={chordPositions[popupChord][currentChordPos[popupChord] ?? 0]}
+              total={chordPositions[popupChord].length}
+              position={currentChordPos[popupChord] + 1}
+              instrument={instruments[currentTab]}
+              onLeft={() => changeCurrentChordPos(popupChord, -1)}
+              onRight={() => changeCurrentChordPos(popupChord, 1)}
+            /> 
+          : <span></span>
+        }
+      </Popper>
       {error && <NotFound message={error} />}
       {loading 
         ? <Loading />
@@ -367,7 +400,13 @@ const ChordPreview = ({ loading, match, history }) => {
                     </Grid>
                     <pre style={{ fontSize }}>
                       {wrapChords(song.lyrics, (match, i) =>
-                        <span key={match + i} className={classes.code}>{match}</span>
+                        <span 
+                          key={match + i} 
+                          className={classes.code}
+                          onClick={e => handlePopper(e, match)}
+                        >
+                          {match}
+                        </span>
                       )}
                     </pre>
                   </CardContent>
@@ -397,7 +436,7 @@ const ChordPreview = ({ loading, match, history }) => {
                 </Typography>
                 <Grid
                   container
-                  spacing={1}
+                  spacing={2}
                 >
                   {others.map(song => 
                     <Grid

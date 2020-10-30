@@ -1,13 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  chord: {
+  root: {
     background: theme.palette.common.white,
     width: 120,
+    padding: theme.spacing(1),
+  },
+  chord: {
   },
   chordKey: {
     textAlign: 'center',
     fontWeight: 'bold',
+    color: theme.palette.common.black,
   },
   action: {
     display: 'flex',
@@ -16,6 +20,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
   },
   actionBtn: {
+    color: theme.palette.common.black,
+  },
+  position: {
+    color: theme.palette.common.black,
   },
 }))
 
