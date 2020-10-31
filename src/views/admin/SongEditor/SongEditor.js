@@ -47,7 +47,7 @@ const SongEditor = ({
     title: '',
     slug: '',
     artists: [],
-    genres: '',
+    genre: '',
     types: '',
     difficulty: '',
     capo: '',
@@ -60,7 +60,7 @@ const SongEditor = ({
     title: '',
     slug: '',
     artists: '',
-    genres: '',
+    genre: '',
     types: '',
     difficulty: '',
     version: '',
@@ -207,16 +207,16 @@ const SongEditor = ({
           xs={12}
         >
           <TextField
-            name="genres"
+            name="genre"
             label="Choose Genres"
             select
             variant="outlined"
             size="small"
             fullWidth
-            value={form.genres}
+            value={form.genre}
             onChange={handleInputChange}
-            helperText={errors.genres}
-            error={!!errors.genres}
+            helperText={errors.genre}
+            error={!!errors.genre}
             disabled={loading}
           >
             {GENRES.map(genre =>
