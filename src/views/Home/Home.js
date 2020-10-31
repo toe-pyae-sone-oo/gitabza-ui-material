@@ -116,7 +116,7 @@ const Home = ({
       <Grid item xs={12}>
         <SectionHeader
           title="Genres"
-          onShowAll={() => history.push('/chords')}
+          onShowAll={null}
         />
         <GenresList 
           genres={GENRES} 

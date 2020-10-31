@@ -15,13 +15,15 @@ const SectionHeader = ({ title = '', onShowAll = f => f }) => {
       >
         {title}
       </Typography>
-      <Button
-        className={classes.showAllBtn}
-        color="primary"
-        onClick={onShowAll}
-      >
-        Show all
-      </Button>
+      {onShowAll && 
+        <Button
+          className={classes.showAllBtn}
+          color="primary"
+          onClick={onShowAll}
+        >
+          Show all
+        </Button>
+      }
     </div>
   )
 }
