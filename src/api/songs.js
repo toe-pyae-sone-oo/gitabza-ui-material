@@ -8,12 +8,14 @@ export const create = payload => {
 
 export const find = ({ 
   title, 
+  genre,
   skip = 0, 
   limit = 10,
   sort,
   order,
 }) => {
   let query = title ? `title=${title.trim()}&` : ''
+  query += genre ? `genre=${genre}&` : ''
   query += sort ? `sort=${sort}&` : ''
   query += order ? `order=${order}&` : ''
   query += `skip=${skip}&`

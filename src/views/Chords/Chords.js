@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
+import TextField from '@material-ui/core/TextField'
+import MenuItem from '@material-ui/core/MenuItem'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import Loading from '../../components/Loading/Loading'
-import { LOAD_SONGS } from '../../constants/actionTypes'
+import { LOAD_SONGS, SET_SONGS_GENRE, SET_SONGS_PAGE } from '../../constants/actionTypes'
+import { GENRES } from '../../constants/songs'
 import { find } from '../../api/songs'
 import SongItem from '../../components/SongItem/SongItem'
+import Loading from '../../components/Loading/Loading'
+import NotFound from '../../components/NotFound/NotFound'
 import useStyles from './ChordsStyle'
 
 const LIMIT_PER_PAGE = 20
@@ -14,34 +18,57 @@ const mapStateToProps = state => ({
   loading: state.loading,
   songs: state.songs.data,
   count: state.songs.count,
+  page: state.songs.page,
+  genre: state.songs.genre,
 })
 
 const mapDispatchToProps = dispatch => ({
   loadSongs: data => dispatch({ type: LOAD_SONGS, payload: data }),
+  setGenre: genre => dispatch({ type: SET_SONGS_GENRE, payload: genre }),
+  setPage: page => dispatch({ type: SET_SONGS_PAGE, payload: page }),
 })
 
-const Chords = ({ loading, songs, count, loadSongs, history }) => {
+const Chords = ({ 
+  loading, 
+  songs, 
+  count, 
+  genre,
+  page,
+  loadSongs, 
+  setGenre,
+  setPage,
+  history,
+}) => {
   const classes = useStyles()
-
-  const [page, setPage] = useState(0)
 
   useEffect(() => {
     let mounted = true
 
-    songs.length === 0 && find({ 
-      limit: LIMIT_PER_PAGE,
-      sort: 'title',
-      order: 'asc',
-    }).then(data => mounted && loadSongs(data))
+    if (count === -1) {
+      console.log('hello!')
+      find({ 
+        genre,
+        limit: LIMIT_PER_PAGE,
+        sort: 'title',
+        order: 'asc',
+      }).then(data => {
+        if (mounted) {
+          loadSongs({ ...data })
+          setPage(0)
+        }
+      })
+    } 
 
     return () => mounted = false
 
-  }, [songs, loadSongs])
+  }, [genre, count, loadSongs, setPage])
 
   const loadMoreSongs = () => {
+    console.log('hello from loadMoreSongs')
     const nextPage = page + 1
     setPage(nextPage)
     find({ 
+      genre,
       skip: nextPage * LIMIT_PER_PAGE, 
       limit: LIMIT_PER_PAGE,
       sort: 'title',
@@ -52,13 +79,43 @@ const Chords = ({ loading, songs, count, loadSongs, history }) => {
       )
   }
 
+  const onGenreChange = e => {
+    loadSongs({ songs: [], count: -1 })
+    setGenre(e.target.value)
+  }
+
   return (
     <>
+      <div 
+        className={classes.filter}
+      >
+        <TextField
+          label="Genres"
+          select
+          variant="outlined"
+          size="small"
+          fullWidth
+          className={classes.genreFilter}
+          value={genre}
+          onChange={onGenreChange}
+        >
+          <MenuItem value={''}>None</MenuItem>
+          {GENRES.map(genre =>
+            <MenuItem
+              key={genre.value}
+              value={genre.value}
+            >
+              {genre.name}
+            </MenuItem>
+          )}
+        </TextField>
+      </div>
+      {count === 0 && <NotFound message="No Songs Found" />}
       <InfiniteScroll
         className={classes.scroll}
         dataLength={songs.length}
         next={loadMoreSongs}
-        hasMore={count !== songs.length}
+        hasMore={count !== songs.length && count !== -1}
       >
         <Grid container spacing={2}>
           {songs.map(song =>

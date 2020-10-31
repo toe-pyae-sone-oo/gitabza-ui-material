@@ -4,7 +4,13 @@ import Grid from '@material-ui/core/Grid'
 import 'react-multi-carousel/lib/styles.css'
 import { getLatest as getLatestSongs, getTop as getTopSongs } from '../../api/songs'
 import { getLatest as getLatestArtists } from '../../api/artists'
-import { LOAD_LATEST_SONGS, LOAD_LATEST_ARTISTS, LOAD_TOP_SONGS } from '../../constants/actionTypes'
+import { 
+  LOAD_LATEST_SONGS, 
+  LOAD_LATEST_ARTISTS, 
+  LOAD_TOP_SONGS, 
+  SET_SONGS_GENRE, 
+  LOAD_SONGS 
+} from '../../constants/actionTypes'
 import { GENRES } from '../../constants/songs'
 import Loading from '../../components/Loading/Loading'
 import SongList from '../../components/home/SongList/SongList'
@@ -20,9 +26,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadSongs: songs => dispatch({ type: LOAD_LATEST_SONGS, payload: songs }),
+  loadLatestSongs: songs => dispatch({ type: LOAD_LATEST_SONGS, payload: songs }),
   loadArtists: artists => dispatch({ type: LOAD_LATEST_ARTISTS, payload: artists }),
   loadTopSongs: songs => dispatch({ type: LOAD_TOP_SONGS, payload: songs }),
+  setGenre: genre => dispatch({ type: SET_SONGS_GENRE, payload: genre }),
+  loadSongs: data => dispatch({ type: LOAD_SONGS, payload: data }),
 })
 
 const Home = ({ 
@@ -30,20 +38,22 @@ const Home = ({
   songs, 
   artists, 
   topSongs,
-  loadSongs, 
+  loadLatestSongs, 
   loadArtists, 
   loadTopSongs,
+  setGenre,
+  loadSongs,
   history, 
 }) => {
   useEffect(() => {
     let mounted = true
 
     songs.length === 0 && getLatestSongs()
-      .then(songs => mounted && loadSongs(songs))
+      .then(songs => mounted && loadLatestSongs(songs))
 
     return () => mounted = false
 
-  }, [songs, loadSongs])
+  }, [songs, loadLatestSongs])
 
   useEffect(() => {
     let mounted = true
@@ -72,8 +82,11 @@ const Home = ({
   const gotoArtistPreview = artist =>
     history.push(`/artists/${artist.slug}`)
 
-  const gotoChordList = genre => 
-    history.push(`/chords?genre=${genre}`)
+  const searchChordsByGenre = genre => {
+    setGenre(genre)
+    loadSongs({ songs: [], count: -1 })
+    history.push(`/chords`)
+  }
 
   return (
     <Grid 
@@ -120,7 +133,7 @@ const Home = ({
         />
         <GenresList 
           genres={GENRES} 
-          onPreview={gotoChordList}
+          onPreview={searchChordsByGenre}
         />
       </Grid>
     </Grid>
