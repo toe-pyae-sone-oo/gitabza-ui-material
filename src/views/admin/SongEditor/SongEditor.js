@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import AutoComplete from '@material-ui/lab/AutoComplete'
 import Button from '@material-ui/core/Button'
 import { LOAD_ADMIN_ARTIST_NAMES, SET_ADMIN_SONGS_CHANGED } from '../../../constants/actionTypes'
+import { GENRES } from '../../../constants/songs'
 import { getNames as getArtistNames } from '../../../api/artists'
 import { create, findById, update } from '../../../api/songs'
 import { getCapo } from '../../../helpers/songs'
@@ -46,6 +47,7 @@ const SongEditor = ({
     title: '',
     slug: '',
     artists: [],
+    genres: '',
     types: '',
     difficulty: '',
     capo: '',
@@ -58,6 +60,7 @@ const SongEditor = ({
     title: '',
     slug: '',
     artists: '',
+    genres: '',
     types: '',
     difficulty: '',
     version: '',
@@ -187,7 +190,7 @@ const SongEditor = ({
             renderInput={params =>
               <TextField 
                 {...params}  
-                label="Select Artists"
+                label="Choose Artists"
                 variant="outlined"
                 helperText={errors.artists}
                 error={!!errors.artists}
@@ -198,6 +201,33 @@ const SongEditor = ({
             value={artists.filter(artist => form.artists.includes(artist.uuid))}
             onChange={handleArtistsInputChange}
           />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+        >
+          <TextField
+            name="genres"
+            label="Choose Genres"
+            select
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={form.genres}
+            onChange={handleInputChange}
+            helperText={errors.genres}
+            error={!!errors.genres}
+            disabled={loading}
+          >
+            {GENRES.map(genre =>
+              <MenuItem
+                key={genre.value}
+                value={genre.value}
+              >
+                {genre.name}
+              </MenuItem>
+            )}
+          </TextField>
         </Grid>
         <Grid
           item
