@@ -5,9 +5,11 @@ import 'react-multi-carousel/lib/styles.css'
 import { getLatest as getLatestSongs, getTop as getTopSongs } from '../../api/songs'
 import { getLatest as getLatestArtists } from '../../api/artists'
 import { LOAD_LATEST_SONGS, LOAD_LATEST_ARTISTS, LOAD_TOP_SONGS } from '../../constants/actionTypes'
+import { GENRES } from '../../constants/songs'
 import Loading from '../../components/Loading/Loading'
 import SongList from '../../components/home/SongList/SongList'
 import ArtistList from '../../components/home/ArtistList/ArtistList'
+import GenresList from '../../components/home/GenresList/GenresList'
 import SectionHeader from '../../components/home/SectionHeader/SectionHeader'
 
 const mapStateToProps = state => ({
@@ -70,6 +72,9 @@ const Home = ({
   const gotoArtistPreview = artist =>
     history.push(`/artists/${artist.slug}`)
 
+  const gotoChordList = genre => 
+    history.push(`/chords?genre=${genre}`)
+
   return (
     <Grid 
       container
@@ -106,6 +111,17 @@ const Home = ({
         <SongList 
           songs={topSongs} 
           onPreview={gotoChordPreview}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <SectionHeader
+          title="Genres"
+          onShowAll={() => history.push('/chords')}
+        />
+        {loading && <Loading />}
+        <GenresList 
+          genres={GENRES} 
+          onPreview={gotoChordList}
         />
       </Grid>
     </Grid>
