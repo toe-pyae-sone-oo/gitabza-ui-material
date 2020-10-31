@@ -118,7 +118,6 @@ const Home = ({
           title="Genres"
           onShowAll={() => history.push('/chords')}
         />
-        {loading && <Loading />}
         <GenresList 
           genres={GENRES} 
           onPreview={gotoChordList}
