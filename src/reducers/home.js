@@ -1,6 +1,10 @@
-import { LOAD_LATEST_SONGS, LOAD_LATEST_ARTISTS } from '../constants/actionTypes'
+import { 
+  LOAD_LATEST_SONGS, 
+  LOAD_LATEST_ARTISTS, 
+  LOAD_TOP_SONGS
+} from '../constants/actionTypes'
 
-export default (state = { songs: [], artists: [] }, action) => {
+export default (state = { songs: [], artists: [], topSongs: [] }, action) => {
   switch (action.type) {
     case LOAD_LATEST_SONGS:
       return {
@@ -11,6 +15,11 @@ export default (state = { songs: [], artists: [] }, action) => {
       return {
         ...state,
         artists: action.payload,
+      }
+    case LOAD_TOP_SONGS:
+      return {
+        ...state,
+        topSongs: action.payload,
       }
     default:
       return state

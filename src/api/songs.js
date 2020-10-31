@@ -57,3 +57,9 @@ export const findByArtist = artistId => {
     .get(`/artists/${artistId}/songs`)
     .then(({ data }) => data)
 }
+
+export const getTop = () => {
+  return httpClient
+    .get('/songs/top')
+    .then(({ data }) => data)
+}

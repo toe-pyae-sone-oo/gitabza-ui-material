@@ -91,11 +91,15 @@ const chordMapper = {
     Gb: 'F#',
     Db: 'C#',
     'G#': 'Ab',
+    'A#': 'Bb',
+    'D#': 'Eb',
   },
   ukulele: {
     'C#': 'Db',
     'F#': 'Gb',
     'G#': 'Ab',
+    'A#': 'Bb',
+    'D#': 'Eb',
   },
 }
 
