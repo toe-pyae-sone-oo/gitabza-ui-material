@@ -7,9 +7,8 @@ const useStyles = makeStyles(theme => ({
   },
   image: {
     width: '100%',
-    height: 'auto',
-    maxHeight: 144,
-    objectFit: 'contain',
+    height: 144,
+    objectFit: 'cover',
     display: 'inline-block',
   },
 }))
