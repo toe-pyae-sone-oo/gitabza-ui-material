@@ -45,9 +45,8 @@ const Chords = ({
     let mounted = true
 
     if (count === -1) {
-      console.log('hello!')
       find({ 
-        genre,
+        genre: genre === 'all' ? undefined : genre,
         limit: LIMIT_PER_PAGE,
         sort: 'title',
         order: 'asc',
@@ -68,7 +67,7 @@ const Chords = ({
     const nextPage = page + 1
     setPage(nextPage)
     find({ 
-      genre,
+      genre: genre === 'all' ? undefined : genre,
       skip: nextPage * LIMIT_PER_PAGE, 
       limit: LIMIT_PER_PAGE,
       sort: 'title',
@@ -99,7 +98,7 @@ const Chords = ({
           value={genre}
           onChange={onGenreChange}
         >
-          <MenuItem value={''}>None</MenuItem>
+          <MenuItem value={'all'}>All</MenuItem>
           {GENRES.map(genre =>
             <MenuItem
               key={genre.value}
