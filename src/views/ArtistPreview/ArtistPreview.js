@@ -69,55 +69,54 @@ const ArtistPreview = ({ loading, match, history }) => {
           item
         >
           {error && <NotFound message={error} />}
+          {artist &&
+              <div className={classes.artistInfoWrapper}>
+                <Avatar
+                  className={classes.avatar}
+                  alt={artist.name}
+                  src={artist.picture}
+                />
+                <div
+                  className={classes.artistInfo}
+                >
+                  <Typography 
+                    className={classes.name}
+                    variant="h6"
+                  >
+                    {artist.name}
+                  </Typography>
+                  <Typography
+                    className={classes.songCount}
+                    variant="subtitle2"
+                  >
+                    သီချင်း - {artist.songs}
+                  </Typography>
+                </div>
+              </div>
+          }
           {loading
             ? <Loading/>
-            : artist &&
-                <>
-                  <div className={classes.artistInfoWrapper}>
-                    <Avatar
-                      className={classes.avatar}
-                      alt={artist.name}
-                      src={artist.picture}
-                    />
-                    <div
-                      className={classes.artistInfo}
-                    >
-                      <Typography 
-                        className={classes.name}
-                        variant="h6"
-                      >
-                        {artist.name}
-                      </Typography>
-                      <Typography
-                        className={classes.songCount}
-                        variant="subtitle2"
-                      >
-                        သီချင်း - {artist.songs}
-                      </Typography>
-                    </div>
-                  </div>
+            : <Grid 
+                container 
+                spacing={2}
+              >
+                {songs.map(song =>
                   <Grid 
-                    container 
-                    spacing={2}
+                    item 
+                    key={song.uuid} 
+                    lg={6} 
+                    md={6}
+                    sm={6}
+                    xs={12}
                   >
-                    {songs.map(song =>
-                      <Grid 
-                        item 
-                        key={song.uuid} 
-                        lg={6} 
-                        md={6}
-                        sm={6}
-                        xs={12}
-                      >
-                        <SongItem 
-                          {...song} 
-                          onPreview={() => 
-                            history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
-                        />
-                      </Grid>
-                    )}
+                    <SongItem 
+                      {...song} 
+                      onPreview={() => 
+                        history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
+                    />
                   </Grid>
-                </>
+                )}
+              </Grid>
           }
         </Grid>
       </Grid>
