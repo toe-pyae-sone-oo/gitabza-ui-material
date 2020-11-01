@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
   },
   showAllBtn: {
     alignSelf: 'end',
+    marginRight: theme.spacing(1),
   },
 }))
 

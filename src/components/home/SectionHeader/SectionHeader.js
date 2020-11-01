@@ -20,6 +20,8 @@ const SectionHeader = ({ title = '', onShowAll = f => f }) => {
           className={classes.showAllBtn}
           color="primary"
           onClick={onShowAll}
+          variant="outlined"
+          size="small"
         >
           Show all
         </Button>
