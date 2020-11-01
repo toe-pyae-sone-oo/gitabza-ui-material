@@ -1,30 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import ArtistItem from '../../components/ArtistItem/ArtistItem'
 import Loading from '../../components/Loading/Loading'
 import { find } from '../../api/artists'
-import { LOAD_ARTISTS } from '../../constants/actionTypes'
+import { LOAD_ARTISTS, SET_ARTISTS_PAGE } from '../../constants/actionTypes'
 import useStyles from './ArtistsStyle'
 
 const mapStateToProps = state => ({
   artists: state.artists.data,
   count: state.artists.count,
+  page: state.artists.page,
   loading: state.loading,
 })
 
 const mapDispatchToProps = dispatch => ({
   loadArtists: ({ artists, count }) => 
-    dispatch({ type: LOAD_ARTISTS, payload: { artists, count } })
+    dispatch({ type: LOAD_ARTISTS, payload: { artists, count } }),
+  setPage: page => dispatch({ type: SET_ARTISTS_PAGE, payload: page }),
 })
 
 const LIMIT_PER_PAGE = 20
 
-const Artists = ({ artists, count, loading, loadArtists, history }) => {
+const Artists = ({ 
+  artists, 
+  count, 
+  loading, 
+  page, 
+  loadArtists, 
+  setPage, 
+  history 
+}) => {
   const classes = useStyles()
-
-  const [page, setPage] = useState(0)
   
   useEffect(() => {
 
