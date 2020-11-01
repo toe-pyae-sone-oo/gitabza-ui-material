@@ -68,6 +68,7 @@ const Search = ({
   loadSongs,
   artists,
   loadArtists,
+  history,
 }) => {
   const classes = useStyles()
 
@@ -167,7 +168,10 @@ const Search = ({
                     sm={6}
                     xs={12}
                   >
-                    <SongItem {...song} />
+                    <SongItem 
+                      {...song} 
+                      onPreview={() => history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
+                    />
                   </Grid>
                 )
             }
@@ -194,12 +198,15 @@ const Search = ({
                   <Grid 
                     item 
                     key={artist.uuid}
-                    lg={4} 
-                    md={6}
+                    lg={3} 
+                    md={3}
                     sm={6}
                     xs={12}
                   >
-                    <ArtistItem {...artist} />
+                    <ArtistItem 
+                      {...artist} 
+                      onPreview={() => history.push(`/artists/${artist.slug}`)}
+                    />
                   </Grid>
                 )
           }
