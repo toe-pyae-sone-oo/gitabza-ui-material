@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
 import IconButton from '@material-ui/core/IconButton'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
@@ -36,6 +35,7 @@ const Navigation = ({
         <Toolbar>
           <img
             className={classes.logo}
+            alt="logo"
             src="https://gitabza.com/upload/img/logo/GitaBZa@Single.png"
           />
           <div className={classes.search}>
