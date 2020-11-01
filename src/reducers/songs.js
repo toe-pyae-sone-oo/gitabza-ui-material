@@ -6,7 +6,6 @@ export default (
     count: -1, 
     genre: '', 
     page: 0, 
-    error: true 
   }, 
   action,
 ) => {
