@@ -96,27 +96,29 @@ const ArtistPreview = ({ loading, match, history }) => {
           }
           {loading
             ? <Loading/>
-            : <Grid 
-                container 
-                spacing={2}
-              >
-                {songs.map(song =>
-                  <Grid 
-                    item 
-                    key={song.uuid} 
-                    lg={6} 
-                    md={6}
-                    sm={6}
-                    xs={12}
-                  >
-                    <SongItem 
-                      {...song} 
-                      onPreview={() => 
-                        history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
-                    />
-                  </Grid>
-                )}
-              </Grid>
+            : songs.length > 0
+              ? <Grid 
+                  container 
+                  spacing={2}
+                >
+                  {songs.map(song =>
+                    <Grid 
+                      item 
+                      key={song.uuid} 
+                      lg={6} 
+                      md={6}
+                      sm={6}
+                      xs={12}
+                    >
+                      <SongItem 
+                        {...song} 
+                        onPreview={() => 
+                          history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
+              : <NotFound message="No Songs" />
           }
         </Grid>
       </Grid>
