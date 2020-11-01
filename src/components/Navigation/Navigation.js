@@ -35,9 +35,10 @@ const Navigation = ({
     <>
       <AppBar classes={{ root: classes.appBar }}>
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            {title}
-          </Typography>
+          <img
+            className={classes.logo}
+            src="https://gitabza.com/upload/img/logo/GitaBZa@Single.png"
+          />
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

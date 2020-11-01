@@ -74,6 +74,10 @@ const useStyles = makeStyles(theme => ({
     },
     zIndex: 2,
   },
+  logo: {
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+  }
 }))
 
 export default useStyles
