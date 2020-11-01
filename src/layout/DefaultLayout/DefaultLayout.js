@@ -28,8 +28,7 @@ const routes = [
 ]
 
 const getRouteByPath = path => {
-  const index = routes.findIndex(route => route.path === path)
-  return index < 0 ? 0 : index
+  return routes.findIndex(route => route.path === path)
 }
 
 const mapStateToProps = state => ({
@@ -75,7 +74,6 @@ const DefaultLayout = ({
       <Navigation
         route={currentRoute}
         changeRoute={navigate}
-        title={routes[currentRoute].title}
         showTab={isSearchView}
         tab={tab}
         setTab={setTab}

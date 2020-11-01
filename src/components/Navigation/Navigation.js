@@ -16,7 +16,6 @@ import useStyles from './NavigationStyle'
 const Navigation = ({ 
   route, 
   changeRoute, 
-  title,
   tab,
   setTab,
   showTab,
