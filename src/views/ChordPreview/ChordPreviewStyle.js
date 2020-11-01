@@ -23,6 +23,10 @@ const useStyles = makeStyles(theme => ({
   },
   lyricsWrapper: {
     overflow: 'scroll',
+    padding: theme.spacing(2),
+  },
+  lyrics: {
+    margin: 0,
   },
   code: {
     color: theme.palette.primary.main,
@@ -100,6 +104,16 @@ const useStyles = makeStyles(theme => ({
   },
   instrumentTab: {
     marginBottom: theme.spacing(1),
+  },
+  chords: {
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+  },
+  chordWrapper: {
+    padding: theme.spacing(1),
+  },
+  popupChord: {
+    maxWidth: 140,
   },
 }))
 

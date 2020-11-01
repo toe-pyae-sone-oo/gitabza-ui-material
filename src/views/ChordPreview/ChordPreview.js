@@ -158,15 +158,17 @@ const ChordPreview = ({ loading, match, history }) => {
         anchorEl={anchorEl}
       >
         {popupChord && chordPositions[popupChord]
-          ? <Chord 
-              chordKey={popupChord}
-              chord={chordPositions[popupChord][currentChordPos[popupChord] ?? 0]}
-              total={chordPositions[popupChord].length}
-              position={currentChordPos[popupChord] + 1}
-              instrument={instruments[currentTab]}
-              onLeft={() => changeCurrentChordPos(popupChord, -1)}
-              onRight={() => changeCurrentChordPos(popupChord, 1)}
-            /> 
+          ? <div className={classes.popupChord}>
+              <Chord 
+                chordKey={popupChord}
+                chord={chordPositions[popupChord][currentChordPos[popupChord] ?? 0]}
+                total={chordPositions[popupChord].length}
+                position={currentChordPos[popupChord] + 1}
+                instrument={instruments[currentTab]}
+                onLeft={() => changeCurrentChordPos(popupChord, -1)}
+                onRight={() => changeCurrentChordPos(popupChord, 1)}
+              /> 
+            </div>
           : <span></span>
         }
       </Popper>
@@ -368,37 +370,45 @@ const ChordPreview = ({ loading, match, history }) => {
                   variant="outlined"
                   className={classes.lyricsCard}
                 >
-                  <CardContent 
-                    className={classes.lyricsWrapper}
+                  <Tabs
+                    value={currentTab}
+                    onChange={(e, value) => setCurrentTab(value)}
+                    indicatorColor="primary"
+                    className={classes.instrumentTab}
                   >
-                    <Tabs
-                      value={currentTab}
-                      onChange={(e, value) => setCurrentTab(value)}
-                      indicatorColor="primary"
-                      className={classes.instrumentTab}
-                    >
-                      <Tab label="Guitar" />
-                      <Tab label="Ukulele" />
-                    </Tabs>
+                    <Tab label="Guitar" />
+                    <Tab label="Ukulele" />
+                  </Tabs>
+                  <div
+                    className={classes.chords}
+                  >
                     <Carousel
                       ssr
                       responsive={responsive}
                       keyBoardControl={false}
                     >
                       {Object.keys(chordPositions).map(key =>
-                        <Chord 
-                          key={key}
-                          chordKey={key}
-                          chord={chordPositions[key][currentChordPos[key]]} 
-                          total={chordPositions[key].length}
-                          position={currentChordPos[key] + 1}
-                          instrument={instruments[currentTab]}
-                          onLeft={() => changeCurrentChordPos(key, -1)}
-                          onRight={() => changeCurrentChordPos(key, 1)}
-                        />
+                        <div 
+                          key={key} 
+                          className={classes.chordWrapper}
+                        >
+                          <Chord 
+                            chordKey={key}
+                            chord={chordPositions[key][currentChordPos[key]]} 
+                            total={chordPositions[key].length}
+                            position={currentChordPos[key] + 1}
+                            instrument={instruments[currentTab]}
+                            onLeft={() => changeCurrentChordPos(key, -1)}
+                            onRight={() => changeCurrentChordPos(key, 1)}
+                          />
+                        </div>
                       )}
                     </Carousel>
-                    <pre style={{ fontSize }}>
+                  </div>
+                  <div 
+                    className={classes.lyricsWrapper}
+                  >
+                    <pre style={{ fontSize }} className={classes.lyrics}>
                       {wrapChords(song.lyrics, (match, i) =>
                         <span 
                           key={match + i} 
@@ -409,7 +419,7 @@ const ChordPreview = ({ loading, match, history }) => {
                         </span>
                       )}
                     </pre>
-                  </CardContent>
+                  </div>
                 </Card>
               </Grid>
               <Grid
