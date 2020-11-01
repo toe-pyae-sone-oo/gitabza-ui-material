@@ -9,6 +9,7 @@ import Loading from '../../components/Loading/Loading'
 import NotFound from '../../components/NotFound/NotFound'
 import { getLatest, findBySlug } from '../../api/artists'
 import { findByArtist as findSongs } from '../../api/songs'
+import { ARTIST_NOT_FOUND, NO_SONGS } from '../../constants/errors'
 import useStyles from './ArtistPreviewStyle'
 
 const mapStateToProps = state => ({
@@ -26,7 +27,7 @@ const ArtistPreview = ({ loading, match, history }) => {
 
   const handleError = err => {
     if (err.response && err.response.status === 404) {
-      setError('Artist Not Found')
+      setError(ARTIST_NOT_FOUND)
     }
   }
 
@@ -45,7 +46,12 @@ const ArtistPreview = ({ loading, match, history }) => {
   useEffect(() => {
     if (artist) {
       findSongs(artist.uuid)
-        .then(setSongs)
+        .then(data => {
+          setSongs(data)
+          if (data.length === 0) {
+            setError(NO_SONGS)
+          }
+        })
         .catch(handleError)
     
       getLatest().then(artists => setOthers([
@@ -68,7 +74,7 @@ const ArtistPreview = ({ loading, match, history }) => {
           xs={12}
           item
         >
-          {error && <NotFound message={error} />}
+          {error === ARTIST_NOT_FOUND && <NotFound message={error} />}
           {artist &&
               <div className={classes.artistInfoWrapper}>
                 <Avatar
@@ -96,29 +102,29 @@ const ArtistPreview = ({ loading, match, history }) => {
           }
           {loading
             ? <Loading/>
-            : songs.length > 0
-              ? <Grid 
-                  container 
-                  spacing={2}
-                >
-                  {songs.map(song =>
-                    <Grid 
-                      item 
-                      key={song.uuid} 
-                      lg={6} 
-                      md={6}
-                      sm={6}
-                      xs={12}
-                    >
-                      <SongItem 
-                        {...song} 
-                        onPreview={() => 
-                          history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
-                      />
-                    </Grid>
-                  )}
-                </Grid>
-              : <NotFound message="No Songs" />
+            : error === NO_SONGS
+                ? <NotFound message={error} />
+                : <Grid 
+                    container 
+                    spacing={2}
+                  >
+                    {songs.map(song =>
+                      <Grid 
+                        item 
+                        key={song.uuid} 
+                        lg={6} 
+                        md={6}
+                        sm={6}
+                        xs={12}
+                      >
+                        <SongItem 
+                          {...song} 
+                          onPreview={() => 
+                            history.push(`/chords/${song.artists[0].slug}/${song.slug}`)}
+                        />
+                      </Grid>
+                    )}
+                  </Grid>
           }
         </Grid>
       </Grid>
