@@ -32,6 +32,7 @@ const ArtistPreview = ({ loading, match, history }) => {
   }
 
   useEffect(() => {
+    setError(undefined)
     if (artistSlug) {
       setArtist(undefined)
       setSongs([])
