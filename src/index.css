@@ -14,10 +14,10 @@ code {
 
 @font-face {
   font-family: 'Pyidaungsu';
-  src: local('Pyidaungsu'), url(./fonts/Pyidaungsu-1.8.3_Regular.ttf);
+  src: url(./fonts/Pyidaungsu-2.5.3_Regular.ttf);
 }
 
 @font-face {
   font-family: 'Pyidaungsu-bold';
-  src: local('Pyidaungsu-bold'), url(./fonts/Pyidaungsu-1.8.3_Bold.ttf);
+  src: url(./fonts/Pyidaungsu-2.5.3_Bold.ttf);
 }
