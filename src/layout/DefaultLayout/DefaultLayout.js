@@ -9,6 +9,7 @@ import Artists from '../../views/Artists/Artists'
 import ArtistPreview from '../../views/ArtistPreview/ArtistPreview'
 import Navigation from '../../components/Navigation/Navigation'
 import Search from '../../views/Search/Search'
+import PageNotFound from '../../views/PageNotFound/PageNotFound'
 import { SET_SEARCH_TAB, SET_SEARCH } from '../../constants/actionTypes'
 import useStyles from './DefaultLayoutStyle'
 
@@ -92,6 +93,7 @@ const DefaultLayout = ({
           <Route exact path="/artists" component={Artists} />
           <Route path="/artists/:slug" component={ArtistPreview} />
           <Route path="/search" component={Search} />
+          <Route component={PageNotFound} />
         </Switch>
       </Container>
     </div>
