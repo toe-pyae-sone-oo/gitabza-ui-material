@@ -66,7 +66,6 @@ const Home = ({
   }, [artists, loadArtists])
 
   useEffect(() => {
-
     let mounted = true
 
     topSongs.length === 0 && getTopSongs()
@@ -98,43 +97,52 @@ const Home = ({
           title="Latest Update"
           onShowAll={() => history.push('/chords')}
         />
-        {loading && <Loading />}
-        <SongList 
-          songs={songs} 
-          onPreview={gotoChordPreview}
-        />
+        {!loading && songs.length > 0
+          ? <SongList 
+              songs={songs} 
+              onPreview={gotoChordPreview}
+            />
+          : <Loading/>
+        }
       </Grid>
       <Grid item xs={12}>
         <SectionHeader 
           title="Artists" 
           onShowAll={() => history.push('/artists')}
         />
-        {loading && <Loading />}
-        <ArtistList 
-          artists={artists} 
-          onPreview={gotoArtistPreview}
-        />
+        {!loading && artists.length > 0
+          ? <ArtistList 
+              artists={artists} 
+              onPreview={gotoArtistPreview}
+            />
+          : <Loading/>
+        }
       </Grid>
       <Grid item xs={12}>
         <SectionHeader
           title="Top Songs"
           onShowAll={() => history.push('/chords')}
         />
-        {loading && <Loading />}
-        <SongList 
-          songs={topSongs} 
-          onPreview={gotoChordPreview}
-        />
+        {!loading && topSongs.length > 0
+          ? <SongList 
+              songs={topSongs} 
+              onPreview={gotoChordPreview}
+            />
+          : <Loading />
+        }
       </Grid>
       <Grid item xs={12}>
         <SectionHeader
           title="Genres"
           onShowAll={null}
         />
-        <GenresList 
-          genres={GENRES} 
-          onPreview={searchChordsByGenre}
-        />
+        {!loading && songs.length > 0
+          ? <GenresList 
+              genres={GENRES} 
+              onPreview={searchChordsByGenre}
+            />
+          : <Loading />
+        }
       </Grid>
     </Grid>
   )

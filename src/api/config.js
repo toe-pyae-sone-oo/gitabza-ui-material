@@ -37,14 +37,19 @@ httpClient.interceptors.response.use(
   err => {
     stopLoading()
 
-    // handle 500 error
+    // Fix this later
+    if (err.response && err.response.status === 500) {
+      setError({
+        message: err.response.data.message,
+        status: err.response.status,
+      })
+    }
 
     if (err.response && err.response.status === 401) {
       setError({ 
         message: err.response.data.message,
         status: err.response.status,
       })
-      throw err
     }
 
     throw err

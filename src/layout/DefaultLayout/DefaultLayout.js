@@ -10,6 +10,7 @@ import ArtistPreview from '../../views/ArtistPreview/ArtistPreview'
 import Navigation from '../../components/Navigation/Navigation'
 import Search from '../../views/Search/Search'
 import PageNotFound from '../../views/PageNotFound/PageNotFound'
+import ServerError from '../../views/ServerError/ServerError'
 import { SET_SEARCH_TAB, SET_SEARCH } from '../../constants/actionTypes'
 import useStyles from './DefaultLayoutStyle'
 
@@ -35,6 +36,7 @@ const getRouteByPath = path => {
 const mapStateToProps = state => ({
   tab: state.search.tab,
   search: state.search.search,
+  error: state.error,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -46,6 +48,7 @@ const DefaultLayout = ({
   tab, 
   setTab,
   search,
+  error,
   setSearch, 
   history,
 }) => {
@@ -64,6 +67,12 @@ const DefaultLayout = ({
     setSearchView(path === '/search')
     setCurrentRoute(getRouteByPath(path))
   }, [path])
+
+  useEffect(() => {
+    if (error && error.status === 500) {
+      history.push('/500')
+    }
+  }, [error, history])
 
   const handleSearch = text => {
     setSearch(text)
@@ -93,6 +102,7 @@ const DefaultLayout = ({
           <Route exact path="/artists" component={Artists} />
           <Route path="/artists/:slug" component={ArtistPreview} />
           <Route path="/search" component={Search} />
+          <Route path="/500" component={ServerError} />
           <Route component={PageNotFound} />
         </Switch>
       </Container>
