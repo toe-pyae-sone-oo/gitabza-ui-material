@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   },
   slideImage: {
     width: '100%',
-    height: 'auto'
+    height: 155
   }
 }))
 
