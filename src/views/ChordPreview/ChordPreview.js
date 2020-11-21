@@ -16,12 +16,14 @@ import RemoveIcon from '@material-ui/icons/Remove'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import PlayIcon from '@material-ui/icons/PlayArrow'
 import FormatSizeIcon from '@material-ui/icons/FormatSize'
+import YoutubeIcon from '@material-ui/icons/YouTube'
 import Youtube from 'react-youtube'
 import Carousel from 'react-multi-carousel'
 import Loading from '../../components/Loading/Loading'
 import NotFound from '../../components/NotFound/NotFound'
 import SongItem from '../../components/home/SongItem/SongItem'
 import Chord from '../../components/Chord/Chord'
+import Title from '../../components/Title/Title'
 import { getLatest, findBySlug } from '../../api/songs'
 import { wrapChords, tranpsoseSong, extractChords, getChordPositions } from '../../helpers/chords'
 import { getVideoId } from '../../helpers/songs'
@@ -440,23 +442,18 @@ const ChordPreview = ({ loading, match, history }) => {
                 md={3}
                 xs={12}
               >
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                >
-                  Youtube
-                </Typography>
+                <Title
+                  icon={<YoutubeIcon color="primary" />}
+                  content="Youtube"
+                ></Title>
                 <Youtube
                   videoId={getVideoId(song.youtube)}
                   className={classes.youtube}
                 /> 
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  className={classes.otherSongsTitle}
-                >
-                  You may also like
-                </Typography>
+                <Title
+                  icon={<MusicNoteIcon color="primary" />}
+                  content="Random Songs"
+                ></Title>
                 <Grid
                   container
                   spacing={2}
