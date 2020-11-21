@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   lyrics: {
     margin: 0,
+    userSelect: 'none'
   },
   code: {
     color: theme.palette.primary.main,

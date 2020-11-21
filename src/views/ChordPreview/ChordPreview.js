@@ -423,6 +423,7 @@ const ChordPreview = ({ loading, match, history }) => {
                       style={{ fontSize }} 
                       className={classes.lyrics}
                       onClick={closePopper}
+                      unselectable="on"
                     >
                       {wrapChords(song.lyrics, (match, i) =>
                         <span 
