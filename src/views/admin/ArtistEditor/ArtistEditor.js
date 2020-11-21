@@ -183,7 +183,7 @@ const ArtistEditor = ({ loading, setChanged, history, match }) => {
           <br/>
           <img
             alt={pictureUrl ?? 'artist picture'}
-            src={pictureUrl ?? `${window.location.origin}/logo192.png`}
+            src={pictureUrl ?? `${window.location.origin}/placeholder.png`}
             className={classes.picture}
           />
         </Grid>

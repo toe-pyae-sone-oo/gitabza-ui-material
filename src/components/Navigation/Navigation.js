@@ -36,7 +36,7 @@ const Navigation = ({
           <img
             className={classes.logo}
             alt="logo"
-            src="https://gitabza.com/upload/img/logo/GitaBZa@Single.png"
+            src={process.env.PUBLIC_URL + '/Gitabza@Logo.svg'}
           />
           <div className={classes.search}>
             <div className={classes.searchIcon}>
