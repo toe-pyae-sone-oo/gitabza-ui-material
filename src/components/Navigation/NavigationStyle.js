@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-    zIndex: 2,
+    zIndex: 1001,
   },
   logo: {
     width: theme.spacing(6),
