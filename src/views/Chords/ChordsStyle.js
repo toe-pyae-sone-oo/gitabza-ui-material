@@ -6,14 +6,17 @@ const useStyles = makeStyles(theme => ({
   },
   filter: {
     display: 'flex',
-    justifyContent: 'flex-end',
     paddingBottom: theme.spacing(2),
+    alignItems: 'center'
   },
   genreFilter: {
     [theme.breakpoints.up('sm')]: {
       maxWidth: 200,
     },
   },
+  title: {
+    marginRight: 'auto !important'
+  }
 }))
 
 export default useStyles

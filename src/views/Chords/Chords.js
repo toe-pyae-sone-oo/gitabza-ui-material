@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
+import MusicIcon from '@material-ui/icons/MusicNote'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LOAD_SONGS, SET_SONGS_GENRE, SET_SONGS_PAGE } from '../../constants/actionTypes'
 import { GENRES } from '../../constants/songs'
@@ -10,6 +11,7 @@ import { find } from '../../api/songs'
 import SongItem from '../../components/SongItem/SongItem'
 import Loading from '../../components/Loading/Loading'
 import NotFound from '../../components/NotFound/NotFound'
+import Title from '../../components/Title/Title'
 import useStyles from './ChordsStyle'
 
 const LIMIT_PER_PAGE = 20
@@ -63,7 +65,6 @@ const Chords = ({
   }, [genre, count, loadSongs, setPage])
 
   const loadMoreSongs = () => {
-    console.log('hello from loadMoreSongs')
     const nextPage = page + 1
     setPage(nextPage)
     find({ 
@@ -88,6 +89,12 @@ const Chords = ({
       <div 
         className={classes.filter}
       >
+        <Title
+          icon={<MusicIcon color="primary" />}
+          content="Chords & Tabs"
+          gutterBottom={false}
+          className={classes.title}
+        ></Title>
         <TextField
           label="Genres"
           select
