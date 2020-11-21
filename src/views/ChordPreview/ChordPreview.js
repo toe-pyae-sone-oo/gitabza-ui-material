@@ -140,12 +140,15 @@ const ChordPreview = ({ loading, match, history }) => {
   }
 
   const handlePopper = (e, key) => {
+    e.stopPropagation()
     setPopupChord(key)
     setAnchorEl(anchorEl === e.currentTarget 
       ? undefined 
       : e.currentTarget
     )
   }
+
+  const closePopper = () => setAnchorEl(undefined)
 
   return (
     <Grid 
@@ -407,7 +410,11 @@ const ChordPreview = ({ loading, match, history }) => {
                   <div 
                     className={classes.lyricsWrapper}
                   >
-                    <pre style={{ fontSize }} className={classes.lyrics}>
+                    <pre 
+                      style={{ fontSize }} 
+                      className={classes.lyrics}
+                      onClick={closePopper}
+                    >
                       {wrapChords(song.lyrics, (match, i) =>
                         <span 
                           key={match + i} 
