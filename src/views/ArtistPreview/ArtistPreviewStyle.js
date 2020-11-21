@@ -4,7 +4,9 @@ const useStyles = makeStyles(theme => ({
   artistInfoWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: theme.spacing(2),
+    position: 'absolute',
+    bottom: 0,
+    padding: theme.spacing(2)
   },
   artistInfo: {
     display: 'flex',
@@ -19,13 +21,40 @@ const useStyles = makeStyles(theme => ({
   },
   name: {
     fontFamily: 'Pyidaungsu-bold',
+    color: theme.palette.primary.main
   },
   songCount: {
     fontFamily: 'Pyidaungsu',
+    fontSize: 14,
+    color: theme.palette.text.primary
   },
   artists: {
-    marginTop: theme.spacing(2),
+    padding: theme.spacing(2)
   },
+  artist: {
+    color: theme.palette.text.primary,
+    fontFamily: 'Pyidaungsu-bold',
+    cursor: 'pointer'
+  },
+  header: {
+    position: 'relative',
+    height: 300,
+    backgroundPosition: 'center !important',
+    backgroundSize: 'cover !important'
+  },
+  headerLayer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%'
+  },
+  cover: {
+    width: '100%',
+    height: 300,
+    objectFit: 'cover'
+  }
 }))
 
 export default useStyles

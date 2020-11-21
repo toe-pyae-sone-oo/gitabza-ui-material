@@ -18,7 +18,7 @@ const Title = ({ icon, content = '' }) => {
         <span 
           className={classes.content}
         >
-          {content.toUpperCase()}
+          {content}
         </span>
       </Box>
     </Typography>
