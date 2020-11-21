@@ -9,7 +9,10 @@ const useStyles = makeStyles(theme => ({
   },
   slideImage: {
     width: '100%',
-    height: 155
+    height: 150,
+    [theme.breakpoints.up('sm')]: {
+      height: 'auto'
+    }
   }
 }))
 
