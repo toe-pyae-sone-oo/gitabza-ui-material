@@ -8,7 +8,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   },
   slideImage: {
-    width: '100%'
+    width: '100%',
+    height: 'auto'
   }
 }))
 
