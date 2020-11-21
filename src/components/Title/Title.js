@@ -15,7 +15,11 @@ const Title = ({ icon, content = '' }) => {
         alignItems="center"
       >
         {icon ?? {}}
-        <span className={classes.content}>{content}</span>
+        <span 
+          className={classes.content}
+        >
+          {content.toUpperCase()}
+        </span>
       </Box>
     </Typography>
   )

@@ -1,10 +1,8 @@
 import React from 'react'
 import Card from '@material-ui/core/Card'
-import Avatar from '@material-ui/core/Avatar'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
-import PersonIcon from '@material-ui/icons/Person'
-import MusicNoteIcon from '@material-ui/icons/MusicNote'
 import useStyles from './ArtistItemStyle'
 
 const ArtistItem = ({ picture, name, songs, onPreview = f => f }) => {
@@ -16,46 +14,23 @@ const ArtistItem = ({ picture, name, songs, onPreview = f => f }) => {
       className={classes.root}
       onClick={onPreview}
     >
-      <div className={classes.avatarWrapper}>
-        <Avatar
-          className={classes.avatar}
-          alt={name}
-          src={picture}
-        />
-      </div>
-      <div
-        className={classes.info}
-      >
-        <Typography 
+      <CardMedia
+        image={picture ?? '"http://localhost:3001/uploads/2020-10-29-7472b173-58fb-4ecd-8d2c-9c8b49a1ab7e.png"'}
+        title={name}
+        className={classes.avatar}
+      ></CardMedia>
+      <CardContent>
+        <Typography
           className={classes.name}
-          variant="subtitle1"
         >
-          <Box
-            display="flex"
-            alignItems="center"
-          >
-            <PersonIcon
-              className={classes.nameIcon} 
-              fontSize="small" 
-            />
-            {name}
-          </Box>
+          {name}
         </Typography>
-        <Typography 
-          variant="subtitle2"
+        <Typography
+          className={classes.songs}
         >
-          <Box
-            display="flex"
-            alignItems="center"
-          >
-            <MusicNoteIcon
-              className={classes.songsIcon} 
-              fontSize="small" 
-            />
-            {songs}
-          </Box>
+          သီချင်း: {songs}
         </Typography>
-      </div>
+      </CardContent>
     </Card>
   )
 }

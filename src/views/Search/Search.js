@@ -198,10 +198,10 @@ const Search = ({
                   <Grid 
                     item 
                     key={artist.uuid}
-                    lg={3} 
+                    lg={2} 
                     md={3}
-                    sm={6}
-                    xs={12}
+                    sm={4}
+                    xs={6}
                   >
                     <ArtistItem 
                       {...artist} 
