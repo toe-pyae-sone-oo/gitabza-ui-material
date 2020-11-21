@@ -6,12 +6,13 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
   },
   avatar: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
+    width: '100%',
+    height: 150,
     margin: '0 auto',
   },
   name: {
     fontFamily: 'Pyidaungsu-bold',
+    fontSize: 14,
     textAlign: 'center',
     marginTop: theme.spacing(1),
   },

@@ -11,6 +11,7 @@ const ArtistItem = ({ name = '', picture, onPreview = f => f }) => {
       onClick={onPreview}
     >
       <Avatar
+        variant="square"
         alt={name}
         src={picture}
         className={classes.avatar}
