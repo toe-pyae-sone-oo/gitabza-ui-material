@@ -77,7 +77,7 @@ const Artists = ({
           next={loadMoreArtists}
           hasMore={count !== artists.length}
         >
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             {artists.map(artist => 
               <Grid
                 item
