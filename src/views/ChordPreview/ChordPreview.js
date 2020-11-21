@@ -121,7 +121,7 @@ const ChordPreview = ({ loading, match, history }) => {
   const pageScroll = () => {
     if (!scroll) return false
     window.scrollBy(0, 1)
-    setTimeout(pageScroll, 100)
+    setTimeout(pageScroll, 10)
   }
 
   const handleScroll = () => {
