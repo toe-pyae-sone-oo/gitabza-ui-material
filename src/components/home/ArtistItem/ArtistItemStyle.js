@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     width: '100%',
-    height: 150,
+    height: 130,
     margin: '0 auto',
   },
   name: {
