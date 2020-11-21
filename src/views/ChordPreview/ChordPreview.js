@@ -65,6 +65,13 @@ const ChordPreview = ({ loading, match, history }) => {
   }
 
   useEffect(() => {
+    return () => {
+      scroll = false
+      setScrolling(false)
+    }
+  }, [])
+
+  useEffect(() => {
     setAnchorEl(undefined)
     if (artistSlug && songSlug) {
       findBySlug(artistSlug, songSlug)
