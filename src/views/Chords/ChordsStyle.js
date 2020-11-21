@@ -10,9 +10,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   },
   genreFilter: {
-    [theme.breakpoints.up('sm')]: {
-      maxWidth: 200,
-    },
+    maxWidth: 150
   },
   title: {
     marginRight: 'auto !important'
