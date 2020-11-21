@@ -17,6 +17,8 @@ import SongList from '../../components/home/SongList/SongList'
 import ArtistList from '../../components/home/ArtistList/ArtistList'
 import GenresList from '../../components/home/GenresList/GenresList'
 import SectionHeader from '../../components/home/SectionHeader/SectionHeader'
+import Slider from '../../components/home/Slider/Slider'
+import useStyles from './HomeStyle'
 
 const mapStateToProps = state => ({
   loading: state.loading,
@@ -45,6 +47,8 @@ const Home = ({
   loadSongs,
   history, 
 }) => {
+  const classes = useStyles()
+
   useEffect(() => {
     let mounted = true
 
@@ -92,6 +96,14 @@ const Home = ({
       container
       spacing={2}
     >
+      <Grid
+        item
+        xs={12}
+      >
+        <div className={classes.mainSlider}>
+          <Slider></Slider>
+        </div>
+      </Grid>
       <Grid item xs={12}>
         <SectionHeader
           title="Latest Update"
