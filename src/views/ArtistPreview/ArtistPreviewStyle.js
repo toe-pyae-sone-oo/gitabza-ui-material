@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover !important'
   },
   headerLayer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     position: 'absolute',
     top: 0,
     left: 0,
