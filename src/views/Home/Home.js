@@ -12,6 +12,7 @@ import {
   LOAD_SONGS 
 } from '../../constants/actionTypes'
 import { GENRES } from '../../constants/songs'
+import { SLIDES } from '../../constants/slides'
 import Loading from '../../components/Loading/Loading'
 import SongList from '../../components/home/SongList/SongList'
 import ArtistList from '../../components/home/ArtistList/ArtistList'
@@ -108,7 +109,9 @@ const Home = ({
         xs={12}
       >
         <div className={classes.mainSlider}>
-          <Slider></Slider>
+          <Slider
+            slides={SLIDES(history)}
+          ></Slider>
         </div>
       </Grid>
       <Grid item xs={12}>

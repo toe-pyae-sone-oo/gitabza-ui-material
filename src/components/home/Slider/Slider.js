@@ -1,7 +1,7 @@
 import React from 'react'
 import Carousel from 'react-multi-carousel'
 import { isBrowser, isTablet } from 'react-device-detect'
-import useStyles from './SliderStyle'
+import Slide from '../Slide/Slide'
 
 const responsive = {
   desktop: {
@@ -21,9 +21,7 @@ const responsive = {
   }
 }
 
-const Slider = () => {
-  const classes = useStyles()
-
+const Slider = ({ slides = [] }) => {
   return (
     <Carousel
       ssr
@@ -33,27 +31,14 @@ const Slider = () => {
       autoPlay
       centerMode={isBrowser || isTablet}
     >
-      <div className={classes.slide}>
-        <img
-          className={classes.slideImage}
-          alt="slide1"
-          src={`${process.env.PUBLIC_URL}/home_slider/W01_S1.jpg`}
-        />
-      </div>
-      <div className={classes.slide}>
-        <img
-          className={classes.slideImage}
-          alt="slide2"
-          src={`${process.env.PUBLIC_URL}/home_slider/W01_S2.jpg`}
-        />
-      </div>
-      <div className={classes.slide}>
-        <img
-          className={classes.slideImage}
-          alt="slide3"
-          src={`${process.env.PUBLIC_URL}/home_slider/W01_S3.jpg`}
-        />
-      </div>
+      {slides.map(({ name, image, action }) => 
+        <Slide
+          key={name}
+          name={name}
+          image={image}
+          action={action}
+        ></Slide>
+      )}
     </Carousel>
   )
 }
