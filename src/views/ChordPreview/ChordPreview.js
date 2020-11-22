@@ -206,11 +206,15 @@ const ChordPreview = ({ loading, match, history }) => {
                     variant="caption"
                   >
                     by{' '}
-                    <span 
-                      className={classes.artists}
-                    >
-                      {song.artists.map(({ name }) => name).join(', ')}
-                    </span>
+                    {song.artists.map(({ name, uuid, slug }) =>
+                      <span
+                        key={uuid}
+                        className={classes.artists}
+                        onClick={() => history.push(`/artists/${slug}`)}
+                      >
+                        {name},
+                      </span>
+                    )}
                   </Typography>
                   <Typography
                     variant="caption"

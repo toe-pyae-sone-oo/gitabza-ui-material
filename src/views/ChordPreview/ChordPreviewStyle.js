@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
   artists: {
     fontFamily: 'Pyidaungsu',
     color: theme.palette.primary.main,
+    cursor: 'pointer'
   },
   difficulty: {
     color: theme.palette.primary.main,
