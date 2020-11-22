@@ -40,16 +40,22 @@ const Artists = ({
 
     let mounted = true
 
-    artists.length === 0 && find({ 
-      limit: LIMIT_PER_PAGE, 
-      sort: 'name', 
-      order: 'asc' 
-    })
-      .then(data => mounted && loadArtists(data))
+    if (count === -1) {
+      find({ 
+        limit: LIMIT_PER_PAGE, 
+        sort: 'name', 
+        order: 'asc' 
+      }).then(data => {
+        if (mounted) {
+          loadArtists(data)
+          setPage(0)
+        }
+      })
+    }
 
     return () => mounted = false
 
-  }, [artists, loadArtists])
+  }, [artists, loadArtists, count, setPage])
 
   const loadMoreArtists = () => {
     const nextPage = page + 1
@@ -75,7 +81,7 @@ const Artists = ({
           className={classes.scroll}
           dataLength={artists.length}
           next={loadMoreArtists}
-          hasMore={count !== artists.length}
+          hasMore={count !== artists.length && count !== -1}
         >
           <Grid container spacing={2}>
             {artists.map(artist => 
