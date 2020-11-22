@@ -35,6 +35,10 @@ const Artists = ({
   history 
 }) => {
   const classes = useStyles()
+
+  useEffect(() => {
+    document.title = `${process.env.REACT_APP_SITE_TITLE_PREFIX} | Artists`
+  }, [])
   
   useEffect(() => {
 

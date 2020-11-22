@@ -17,6 +17,10 @@ const ServerError = ({ error, setError, history }) => {
   const classes = useStyles()
 
   useEffect(() => {
+    document.title = `${process.env.REACT_APP_SITE_TITLE_PREFIX} | 500`
+  }, [])
+
+  useEffect(() => {
     if (!error) {
       history.push('/')
     }

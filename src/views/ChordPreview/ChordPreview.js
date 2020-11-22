@@ -93,6 +93,8 @@ const ChordPreview = ({ loading, match, history }) => {
   useEffect(() => {
     setAnchorEl(undefined)
     if (song) {
+      document.title = `${process.env.REACT_APP_SITE_TITLE_PREFIX} | ${song.title} by ${song.artists[0].name}`
+
       const chords = extractChords(song.lyrics, instruments[currentTab])
       const positions = getChordPositions(chords, instruments[currentTab])
       setChordPositions(positions)

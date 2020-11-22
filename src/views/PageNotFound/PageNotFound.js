@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import useStyles from './PageNotFoundStyle'
 
 const PageNotFound = () => {
   
   const classes = useStyles()
+
+  useEffect(() => {
+    document.title = `${process.env.REACT_APP_SITE_TITLE_PREFIX} | 404`
+  }, [])
 
   return (
     <div className={classes.root}>

@@ -44,6 +44,10 @@ const Chords = ({
   const classes = useStyles()
 
   useEffect(() => {
+    document.title = `${process.env.REACT_APP_SITE_TITLE_PREFIX} | Chords`
+  }, [])
+
+  useEffect(() => {
     
     let mounted = true
 

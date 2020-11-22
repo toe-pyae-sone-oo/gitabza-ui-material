@@ -76,6 +76,10 @@ const Search = ({
   const [artistError, setArtistError] = useState(undefined)
 
   useEffect(() => {
+    document.title = `${process.env.REACT_APP_SITE_TITLE_PREFIX} | Search`
+  }, [])
+
+  useEffect(() => {
     loadSongs({
       page: 0,
       count: 0,

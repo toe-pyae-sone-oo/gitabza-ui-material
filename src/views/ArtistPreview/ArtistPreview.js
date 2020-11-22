@@ -49,6 +49,8 @@ const ArtistPreview = ({ loading, match, history }) => {
 
   useEffect(() => {
     if (artist) {
+      document.title = `${process.env.REACT_APP_SITE_TITLE_PREFIX} | ${artist.name}`
+
       findSongs(artist.uuid)
         .then(data => {
           setSongs(data)

@@ -50,6 +50,10 @@ const Home = ({
   const classes = useStyles()
 
   useEffect(() => {
+    document.title = process.env.REACT_APP_SITE_TITLE
+  }, [])
+
+  useEffect(() => {
 
     let mounted = true
 
