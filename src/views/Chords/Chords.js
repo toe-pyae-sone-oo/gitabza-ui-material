@@ -44,6 +44,7 @@ const Chords = ({
   const classes = useStyles()
 
   useEffect(() => {
+    
     let mounted = true
 
     if (count === -1) {
