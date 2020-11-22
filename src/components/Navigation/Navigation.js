@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import InputBase from '@material-ui/core/InputBase'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 import SearchIcon from '@material-ui/icons/Search'
 import HomeIcon from '@material-ui/icons/Home'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
@@ -38,6 +40,15 @@ const Navigation = ({
             alt="logo"
             src={process.env.PUBLIC_URL + '/Gitabza@Logo.svg'}
           />
+          <Typography
+            variant="h6"
+          >
+            <Box
+              display={{ xs: 'none', md: 'block' }}
+            >
+              {process.env.REACT_APP_SITE_TITLE_PREFIX}
+            </Box>
+          </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
