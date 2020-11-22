@@ -3,8 +3,8 @@ import AppBar from '@material-ui/core/AppBar'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import Toolbar from '@material-ui/core/Toolbar'
 import InputBase from '@material-ui/core/InputBase'
-import IconButton from '@material-ui/core/IconButton'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
+import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
 import HomeIcon from '@material-ui/icons/Home'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
@@ -56,37 +56,37 @@ const Navigation = ({
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton 
+            <Button 
               onClick={() => changeRoute(0)}
+              startIcon={<HomeIcon/>}
+              className={route === 0 
+                ? classes.navIconActive 
+                : classes.navIcon
+              } 
             >
-              <HomeIcon 
-                className={route === 0 
-                  ? classes.navIconActive 
-                  : classes.navIcon
-                } 
-              />
-            </IconButton>
-            <IconButton 
+              Home
+            </Button>
+            <Button 
               onClick={() => changeRoute(1)}
+              startIcon={<MusicNoteIcon/>}
+              className={route === 1
+                ? classes.navIconActive 
+                : classes.navIcon
+              } 
             >
-              <MusicNoteIcon 
-                className={route === 1
-                  ? classes.navIconActive 
-                  : classes.navIcon
-                } 
-              />
-            </IconButton>
-            <IconButton
+              Chords
+            </Button>
+            <Button
               edge="end"
               onClick={() => changeRoute(2)}
+              startIcon={<MicIcon/>}
+              className={route === 2
+                ? classes.navIconActive 
+                : classes.navIcon
+              }
             >
-              <MicIcon 
-                className={route === 2
-                  ? classes.navIconActive 
-                  : classes.navIcon
-                } 
-              />
-            </IconButton>
+              Artists
+            </Button>
           </div>
         </Toolbar>
         {showTab && <SearchTab tab={tab} changeTab={setTab} />}
