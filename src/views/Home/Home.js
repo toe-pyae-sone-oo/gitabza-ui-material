@@ -50,6 +50,7 @@ const Home = ({
   const classes = useStyles()
 
   useEffect(() => {
+
     let mounted = true
 
     songs.length === 0 && getLatestSongs()
@@ -60,6 +61,7 @@ const Home = ({
   }, [songs, loadLatestSongs])
 
   useEffect(() => {
+
     let mounted = true
 
     artists.length === 0 && getLatestArtists()
@@ -70,6 +72,7 @@ const Home = ({
   }, [artists, loadArtists])
 
   useEffect(() => {
+    
     let mounted = true
 
     topSongs.length === 0 && getTopSongs()
