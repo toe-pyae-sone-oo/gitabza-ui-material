@@ -8,6 +8,7 @@ import { validateAdminLoginForm as validateForm } from '../../../validators'
 import { login } from '../../../api/adminLogin'
 import { saveToken } from '../../../helpers/adminLogin'
 import { SET_ADMIN_TOKEN, SET_ERROR } from '../../../constants/actionTypes'
+import { ADMIN_ROUTE } from '../../../constants/routes'
 import useStyles from './LoginStyle'
 
 const mapStateToProps = state => ({
@@ -52,7 +53,7 @@ const Login = ({ loading, setToken, setError, history }) => {
         .then(handleToken)
         .then(() => {
           setError(false)
-          history.push('/admin')
+          history.push(`/${ADMIN_ROUTE}`)
         })
         .catch(({ response }) => {
           if (

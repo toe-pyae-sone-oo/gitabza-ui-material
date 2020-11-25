@@ -6,6 +6,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import DefaultLayout from './layout/DefaultLayout/DefaultLayout'
 import AdminLayout from './layout/AdminLayout/AdminLayout'
 import EmptyLayout from './layout/EmptyLayout/EmptyLayout'
+import { ADMIN_ROUTE } from './constants/routes'
 
 const theme = createMuiTheme({
   palette: {
@@ -24,8 +25,8 @@ const App = () =>
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <Switch>
-      <Route path="/admin/login" component={EmptyLayout} />
-      <Route path="/admin" component={AdminLayout} />
+      <Route path={`/${ADMIN_ROUTE}/login`} component={EmptyLayout} />
+      <Route path={`/${ADMIN_ROUTE}`} component={AdminLayout} />
       <Route path="/" component={DefaultLayout} />
     </Switch>
   </ThemeProvider>

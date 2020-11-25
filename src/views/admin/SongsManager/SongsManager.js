@@ -24,6 +24,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import { getIndex, getOffset, getTotalPages } from '../../../helpers/pagination'
 import { LOAD_ADMIN_SONGS, SET_ADMIN_SONGS_SEARCH } from '../../../constants/actionTypes'
+import { ADMIN_ROUTE } from '../../../constants/routes'
 import { find, remove } from '../../../api/songs'
 import useStyles from './SongsManagerStyle'
 
@@ -144,7 +145,7 @@ const SongsManager = ({
             variant="outlined"
             color="primary"
             startIcon={<AddIcon/>}
-            onClick={() => history.push('/admin/songs/new')}
+            onClick={() => history.push(`/${ADMIN_ROUTE}/songs/new`)}
           >
             New
           </Button>
@@ -216,7 +217,7 @@ const SongsManager = ({
                           size="small"
                           className={classes.edit}
                           onClick={() => 
-                            history.push(`/admin/songs/${song.uuid}/edit`)
+                            history.push(`/${ADMIN_ROUTE}/songs/${song.uuid}/edit`)
                           }
                         >
                           <EditIcon fontSize="inherit" />

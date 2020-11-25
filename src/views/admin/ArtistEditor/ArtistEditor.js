@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import { validateArtistForm } from '../../../validators'
 import { upload, create, findById, update } from '../../../api/artists'
 import { SET_ADMIN_ARTISTS_CHANGED } from '../../../constants/actionTypes'
+import { ADMIN_ROUTE } from '../../../constants/routes'
 import useStyles from './ArtistEditorStyle'
 
 const mapStateToProps = state => ({
@@ -94,14 +95,14 @@ const ArtistEditor = ({ loading, setChanged, history, match }) => {
         update(artistId, { ...form, picture: uploaded })
           .then(() => {
             setChanged(true)
-            history.push('/admin/artists')
+            history.push(`/${ADMIN_ROUTE}/artists`)
           })
           .catch(handleError(_errors))
       } else {
         create({ ...form, picture: uploaded })
           .then(() => {
             setChanged(true)
-            history.push('/admin/artists')
+            history.push(`/${ADMIN_ROUTE}/artists`)
           })
           .catch(handleError(_errors))
       }
@@ -203,7 +204,7 @@ const ArtistEditor = ({ loading, setChanged, history, match }) => {
             variant="contained"
             color="default"
             className={classes.cancel}
-            onClick={() => history.push('/admin/artists')}
+            onClick={() => history.push(`/${ADMIN_ROUTE}/artists`)}
             disabled={loading}
           >
             Cancel

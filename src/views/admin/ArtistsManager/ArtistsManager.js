@@ -25,6 +25,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { LOAD_ADMIN_ARTISTS, SET_ADMIN_ARTISTS_SEARCH } from '../../../constants/actionTypes'
 import { find, remove } from '../../../api/artists'
 import { getTotalPages, getOffset, getIndex } from '../../../helpers/pagination'
+import { ADMIN_ROUTE } from '../../../constants/routes'
 import useStyles from './ArtistsManagerStyle'
 
 const LIMIT_PER_PAGE = 10
@@ -156,7 +157,7 @@ const ArtistsManager = ({
             variant="outlined"
             color="primary"
             startIcon={<AddIcon/>}
-            onClick={() => history.push('/admin/artists/new')}
+            onClick={() => history.push(`/${ADMIN_ROUTE}/artists/new`)}
           >
             New
           </Button>
@@ -220,7 +221,7 @@ const ArtistsManager = ({
                           size="small"
                           className={classes.edit}
                           onClick={() => 
-                            history.push(`/admin/artists/${artist.uuid}/edit`)
+                            history.push(`/${ADMIN_ROUTE}/artists/${artist.uuid}/edit`)
                           }
                         >
                           <EditIcon fontSize="inherit" />

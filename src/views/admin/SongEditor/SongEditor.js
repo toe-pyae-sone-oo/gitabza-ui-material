@@ -9,6 +9,7 @@ import AutoComplete from '@material-ui/lab/Autocomplete'
 import Button from '@material-ui/core/Button'
 import { LOAD_ADMIN_ARTIST_NAMES, SET_ADMIN_SONGS_CHANGED } from '../../../constants/actionTypes'
 import { GENRES } from '../../../constants/songs'
+import { ADMIN_ROUTE } from '../../../constants/routes'
 import { getNames as getArtistNames } from '../../../api/artists'
 import { create, findById, update } from '../../../api/songs'
 import { getCapo } from '../../../helpers/songs'
@@ -115,14 +116,14 @@ const SongEditor = ({
         update(songId, form)
           .then(() => {
             setChanged(true)
-            history.push('/admin/songs')
+            history.push(`/${ADMIN_ROUTE}/songs`)
           })
           .catch(handleError(_errors))
       } else {
         create({ ...form })
           .then(() => {
             setChanged(true)
-            history.push('/admin/songs')
+            history.push(`/${ADMIN_ROUTE}/songs`)
           })
           .catch(handleError(_errors))
       }
@@ -378,7 +379,7 @@ const SongEditor = ({
             variant="contained"
             color="default"
             className={classes.cancel}
-            onClick={() => history.push('/admin/songs')}
+            onClick={() => history.push(`/${ADMIN_ROUTE}/songs`)}
             disabled={loading}
           >
             Cancel

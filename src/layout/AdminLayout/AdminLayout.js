@@ -17,6 +17,7 @@ import SongEditor from '../../views/admin/SongEditor/SongEditor'
 import { getToken, removeToken } from '../../helpers/adminLogin'
 import { SET_ADMIN_TOKEN, SET_ERROR, SET_ADMIN_VERIFIED } from '../../constants/actionTypes'
 import { verifyToken } from '../../api/adminLogin'
+import { ADMIN_ROUTE } from '../../constants/routes'
 import AuthenticatedRoute from '../../routes/AuthenticatedRoute'
 import useStyles from './AdminLayoutStyle'
 
@@ -68,7 +69,7 @@ const AdminLayout = ({
   }
 
   const reLogin = () => {
-    history.push('/admin/login')
+    history.push(`/${ADMIN_ROUTE}/login`)
     setToken(false)
     removeToken()
     setError(false)
@@ -111,48 +112,48 @@ const AdminLayout = ({
         <Switch>
           <AuthenticatedRoute 
             exact 
-            path="/admin" 
+            path={`/${ADMIN_ROUTE}`}
             component={Dashboard} 
             appProps={{ authenticated: loggedIn }}
-            redirect={'/admin/login'}
+            redirect={`/${ADMIN_ROUTE}/login`}
           />
           <AuthenticatedRoute 
             exact 
-            path="/admin/artists" 
+            path={`/${ADMIN_ROUTE}/artists`}
             component={ArtistsManager} 
             appProps={{ authenticated: loggedIn }}
-            redirect={'/admin/login'}
+            redirect={`/${ADMIN_ROUTE}/login`}
           />
           <AuthenticatedRoute  
-            path="/admin/artists/new" 
+            path={`/${ADMIN_ROUTE}/artists/new`}
             component={ArtistEditor} 
             appProps={{ authenticated: loggedIn }}
-            redirect={'/admin/login'}
+            redirect={`/${ADMIN_ROUTE}/login`}
           />
           <AuthenticatedRoute 
-            path="/admin/artists/:id/edit" 
+            path={`/${ADMIN_ROUTE}/artists/:id/edit`}
             component={ArtistEditor} 
             appProps={{ authenticated: loggedIn }}
-            redirect={'/admin/login'}
+            redirect={`/${ADMIN_ROUTE}/login`}
           />
           <AuthenticatedRoute 
             exact 
-            path="/admin/songs" 
+            path={`/${ADMIN_ROUTE}/songs`}
             component={SongsManager} 
             appProps={{ authenticated: loggedIn }}
-            redirect={'/admin/login'}
+            redirect={`/${ADMIN_ROUTE}/login`}
           />
           <AuthenticatedRoute 
-            path="/admin/songs/new" 
+            path={`/${ADMIN_ROUTE}/songs/new`}
             component={SongEditor} 
             appProps={{ authenticated: loggedIn }}
-            redirect={'/admin/login'}
+            redirect={`/${ADMIN_ROUTE}/login`}
           />
           <AuthenticatedRoute 
-            path="/admin/songs/:id/edit" 
+            path={`/${ADMIN_ROUTE}/songs/:id/edit`}
             component={SongEditor} 
             appProps={{ authenticated: loggedIn }}
-            redirect={'/admin/login'}
+            redirect={`/${ADMIN_ROUTE}/login`}
           />
         </Switch>
       </Container>

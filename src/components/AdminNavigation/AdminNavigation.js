@@ -18,6 +18,7 @@ import MicIcon from '@material-ui/icons/Mic'
 import PersonIcon from '@material-ui/icons/Person'
 import KeyIcon from '@material-ui/icons/VpnKey'
 import DashboardIcon from '@material-ui/icons/Dashboard'
+import { ADMIN_ROUTE } from '../../constants/routes'
 import useStyles from './AdminNavigationStyle'
 
 const AdminNavigation = ({ window }) => {
@@ -43,7 +44,7 @@ const AdminNavigation = ({ window }) => {
           button
           component={NavLink}
           exact
-          to="/admin"
+          to={`/${ADMIN_ROUTE}`}
           activeClassName="Mui-selected"
         >
           <ListItemIcon>
@@ -54,7 +55,7 @@ const AdminNavigation = ({ window }) => {
         <ListItem 
           button
           component={NavLink}
-          to="/admin/artists"
+          to={`/${ADMIN_ROUTE}/artists`}
           activeClassName="Mui-selected"
         >
           <ListItemIcon>
@@ -65,7 +66,7 @@ const AdminNavigation = ({ window }) => {
         <ListItem 
           button
           component={NavLink}
-          to="/admin/songs"
+          to={`/${ADMIN_ROUTE}/songs`}
           activeClassName="Mui-selected"
         >
           <ListItemIcon>
