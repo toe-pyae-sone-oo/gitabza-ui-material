@@ -180,9 +180,12 @@ const SongsManager = ({
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell className={classes.indexCol}>#</TableCell>
-                <TableCell className={classes.titleCol}>Title</TableCell>
-                <TableCell className={classes.actionCol}>Action</TableCell>
+                <TableCell>#</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Artist</TableCell>
+                <TableCell>Genre</TableCell>
+                <TableCell>Difficulty</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -198,6 +201,15 @@ const SongsManager = ({
                       </TableCell>
                       <TableCell>
                         {song.title}
+                      </TableCell>
+                      <TableCell>
+                        {song.artists.map(a => a.name).join(',')}
+                      </TableCell>
+                      <TableCell>
+                        {song.genre}
+                      </TableCell>
+                      <TableCell>
+                        {song.difficulty}
                       </TableCell>
                       <TableCell>
                         <IconButton 
@@ -221,7 +233,7 @@ const SongsManager = ({
                   )
                 : <TableRow>
                     <TableCell
-                      colSpan={3}
+                      colSpan={6}
                       className={classes.loadingCell}
                     >
                       Loading...
