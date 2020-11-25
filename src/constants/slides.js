@@ -3,7 +3,7 @@ export const SLIDES = history => {
     {
       name: 'Slide 1',
       image: `${process.env.PUBLIC_URL}/home_slider/W01_S1.jpg`,
-      action: () => history.push('/artists/kyar-pauk')
+      action: () => history.push('/artists/big-bag')
     },
     {
       name: 'Slide 2',
