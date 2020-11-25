@@ -7,9 +7,15 @@ const useStyles = makeStyles(theme => ({
   },
   image: {
     width: '100%',
-    height: 144,
     objectFit: 'cover',
     display: 'inline-block',
+    height: 90,
+    [theme.breakpoints.up('sm')]: {
+      height: 110
+    },
+    [theme.breakpoints.up('md')]: {
+      height: 125
+    }
   },
 }))
 

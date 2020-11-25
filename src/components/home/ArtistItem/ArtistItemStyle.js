@@ -7,8 +7,14 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     width: '100%',
-    height: 130,
     margin: '0 auto',
+    height: 90,
+    [theme.breakpoints.up('sm')]: {
+      height: 110
+    },
+    [theme.breakpoints.up('md')]: {
+      height: 125
+    }
   },
   name: {
     fontFamily: 'Pyidaungsu-bold',
