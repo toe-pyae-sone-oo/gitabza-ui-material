@@ -5,10 +5,12 @@ import { Provider } from 'react-redux'
 import App from './App'
 import { store } from './store'
 import './index.css'
+import GA from './helpers/googleAnalytics'
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
+      {GA.init() && <GA.RouteTracker />}
       <Switch>
         <Route path="/" component={App} />
       </Switch>
