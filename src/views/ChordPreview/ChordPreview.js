@@ -30,6 +30,7 @@ import { getVideoId } from '../../helpers/songs'
 import { responsive } from '../../helpers/carousel'
 import useStyles from './ChordPreviewStyle'
 import 'react-multi-carousel/lib/styles.css'
+import { trackButtonClick } from '../../helpers/ga'
 
 const mapStateToProps = state => ({
   loading: state.loading,
@@ -108,17 +109,31 @@ const ChordPreview = ({ loading, match, history }) => {
   }, [song, currentTab])
 
   const handleTranspose = step => {
-    const lyrics = tranpsoseSong(song.lyrics, step)
-    setSong({
-      ...song,
-      lyrics,
-    })
+    if (song) {
+      const lyrics = tranpsoseSong(song.lyrics, step)
+      setSong({
+        ...song,
+        lyrics,
+      })
+
+      // GA tracking
+      trackButtonClick(
+        'transpose',
+        `transpose ${song.title} by ${step}`
+      )
+    }
   }
 
   const handleFontSize = size => {
     const newSize = fontSize + size
     if (newSize >= 8 && newSize <= 32) {
       setFontSize(newSize)
+
+      // GA tracking
+      trackButtonClick(
+        'change-font',
+        `change font size to ${newSize}`
+      )
     }
   }
 
@@ -132,6 +147,12 @@ const ChordPreview = ({ loading, match, history }) => {
     scroll = !scroll
     if (scroll) {
       pageScroll()
+
+      // GA tracking
+      trackButtonClick(
+        'auto-scroll',
+        'clicked auto scroll'
+      )
     }
     setScrolling(scroll)
   }
