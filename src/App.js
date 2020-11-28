@@ -22,17 +22,18 @@ const theme = createMuiTheme({
   },
 });
 
-const App = () => {
+const App = ({ history }) => {
 
   useEffect(() => {
     trackPageview(
       window.location.pathname + window.location.search
     )
+
+    history.listen(location => 
+      trackPageview(location.pathname + location.search)
+    )
   }, [])
 
-  const { listen }  = useHistory()
-  listen(location => 
-    trackPageview(location.pathname + location.search))
 
   return (
     <ThemeProvider theme={theme}>
