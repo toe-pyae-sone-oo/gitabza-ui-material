@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Switch, Route, useHistory } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/styles'
@@ -32,7 +32,7 @@ const App = ({ history }) => {
     history.listen(location => 
       trackPageview(location.pathname + location.search)
     )
-  }, [])
+  }, [history])
 
 
   return (
