@@ -13,3 +13,11 @@ export const trackButtonClick = (label, action) => {
     action
   })
 }
+
+export const trackSearch = (label, action) => {
+  ReactGA.event({
+    category: 'search',
+    label,
+    action
+  })
+}

@@ -13,6 +13,7 @@ import PageNotFound from '../../views/PageNotFound/PageNotFound'
 import ServerError from '../../views/ServerError/ServerError'
 import { SET_SEARCH_TAB, SET_SEARCH } from '../../constants/actionTypes'
 import useStyles from './DefaultLayoutStyle'
+import { trackSearch } from '../../helpers/ga'
 
 const routes = [
   {
@@ -77,6 +78,9 @@ const DefaultLayout = ({
   const handleSearch = text => {
     setSearch(text)
     history.push('/search')
+
+    // GA tracking
+    trackSearch('search', `searched ${text}`)
   }
 
   return (
