@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
-import MenuItem from '@material-ui/core/MenuItem'
 import MusicIcon from '@material-ui/icons/MusicNote'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { LOAD_SONGS, SET_SONGS_GENRE, SET_SONGS_PAGE } from '../../constants/actionTypes'
-import { GENRES } from '../../constants/songs'
 import { find } from '../../api/songs'
 import SongItem from '../../components/SongItem/SongItem'
 import Loading from '../../components/Loading/Loading'
@@ -37,7 +34,6 @@ const Chords = ({
   genre,
   page,
   loadSongs, 
-  setGenre,
   setPage,
   history,
 }) => {
@@ -84,11 +80,6 @@ const Chords = ({
       )
   }
 
-  const onGenreChange = e => {
-    loadSongs({ songs: [], count: -1 })
-    setGenre(e.target.value)
-  }
-
   return (
     <>
       <div 
@@ -100,26 +91,6 @@ const Chords = ({
           gutterBottom={false}
           className={classes.title}
         ></Title>
-        <TextField
-          label="Genres"
-          select
-          variant="outlined"
-          size="small"
-          fullWidth
-          className={classes.genreFilter}
-          value={genre}
-          onChange={onGenreChange}
-        >
-          <MenuItem value={'all'}>All</MenuItem>
-          {GENRES.map(genre =>
-            <MenuItem
-              key={genre.value}
-              value={genre.value}
-            >
-              {genre.name}
-            </MenuItem>
-          )}
-        </TextField>
       </div>
       {count === 0 && <NotFound message="No Songs Found" />}
       <InfiniteScroll
