@@ -61,7 +61,6 @@ const SongEditor = ({
     title: '',
     slug: '',
     artists: '',
-    genre: '',
     types: '',
     difficulty: '',
     version: '',
@@ -216,8 +215,6 @@ const SongEditor = ({
             fullWidth
             value={form.genre}
             onChange={handleInputChange}
-            helperText={errors.genre}
-            error={!!errors.genre}
             disabled={loading}
           >
             {GENRES.map(genre =>
