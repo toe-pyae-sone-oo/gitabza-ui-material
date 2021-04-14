@@ -7,16 +7,12 @@ import { getLatest as getLatestArtists } from '../../api/artists'
 import { 
   LOAD_LATEST_SONGS, 
   LOAD_LATEST_ARTISTS, 
-  LOAD_TOP_SONGS, 
-  SET_SONGS_GENRE, 
-  LOAD_SONGS 
+  LOAD_TOP_SONGS,
 } from '../../constants/actionTypes'
-import { GENRES } from '../../constants/songs'
 import { SLIDES } from '../../constants/slides'
 import Loading from '../../components/Loading/Loading'
 import SongList from '../../components/home/SongList/SongList'
 import ArtistList from '../../components/home/ArtistList/ArtistList'
-import GenresList from '../../components/home/GenresList/GenresList'
 import SectionHeader from '../../components/home/SectionHeader/SectionHeader'
 import Slider from '../../components/home/Slider/Slider'
 import useStyles from './HomeStyle'
@@ -32,8 +28,6 @@ const mapDispatchToProps = dispatch => ({
   loadLatestSongs: songs => dispatch({ type: LOAD_LATEST_SONGS, payload: songs }),
   loadArtists: artists => dispatch({ type: LOAD_LATEST_ARTISTS, payload: artists }),
   loadTopSongs: songs => dispatch({ type: LOAD_TOP_SONGS, payload: songs }),
-  setGenre: genre => dispatch({ type: SET_SONGS_GENRE, payload: genre }),
-  loadSongs: data => dispatch({ type: LOAD_SONGS, payload: data }),
 })
 
 const Home = ({ 
@@ -44,8 +38,6 @@ const Home = ({
   loadLatestSongs, 
   loadArtists, 
   loadTopSongs,
-  setGenre,
-  loadSongs,
   history, 
 }) => {
   const classes = useStyles()
@@ -92,12 +84,6 @@ const Home = ({
 
   const gotoArtistPreview = artist =>
     history.push(`/artists/${artist.slug}`)
-
-  const searchChordsByGenre = genre => {
-    setGenre(genre)
-    loadSongs({ songs: [], count: -1 })
-    history.push(`/chords`)
-  }
 
   return (
     <Grid 
@@ -149,19 +135,6 @@ const Home = ({
           ? <SongList 
               songs={topSongs} 
               onPreview={gotoChordPreview}
-            />
-          : <Loading />
-        }
-      </Grid>
-      <Grid item xs={12}>
-        <SectionHeader
-          title="Genres"
-          onShowAll={null}
-        />
-        {!loading && songs.length > 0
-          ? <GenresList 
-              genres={GENRES} 
-              onPreview={searchChordsByGenre}
             />
           : <Loading />
         }
